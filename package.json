@@ -1,0 +1,27 @@
+{
+  "name": "knote",
+  "version": "1.0.0",
+  "description": "A slack bot that save and track note ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eftakhairul/knote.git"
+  },
+  "keywords": [
+    "note",
+    "knote",
+    "slack-bot"
+  ],
+  "author": "Eftakhairul Islam <eftakhairul@gmail.com> (http://eftakhairul@gmail.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eftakhairul/knote/issues"
+  },
+  "homepage": "https://github.com/eftakhairul/knote#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
