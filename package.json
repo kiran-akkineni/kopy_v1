@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/eftakhairul/knote#readme",
   "dependencies": {
+    "botkit": "0.0.5",
     "express": "^4.13.4"
   }
 }

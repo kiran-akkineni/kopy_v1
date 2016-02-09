@@ -23,14 +23,14 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
-    redirect_uri  : 'https://564e90dc.ngrok.io',
-    scopes        : ['bot', 'commands'],
+    redirect_uri  : 'http://7ee0f808.ngrok.io',
+    scopes        : ['bot', 'commands', 'outgoing-webhook'],
   }
 );
 
 
 
-controller.setupWebserver(process.env.port,function(err,webserver) {
+controller.setupWebserver(port,function(err,webserver) {
   controller.createWebhookEndpoints(controller.webserver);
 
   controller.createOauthEndpoints(controller.webserver,function(err,req,res) {
@@ -60,6 +60,16 @@ controller.on('create_bot',function(bot,config) {
       if (!err) {
         trackBot(bot);
       }
+
+      bot.startPrivateConversation({user: config.createdBy},function(err,convo) {
+        if (err) {
+          console.log(err);
+        } else {
+          convo.say('I am a knote, just joined your team');
+          convo.say('You must now /invite me to a channel so that I can be of use!');
+        }
+      });
+
     });
   }
 
@@ -81,3 +91,4 @@ controller.hears('','direct_message,direct_mention,mention',function(bot,message
   console.log(message.text);
   bot.reply(message,'Hey how are you today?')
 });
+
