@@ -22,7 +22,7 @@ controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
     redirect_uri  : 'https://fa0a7b79.ngrok.io',
-    scopes        : ['bot', 'commands', 'outgoing-webhook'],
+    scopes        : ['bot', 'commands', 'outgoing-webhook', 'users:read', 'team.info'],
   }
 );
 
@@ -70,7 +70,6 @@ controller.on('create_bot', function(bot,config) {
 
     });
   }
-
 });
 
 
@@ -86,6 +85,7 @@ controller.on('rtm_close', function(bot) {
 // give the bot something to listen for.
 controller.hears('','direct_message,direct_mention,mention',function(bot,message) {
   console.log(message);
+  console.log(bot.config)
   //console.log(message.text);
   bot.reply(message,'Hey how are you today?')
 });
