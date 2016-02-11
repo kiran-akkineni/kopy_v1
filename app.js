@@ -4,8 +4,6 @@
 
 "use strict";
 
-var express = require('express');
-var app     = express();
 var Botkit  = require('botkit');
 
 
@@ -23,14 +21,14 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
-    redirect_uri  : 'http://7ee0f808.ngrok.io',
+    redirect_uri  : 'https://fa0a7b79.ngrok.io',
     scopes        : ['bot', 'commands', 'outgoing-webhook'],
   }
 );
 
 
 
-controller.setupWebserver(port,function(err,webserver) {
+controller.setupWebserver(port, function(err,webserver) {
   controller.createWebhookEndpoints(controller.webserver);
 
   controller.createOauthEndpoints(controller.webserver,function(err,req,res) {
@@ -50,7 +48,7 @@ function trackBot(bot) {
 }
 
 
-controller.on('create_bot',function(bot,config) {
+controller.on('create_bot', function(bot,config) {
 
   if (_bots[bot.config.token]) {
     // already online! do nothing.
@@ -61,11 +59,11 @@ controller.on('create_bot',function(bot,config) {
         trackBot(bot);
       }
 
-      bot.startPrivateConversation({user: config.createdBy},function(err,convo) {
+      bot.startPrivateConversation({user: config.createdBy}, function(err,convo) {
         if (err) {
           console.log(err);
         } else {
-          convo.say('I am a knote, just joined your team');
+          convo.say('I am the knote, just joined your team');
           convo.say('You must now /invite me to a channel so that I can be of use!');
         }
       });
@@ -77,18 +75,27 @@ controller.on('create_bot',function(bot,config) {
 
 
 // Handle events related to the websocket connection to Slack
-controller.on('rtm_open',function(bot) {
-  console.log('** The RTM api just connected!');
+controller.on('rtm_open', function(bot) {
+  console.log('The RTM api just connected!');
 });
 
-controller.on('rtm_close',function(bot) {
-  console.log('** The RTM api just closed');
-  // you may want to attempt to re-open
+controller.on('rtm_close', function(bot) {
+  console.log('The RTM api just closed');
 });
 
 // give the bot something to listen for.
 controller.hears('','direct_message,direct_mention,mention',function(bot,message) {
-  console.log(message.text);
+  console.log(message);
+  //console.log(message.text);
   bot.reply(message,'Hey how are you today?')
+});
+
+controller.on('slash_command', function(bot,message) {
+
+  console.log(message);
+
+  bot.replyPublic(message,'<@' + message.user + '> is cool!');
+  bot.replyPrivate(message,'*nudge nudge wink wink*');
+
 });
 
