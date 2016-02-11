@@ -13,7 +13,10 @@
   "keywords": [
     "note",
     "knote",
-    "slack-bot"
+    "slack-bot",
+    "slack-knote",
+    "knote-bot",
+    "slack-knote-bot"
   ],
   "author": "Eftakhairul Islam <eftakhairul@gmail.com> (http://eftakhairul@gmail.com/)",
   "license": "ISC",
@@ -23,6 +26,6 @@
   "homepage": "https://github.com/eftakhairul/knote#readme",
   "dependencies": {
     "botkit": "0.0.5",
-    "express": "^4.13.4"
+    "pg": "^4.4.4"
   }
 }
