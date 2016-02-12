@@ -26,6 +26,7 @@
   "homepage": "https://github.com/eftakhairul/knote#readme",
   "dependencies": {
     "botkit": "0.0.5",
-    "pg": "^4.4.4"
+    "pg": "^4.4.4",
+    "util": "^0.10.3"
   }
 }

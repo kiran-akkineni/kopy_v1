@@ -5,12 +5,14 @@
 "use strict";
 
 var Botkit  = require('botkit');
+var pg      = require('pg');
+var util    = require('util');
 
 
-var clientId      = process.env.clientId || '3217634342.20399675426';
-var clientSecret  = process.env.clientSecret || 'dabe3eb3bfba517ca14fcd1a43c46ac7';
-var port          = process.env.port || 3000;
-
+var clientId      = process.env.CLIENT_ID     || '3217634342.20399675426';
+var clientSecret  = process.env.CLIENT_SECRET || 'dabe3eb3bfba517ca14fcd1a43c46ac7';
+var port          = process.env.PORT          || 3000;
+var connection    = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
 
 //debug mode set to false
 var controller = Botkit.slackbot({
@@ -91,7 +93,7 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
 
   bot.api.users.info({'user': message.user}, function(err, response) {
     data.app_user_name  = response.user.name;
-    //save into DB
+    saveKnote(db, data);
   });
 
   bot.reply(message,'Your message has been saved. Thank you.')
@@ -109,8 +111,42 @@ controller.on('slash_command', function(bot,message) {
   data.app_group_name   = message.team_domain;
 
   bot.replyPublic(message, 'Your message has been saved. Thank you.');
-
-  //save into DB
-  
+  saveKnote(db, data);
 });
 
+
+function saveKnote(data) {
+
+  var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
+                                  data.user_id,
+                                  data.message,
+                                  data.app_name,
+                                  data.app_user_name,
+                                  data.app_group_name);
+
+   // Get a Postgres client from the connection pool
+    pg.connect(connection, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return false;
+        }
+
+
+
+        // SQL Query > Select Data
+        var query = client.query(querySrring);
+
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return true;
+        });
+    });
+};
