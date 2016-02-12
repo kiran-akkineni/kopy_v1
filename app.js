@@ -21,12 +21,10 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
-    redirect_uri  : 'https://fa0a7b79.ngrok.io',
-    scopes        : ['bot', 'commands', 'outgoing-webhook', 'users:read', 'team.info'],
+    redirect_uri  : 'http://6e23b8a5.ngrok.io',
+    scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook'],
   }
 );
-
-
 
 controller.setupWebserver(port, function(err,webserver) {
   controller.createWebhookEndpoints(controller.webserver);
@@ -83,19 +81,36 @@ controller.on('rtm_close', function(bot) {
 });
 
 // give the bot something to listen for.
-controller.hears('','direct_message,direct_mention,mention',function(bot,message) {
-  console.log(message);
-  console.log(bot.config)
-  //console.log(message.text);
-  bot.reply(message,'Hey how are you today?')
+controller.hears('','direct_message,direct_mention,mention',function(bot, message) {
+  var data = {};
+
+  data.user_id        = message.user;
+  data.message        = message.text;
+  data.app_name       = 'slack';
+  data.app_group_name = bot.config.name;
+
+  bot.api.users.info({'user': message.user}, function(err, response) {
+    data.app_user_name  = response.user.name;
+    //save into DB
+  });
+
+  bot.reply(message,'Your message has been saved. Thank you.')
 });
 
 controller.on('slash_command', function(bot,message) {
-
   console.log(message);
 
-  bot.replyPublic(message,'<@' + message.user + '> is cool!');
-  bot.replyPrivate(message,'*nudge nudge wink wink*');
+  var data = {};
 
+  data.user_id          = message. user_id;
+  data.message          = message.text;
+  data.app_name         = 'slack';
+  data.app_user_name    = message.user_name;
+  data.app_group_name   = message.team_domain;
+
+  bot.replyPublic(message, 'Your message has been saved. Thank you.');
+
+  //save into DB
+  
 });
 
