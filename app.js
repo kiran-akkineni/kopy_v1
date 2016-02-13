@@ -35,8 +35,17 @@ controller.setupWebserver(port, function(err, webserver) {
     if (err) {
       res.status(500).send('ERROR: ' + err);
     } else {
-      res.send('Success!');
+      res.send('Success Authenticated!');
     }
+  });
+
+  webserver.get('/heartbeat',function(req,res) {
+    res.send('OK');
+  });
+
+  webserver.get('/migrate',function(req,res) {
+    dbMigrate();
+    res.send('DB migration is done.');
   });
 });
 
@@ -145,4 +154,8 @@ function saveKnote(data) {
             return true;
         });
     });
+};
+
+function dbMigrate() {
+
 }
