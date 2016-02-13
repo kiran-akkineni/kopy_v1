@@ -26,7 +26,7 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
-    redirect_uri  : 'https://b934b153.ngrok.io',
+    redirect_uri  : 'https://knote-v1a.heroku.com',
     scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook'],
   }
 );
