@@ -102,7 +102,7 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
   data.message        = message.text;
   data.app_name       = 'slack';
   data.app_group_name = bot.config.name;
-  data.created_at     = new Date().getTime();
+
 
   bot.api.users.info({'user': message.user}, function(err, response) {
     data.app_user_name  = response.user.name;
@@ -120,7 +120,7 @@ controller.on('slash_command', function(bot,message) {
   data.app_name         = 'slack';
   data.app_user_name    = message.user_name;
   data.app_group_name   = message.team_domain;
-  data.created_at       = new Date().getTime();
+
 
   bot.replyPublic(message, 'Your message has been saved. Thank you.');
   saveKnote(data);
@@ -129,13 +129,12 @@ controller.on('slash_command', function(bot,message) {
 
 function saveKnote(data) {
 
-  var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name,created_at) VALUES ('%s','%s','%s','%s','%s','%s')",
+  var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
                                  data.user_id,
                                  data.message,
                                  data.app_name,
                                  data.app_user_name,
-                                 data.app_group_name,
-                                 data.created_at);
+                                 data.app_group_name);
 
     exequteQuery(querySrring);
 }
@@ -143,7 +142,8 @@ function saveKnote(data) {
 function dbMigrate() {
     var query = "CREATE TABLE IF NOT EXISTS knote (ID bigserial PRIMARY KEY, " +
                 "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
-                "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, created_at timestamp)";
+                "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
+                "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
     exequteQuery(query);
 
