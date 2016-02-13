@@ -38,7 +38,7 @@ controller.setupWebserver(port, function(err, webserver) {
     if (err) {
       res.status(500).send('ERROR: ' + err);
     } else {
-      res.send('Success Authenticated!');
+      res.send('Successfully Authenticated. Visit your slack team.');
     }
   });
 
@@ -146,7 +146,7 @@ function saveKnote(data) {
 
 function dbMigrate() {
     console.log('Migration started ...');
-    
+
     var query = "CREATE TABLE IF NOT EXISTS knote (ID bigserial PRIMARY KEY, " +
                 "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
                 "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
