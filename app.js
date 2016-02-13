@@ -1,5 +1,5 @@
 /**
- * @author Eftakhairul Islam <eftakharul@gmail.com>
+ * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
 
 "use strict";
@@ -11,8 +11,8 @@ var util    = require('util');
 
 var clientId      = process.env.CLIENT_ID     || '3217634342.20399675426';
 var clientSecret  = process.env.CLIENT_SECRET || 'dabe3eb3bfba517ca14fcd1a43c46ac7';
-var port          = process.env.PORT          || 3000;
-var connection    = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
+var port          = process.env.PORT          || 5000;
+var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
 
 //debug mode set to false
 var controller = Botkit.slackbot({
@@ -23,12 +23,12 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
-    redirect_uri  : 'http://6e23b8a5.ngrok.io',
+    redirect_uri  : 'https://b934b153.ngrok.io',
     scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook'],
   }
 );
 
-controller.setupWebserver(port, function(err,webserver) {
+controller.setupWebserver(port, function(err, webserver) {
   controller.createWebhookEndpoints(controller.webserver);
 
   controller.createOauthEndpoints(controller.webserver,function(err,req,res) {
@@ -93,15 +93,13 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
 
   bot.api.users.info({'user': message.user}, function(err, response) {
     data.app_user_name  = response.user.name;
-    saveKnote(db, data);
+    saveKnote(data);
   });
 
   bot.reply(message,'Your message has been saved. Thank you.')
 });
 
 controller.on('slash_command', function(bot,message) {
-  console.log(message);
-
   var data = {};
 
   data.user_id          = message. user_id;
@@ -111,31 +109,29 @@ controller.on('slash_command', function(bot,message) {
   data.app_group_name   = message.team_domain;
 
   bot.replyPublic(message, 'Your message has been saved. Thank you.');
-  saveKnote(db, data);
+  saveKnote(data);
 });
 
 
 function saveKnote(data) {
 
   var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
-                                  data.user_id,
-                                  data.message,
-                                  data.app_name,
-                                  data.app_user_name,
-                                  data.app_group_name);
+                                 data.user_id,
+                                 data.message,
+                                 data.app_name,
+                                 data.app_user_name,
+                                 data.app_group_name);
 
    // Get a Postgres client from the connection pool
-    pg.connect(connection, function(err, client, done) {
-        // Handle connection errors
+    pg.connect(conString, function(err, client, done) {
+        // Handle conString errors
         if(err) {
           done();
           console.log(err);
           return false;
         }
 
-
-
-        // SQL Query > Select Data
+        // SQL Query > Insert Data
         var query = client.query(querySrring);
 
         // Stream results back one row at a time
@@ -149,4 +145,4 @@ function saveKnote(data) {
             return true;
         });
     });
-};
+}
