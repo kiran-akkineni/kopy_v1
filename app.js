@@ -9,8 +9,8 @@ var pg      = require('pg');
 var util    = require('util');
 
 
-var clientId      = process.env.CLIENT_ID     || '3217634342.20399675426';
-var clientSecret  = process.env.CLIENT_SECRET || 'dabe3eb3bfba517ca14fcd1a43c46ac7';
+var clientId      = process.env.CLIENT_ID     || '3578811873.21294826611';
+var clientSecret  = process.env.CLIENT_SECRET || 'ddd5742d580c9d3ea01f17f6253f5a47';
 var port          = process.env.PORT          || 5000;
 var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
 
@@ -44,6 +44,11 @@ controller.setupWebserver(port, function(err, webserver) {
 
   webserver.get('/heartbeat',function(req,res) {
     res.send('OK');
+  });
+
+  webserver.get('/app',function(req,res) {
+    var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=3578811873.21294826611"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
+    res.send(html);
   });
 
   webserver.get('/migrate',function(req,res) {
@@ -140,12 +145,15 @@ function saveKnote(data) {
 }
 
 function dbMigrate() {
+    console.log('Migration started ...');
+    
     var query = "CREATE TABLE IF NOT EXISTS knote (ID bigserial PRIMARY KEY, " +
                 "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
                 "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
                 "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
     exequteQuery(query);
+    console.log('Migration Ended');
 
 }
 //DB query function
