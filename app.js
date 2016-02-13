@@ -14,6 +14,9 @@ var clientSecret  = process.env.CLIENT_SECRET || 'dabe3eb3bfba517ca14fcd1a43c46a
 var port          = process.env.PORT          || 5000;
 var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
 
+//db migrating
+dbMigrate();
+
 //debug mode set to false
 var controller = Botkit.slackbot({
   debug: false
@@ -99,6 +102,7 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
   data.message        = message.text;
   data.app_name       = 'slack';
   data.app_group_name = bot.config.name;
+  data.created_at     = new Date().getTime();
 
   bot.api.users.info({'user': message.user}, function(err, response) {
     data.app_user_name  = response.user.name;
@@ -116,6 +120,7 @@ controller.on('slash_command', function(bot,message) {
   data.app_name         = 'slack';
   data.app_user_name    = message.user_name;
   data.app_group_name   = message.team_domain;
+  data.created_at       = new Date().getTime();
 
   bot.replyPublic(message, 'Your message has been saved. Thank you.');
   saveKnote(data);
@@ -124,14 +129,28 @@ controller.on('slash_command', function(bot,message) {
 
 function saveKnote(data) {
 
-  var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
+  var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name,created_at) VALUES ('%s','%s','%s','%s','%s','%s')",
                                  data.user_id,
                                  data.message,
                                  data.app_name,
                                  data.app_user_name,
-                                 data.app_group_name);
+                                 data.app_group_name,
+                                 data.created_at);
 
-   // Get a Postgres client from the connection pool
+    exequteQuery(querySrring);
+}
+
+function dbMigrate() {
+    var query = "CREATE TABLE IF NOT EXISTS knote (ID bigserial PRIMARY KEY, " +
+                "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
+                "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, created_at timestamp)";
+
+    exequteQuery(query);
+
+}
+//DB query function
+function exequteQuery(querySrring) {
+    // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle conString errors
         if(err) {
@@ -145,7 +164,7 @@ function saveKnote(data) {
 
         // Stream results back one row at a time
         query.on('row', function(row) {
-            results.push(row);
+            console.log(row)
         });
 
         // After all data is returned, close connection and return results
@@ -154,8 +173,4 @@ function saveKnote(data) {
             return true;
         });
     });
-};
-
-function dbMigrate() {
-
 }
