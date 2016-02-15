@@ -76,7 +76,7 @@ controller.on('create_bot', function(bot,config) {
         if (err) {
           console.log(err);
         } else {
-          convo.say('I am the knote, just joined your team');
+          convo.say('I am the kopy, just joined your team');
           convo.say('You must now /invite me to a channel so that I can be of use!');
         }
       });
@@ -107,7 +107,7 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
 
   bot.api.users.info({'user': message.user}, function(err, response) {
     data.app_user_name  = response.user.name;
-    saveKnote(data);
+    savekopy(data);
   });
 
   bot.reply(message,'Your message has been saved. Thank you.')
@@ -124,36 +124,36 @@ controller.on('slash_command', function(bot,message) {
 
 
   bot.replyPublic(message, 'Your message has been saved. Thank you.');
-  saveKnote(data);
+  savekopy(data);
 });
 
 
-function saveKnote(data) {
+function savekopy(data) {
 
-  var querySrring = util.format("INSERT INTO knote (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
+  var queryString = util.format("INSERT INTO kopy (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
                                  data.user_id,
                                  data.message,
                                  data.app_name,
                                  data.app_user_name,
                                  data.app_group_name);
 
-    exequteQuery(querySrring);
+    executeQuery(queryString);
 }
 
 function dbMigrate() {
     console.log('Migration started ...');
 
-    var query = "CREATE TABLE IF NOT EXISTS knote (ID bigserial PRIMARY KEY, " +
+    var query = "CREATE TABLE IF NOT EXISTS kopy (ID bigserial PRIMARY KEY, " +
                 "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
                 "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
                 "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
-    exequteQuery(query);
+    executeQuery(query);
     console.log('Migration Ended');
 
 }
 //DB query function
-function exequteQuery(querySrring) {
+function executeQuery(queryString) {
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle conString errors
@@ -164,7 +164,7 @@ function exequteQuery(querySrring) {
         }
 
         // SQL Query > Insert Data
-        var query = client.query(querySrring);
+        var query = client.query(queryString);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
