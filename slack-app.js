@@ -22,7 +22,7 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
     clientId      : clientId,
     clientSecret  : clientSecret,
-    redirect_uri  : 'http://kopychat.heroku.com',
+    redirect_uri  : 'https://kopychat.heroku.com',
     scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook'],
   }
 );
