@@ -1,0 +1,28 @@
+{
+  "name": "kopychat",
+  "version": "1.0.0",
+  "description": "Save notes from messaging apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiran-akkineni/kopy_v1.git"
+  },
+  "keywords": [
+    "note",
+    "copy",
+    "chat",
+    "messaging",
+    "slack",
+    "list",
+    "productivity"
+  ],
+  "author": "Kiran Akkineni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kiran-akkineni/kopy_v1/issues"
+  },
+  "homepage": "https://github.com/kiran-akkineni/kopy_v1#readme"
+}
