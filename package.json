@@ -2,9 +2,9 @@
   "name": "kopychat",
   "version": "1.0.0",
   "description": "Save notes from messaging apps",
-  "main": "index.js",
+  "main": "slack-app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node slack-app.js"
   },
   "repository": {
     "type": "git",
