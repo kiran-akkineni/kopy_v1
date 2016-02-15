@@ -164,7 +164,7 @@ function executeQuery(queryString) {
         }
 
         // SQL Query > Insert Data
-        var query = client.query(querySrring);
+        var query = client.query(queryString);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
