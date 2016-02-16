@@ -1,3 +1,7 @@
+/**
+ * @author Eftakhairul Islam <eftakhairul@gmail.com>
+ */
+
 "use strict";
 
 var Botkit  = require('botkit');
@@ -42,8 +46,8 @@ controller.setupWebserver(port, function(err, webserver) {
     res.send('OK');
   });
 
-  webserver.get('/connect',function(req,res) {
-    var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=19936248482.21489538647"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
+  webserver.get('/app',function(req,res) {
+    var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=3578811873.21294826611"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
     res.send(html);
   });
 
@@ -130,7 +134,7 @@ controller.on('slash_command', function(bot,message) {
 
 function savekopy(data) {
 
-  var queryString = util.format("INSERT INTO kopy (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
+  var queryString = util.format("INSERT INTO messages (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
                                  data.user_id,
                                  data.message,
                                  data.app_name,
@@ -143,7 +147,7 @@ function savekopy(data) {
 function dbMigrate() {
     console.log('Migration started ...');
 
-    var query = "CREATE TABLE IF NOT EXISTS kopy (ID bigserial PRIMARY KEY, " +
+    var query = "CREATE TABLE IF NOT EXISTS messages (ID bigserial PRIMARY KEY, " +
                 "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
                 "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
                 "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
