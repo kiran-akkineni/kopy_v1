@@ -47,7 +47,7 @@ controller.setupWebserver(port, function(err, webserver) {
   });
 
   webserver.get('/app',function(req,res) {
-    var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=3578811873.21294826611"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
+    var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=19936248482.21489538647"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
     res.send(html);
   });
 
