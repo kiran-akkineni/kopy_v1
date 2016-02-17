@@ -117,7 +117,7 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
     savekopy(data);
   });
 
-  bot.replyPrivate(message,'Your message has been saved - ' + message.text);
+  bot.replyPrivate(message,'Message saved - ' + message.text);
 });
 
 controller.on('slash_command', function(bot,message) {
@@ -130,7 +130,7 @@ controller.on('slash_command', function(bot,message) {
   data.app_group_name   = message.team_domain;
 
 
-  bot.replyPrivate(message, 'Your message has been saved - ' + message.text);
+  bot.replyPrivate(message, 'Message saved - ' + message.text);
   savekopy(data);
 });
 
