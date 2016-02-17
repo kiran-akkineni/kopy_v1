@@ -20,7 +20,7 @@ var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5
 //Calling function to create database tables
 dbMigrate();
 
-//debug mode set to false
+//Set debug to false
 var controller = Botkit.slackbot({
   debug: false
 });
