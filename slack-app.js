@@ -4,17 +4,20 @@
 
 "use strict";
 
+// required libraries
 var Botkit  = require('botkit');
 var pg      = require('pg');
 var util    = require('util');
 
-
+//Inputs from Slack
 var clientId      = process.env.CLIENT_ID     || '19936248482.21489538647';
 var clientSecret  = process.env.CLIENT_SECRET || 'c71c603cf8fce0c4d840ad9ca794c9c3';
+
+//Database inputs
 var port          = process.env.PORT          || 5000;
 var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
 
-//db migrating
+//Calling function to create database tables
 dbMigrate();
 
 //debug mode set to false
