@@ -1,5 +1,5 @@
 /**
- * @author Eftakhairul Islam <eftakhairul@gmail.com>
+ * @author Eftakhairul Islam <eftakhairul@gmail.com>, Kiran Akkineni <Kiran.home@gmail.com>
  */
 
 "use strict";
