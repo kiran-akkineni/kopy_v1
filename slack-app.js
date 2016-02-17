@@ -117,7 +117,7 @@ controller.hears('','direct_message,direct_mention,mention',function(bot, messag
     savekopy(data);
   });
 
-  bot.reply(message,'Your message has been saved. Thank you.')
+  bot.replyPrivate(message,'Your message has been saved. Thank you.')
 });
 
 controller.on('slash_command', function(bot,message) {
