@@ -130,7 +130,7 @@ controller.on('slash_command', function(bot,message) {
   data.app_group_name   = message.team_domain;
 
 
-  bot.reply(message, 'Your message has been saved. Thank you.');
+  bot.replyPrivate(message, 'Your message has been saved. Thank you.');
   savekopy(data);
 });
 
