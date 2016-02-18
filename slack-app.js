@@ -84,7 +84,7 @@ controller.on('create_bot', function(bot,config) {
           console.log(err);
         } else {
           convo.say("Hi, I'm kopy!");
-          convo.say("Use me or /kopy command to save important notes for later");
+          convo.say("Use me or /kopy command to save important notes for later :sun_with_face:");
         }
       });
 
@@ -105,7 +105,7 @@ controller.on('rtm_close', function(bot) {
 // give the bot something to listen for.
 controller.hears(
   ["keyword",".*"],
-  ["direct_message", "direct_mention", "mention", "ambient"],function(bot, message) {
+  ["direct_message", "direct_mention", "mention", "message_received"],function(bot, message) {
   var data = {};
 
   data.user_id        = message.user;
@@ -132,7 +132,7 @@ controller.on('slash_command', function(bot,message) {
   data.app_group_name   = message.team_domain;
 
 
-  bot.replyPrivate(message, 'Message saved - ' + message.text);
+  bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
   savekopy(data);
 });
 
