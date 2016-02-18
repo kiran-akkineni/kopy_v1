@@ -83,8 +83,8 @@ controller.on('create_bot', function(bot,config) {
         if (err) {
           console.log(err);
         } else {
-          convo.say('I am the kopy, just joined your team');
-          convo.say('You must now /invite me to a channel so that I can be of use!');
+          convo.say("Hi, I'm kopy!");
+          convo.say("Use me or /kopy command to save important notes for later");
         }
       });
 
@@ -103,7 +103,9 @@ controller.on('rtm_close', function(bot) {
 });
 
 // give the bot something to listen for.
-controller.hears('','direct_message,direct_mention,mention',function(bot, message) {
+controller.hears(
+  ["keyword",".*"],
+  ["direct_message", "direct_mention", "mention", "ambient"],function(bot, message) {
   var data = {};
 
   data.user_id        = message.user;
