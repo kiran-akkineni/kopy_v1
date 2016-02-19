@@ -119,13 +119,13 @@ controller.hears(
     savekopy(data);
   });
 
-  bot.replyPrivate(message,'Message saved - ' + message.text);
+  bot.replyPrivate(message,'Got it, boss :memo: :notebook_with_decorative_cover: - ' + message.text);
 });
 
 controller.on('slash_command', function(bot,message) {
   var data = {};
 
-  data.user_id          = message. user_id;
+  data.user_id          = message.user_id;
   data.message          = message.text;
   data.app_name         = 'slack';
   data.app_user_name    = message.user_name;
@@ -148,6 +148,7 @@ function savekopy(data) {
 
     executeQuery(queryString);
 }
+
 
 function dbMigrate() {
     console.log('Migration started ...');
