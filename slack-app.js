@@ -120,7 +120,7 @@ controller.hears(
   });
 
   bot.startPrivateConversation(message,function(err,dm) {
-    dm.say('Got it, boss :memo: :notebook_with_decorative_cover: - ' + message.text);
+    dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
   });
 });
 
