@@ -119,7 +119,9 @@ controller.hears(
     savekopy(data);
   });
 
-  bot.replyPrivate(message,'Got it, boss :memo: :notebook_with_decorative_cover: - ' + message.text);
+  bot.startPrivateConversation(message,function(err,dm) {
+    dm.say('Got it, boss :memo: :notebook_with_decorative_cover: - ' + message.text);
+  });
 });
 
 controller.on('slash_command', function(bot,message) {
