@@ -104,7 +104,7 @@ controller.on('rtm_close', function(bot) {
 
 // give the bot something to listen for.
 controller.hears(
-  ["keyword","\w[^kopylist]"],
+  ["keyword",".*","[^kopylist]"],
   ["direct_message", "direct_mention", "mention", "message_received"],function(bot, message) {
   var data = {};
 
