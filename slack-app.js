@@ -6,11 +6,13 @@
 
 // required libraries
 global.base_path    = __dirname;
-global.moduleLoader = require(base_path + '/moduleLoader.js');
+global.Config       = {};
+global.ModuleLoader = require(base_path + '/moduleLoader.js');
+
+var slackModel      = ModuleLoader.model('slack');
 
 var Botkit          = require('botkit');
-var pg              = require('pg');
-var util            = require('util');
+
 
 
 
@@ -18,15 +20,18 @@ var util            = require('util');
 
 
 //Inputs from Slack
-var clientId      = process.env.CLIENT_ID     || '19936248482.21489538647';
-var clientSecret  = process.env.CLIENT_SECRET || 'c71c603cf8fce0c4d840ad9ca794c9c3';
+Config.clientId      = process.env.CLIENT_ID     || '19936248482.21489538647';
+Config.clientSecret  = process.env.CLIENT_SECRET || 'c71c603cf8fce0c4d840ad9ca794c9c3';
 
 //Database inputs
-var port          = process.env.PORT          || 5000;
-var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
+Config.port          = process.env.PORT          || 5000;
+Config.conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
+
+Config.username      = process.env.USERNAME      || "kopychat@gmail.com ";
+Config.password      = process.env.PGPASSWORD    || "slashkopy";
 
 //Calling function to create database tables
-dbMigrate();
+slackModel.dbMigrate();
 
 
 require(base_path + '/src/hangouts.js');
@@ -149,54 +154,3 @@ controller.on('slash_command', function(bot,message) {
 });
 
 
-function savekopy(data) {
-
-  var queryString = util.format("INSERT INTO messages (user_id,message,app_name,app_user_name,app_group_name) VALUES ('%s','%s','%s','%s','%s')",
-                                 data.user_id,
-                                 data.message,
-                                 data.app_name,
-                                 data.app_user_name,
-                                 data.app_group_name);
-
-    executeQuery(queryString);
-}
-
-
-function dbMigrate() {
-    console.log('Migration started ...');
-
-    var query = "CREATE TABLE IF NOT EXISTS messages (ID bigserial PRIMARY KEY, " +
-                "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
-                "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
-                "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
-
-    executeQuery(query);
-    console.log('Migration Ended');
-
-}
-//DB query function
-function executeQuery(queryString) {
-    // Get a Postgres client from the connection pool
-    pg.connect(conString, function(err, client, done) {
-        // Handle conString errors
-        if(err) {
-          done();
-          console.log(err);
-          return false;
-        }
-
-        // SQL Query > Insert Data
-        var query = client.query(queryString);
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            console.log(row)
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return true;
-        });
-    });
-}
