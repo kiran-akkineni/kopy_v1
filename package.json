@@ -27,6 +27,7 @@
   "homepage": "https://github.com/kiran-akkineni/kopy_v1#readme",
   "dependencies": {
     "botkit": "0.0.5",
+    "hangouts-bot": "^0.2.1",
     "pg": "^4.4.4",
     "util": "^0.10.3"
   }

@@ -5,9 +5,17 @@
 "use strict";
 
 // required libraries
-var Botkit  = require('botkit');
-var pg      = require('pg');
-var util    = require('util');
+global.base_path    = __dirname;
+global.moduleLoader = require(base_path + '/moduleLoader.js');
+
+var Botkit          = require('botkit');
+var pg              = require('pg');
+var util            = require('util');
+
+
+
+
+
 
 //Inputs from Slack
 var clientId      = process.env.CLIENT_ID     || '19936248482.21489538647';
@@ -20,6 +28,8 @@ var conString     = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5
 //Calling function to create database tables
 dbMigrate();
 
+
+require(base_path + '/src/hangouts.js');
 //Set debug to false
 var controller = Botkit.slackbot({
   debug: false
