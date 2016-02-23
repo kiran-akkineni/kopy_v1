@@ -11,7 +11,7 @@ global.Config         = {};
 global.ModuleLoader   = require(base_path + '/src/library/moduleLoader.js');
 
 var Botkit            = require('botkit');
-var hangoutsBot       = require("hangouts-bot");
+var hangoutsBot       = require('hangouts-bot');
 
 //Inputs from Slack
 Config.clientId       = process.env.CLIENT_ID     || '19936248482.21489538647';
@@ -23,8 +23,8 @@ Config.conString      = process.env.DATABASE_URL  || 'postgres://vagrant@localho
 Config.redirect_uri   = process.env.REDIRECT_URI  || 'https://kopychat.heroku.com';
 
 //hangouts
-Config.username       = process.env.USERNAME      || "kopychat@gmail.com";
-Config.password       = process.env.PGPASSWORD    || "slashkopy0";
+Config.username       = process.env.USERNAME      || 'kopychat@gmail.com';
+Config.password       = process.env.PGPASSWORD    || 'slashkopy0';
 
 
 
