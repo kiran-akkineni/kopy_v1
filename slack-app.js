@@ -22,6 +22,7 @@ Config.port           = process.env.PORT          || 5000;
 Config.conString      = process.env.DATABASE_URL  || 'postgres://vagrant@localhost:5432/vagrant';
 Config.redirect_uri   = process.env.REDIRECT_URI  || 'https://kopychat.heroku.com';
 
+//hangouts
 Config.username       = process.env.USERNAME      || "kopychat@gmail.com";
 Config.password       = process.env.PGPASSWORD    || "slashkopy0";
 
