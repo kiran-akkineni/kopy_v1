@@ -16,6 +16,11 @@ module.exports =  function(hangoutsBot)  {
         console.log(bot);
         console.log(from);
         console.log(from + ">> " + message);
+        var data = {};
+
+        data.user        = from;
+        data.message     = message;
+        data.app_name    = 'hangouts';
     })
 };
 
