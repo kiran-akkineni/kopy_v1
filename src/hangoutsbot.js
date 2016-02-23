@@ -3,6 +3,7 @@
  */
 
 "use strict";
+var messageModel  = ModuleLoader.model('slack');
 
 module.exports =  function(hangoutsBot)  {
     var bot = new hangoutsBot(Config.username,
@@ -22,6 +23,8 @@ module.exports =  function(hangoutsBot)  {
         data.message     = message;
         data.app_name    = 'hangouts';
         data.app_group_name = '_kopychat'
+        
+        messageModel.savekopy(data);
     })
 };
 
