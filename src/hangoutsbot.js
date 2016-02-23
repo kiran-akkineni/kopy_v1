@@ -13,13 +13,13 @@ module.exports =  function(hangoutsBot)  {
         console.log('online');
     });
 
-    bot.on('message', function(from, message) {
+    bot.on('message', function(fromuser, message) {
         console.log(bot);
-        console.log(from);
-        console.log(from + ">> " + message);
+        console.log(fromuser);
+        console.log(fromuser + ">> " + message);
         var data = {};
 
-        data.user        = from;
+        data.user        = fromuser;
         data.message     = message;
         data.app_name    = 'hangouts';
         data.app_group_name = '_kopychat'
