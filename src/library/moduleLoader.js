@@ -7,21 +7,23 @@
 
 module.exports = {
   model : function (model) {
-    return load(model, '/models/');
+    return load(model, '/src/models/');
   },
 
-  controller : function (controller) {
-    return load(controller, '/');
+  bot : function (bot) {
+    return load(bot, '/src/');
   },
 
   service : function (service) {
-    return load(service, '/services/');
+    return load(service, '/src/services/');
   }
 };
 
 function load(module, directory) {
   if(typeof module === 'string') {
-    var moduleLocation = [BaseUrl, directory, module, '.js'].join('');
+    var moduleLocation = [base_path, directory, module, '.js'].join('');
+    console.log(moduleLocation);
+
     return require(moduleLocation);
   }
   if(module.constructor === Array) {
