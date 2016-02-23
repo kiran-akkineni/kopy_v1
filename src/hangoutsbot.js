@@ -19,8 +19,8 @@ module.exports =  function(hangoutsBot)  {
         console.log(from + ">> " + message);
         var data = {};
 
-        data.user        = message.from;
-        data.message     = message.message;
+        data.user        = from;
+        data.message     = message;
         data.app_name    = 'hangouts';
         data.app_group_name = '_kopychat'
         
