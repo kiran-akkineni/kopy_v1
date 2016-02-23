@@ -4,8 +4,8 @@
 
 "use strict";
 
-var pg              = require('pg');
-var util            = require('util');
+var pg    = require('pg');
+var util  = require('util');
 
 module.exports = {
 
