@@ -1,10 +1,8 @@
-
 /**
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
 
 'use strict';
-
 module.exports = {
   model : function (model) {
     return load(model, '/src/models/');
@@ -29,7 +27,6 @@ function load(module, directory) {
   if(module.constructor === Array) {
     return console.log('yup it\'s an array');
   }
-
-}
+};
 
 
