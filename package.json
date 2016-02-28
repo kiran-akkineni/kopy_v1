@@ -4,7 +4,9 @@
   "description": "Save notes from messaging apps",
   "main": "slack-app.js",
   "scripts": {
-    "start": "node server/slack-app.js"
+    "start": "node server/slack-app.js",
+    "build": "tsc -w",
+    "postinstall": "typings install && tsc"
   },
   "repository": {
     "type": "git",
@@ -26,21 +28,22 @@
   },
   "homepage": "https://github.com/kiran-akkineni/kopy_v1#readme",
   "dependencies": {
-    "botkit": "0.0.5",
-    "hangouts-bot": "^0.2.1",
-    "pg": "^4.4.4",
-    "util": "^0.10.3",
     "angular2": "2.0.0-beta.7",
-    "systemjs": "0.19.22",
+    "botkit": "0.0.5",
+    "cookie-parser": "^1.4.1",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
+    "hangouts-bot": "^0.2.1",
+    "pg": "^4.4.4",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2"
+    "rxjs": "5.0.0-beta.2",
+    "systemjs": "0.19.22",
+    "util": "^0.10.3"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.1.0",
     "typescript": "^1.7.5",
-    "typings":"^0.6.8"
+    "typings": "^0.6.8"
   }
 }
