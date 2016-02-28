@@ -5,17 +5,18 @@
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
-    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="es6-shim/es6-shim.min.js"></script>
+    <script src="systemjs/dist/system-polyfills.js"></script>
 
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="angular2/bundles/angular2-polyfills.js"></script>
+    <script src="systemjs/dist/system.src.js"></script>
+    <script src="rxjs/bundles/Rx.js"></script>
+    <script src="angular2/bundles/angular2.dev.js"></script>
 
     <!-- 2. Configure SystemJS -->
-    <script>
+     <script>
       System.config({
+        defaultJSExtensions: true,
         packages: {
           app: {
             format: 'register',
@@ -23,7 +24,7 @@
           }
         }
       });
-      System.import('app/main')
+      System.import('main')
             .then(null, console.error.bind(console));
     </script>
 
