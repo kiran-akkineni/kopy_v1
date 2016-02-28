@@ -4,6 +4,9 @@
 
 "use strict";
 var slackModel  = ModuleLoader.model('slack');
+var express     = require('express');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 module.exports =  function(Botkit)  {
     //Set debug to false
@@ -34,6 +37,16 @@ module.exports =  function(Botkit)  {
       webserver.get('/heartbeat',function(req,res) {
         res.send('OK');
       });
+
+
+        //serving static
+        webserver.use(express.static("./node_modules/"));
+        webserver.use(express.static("./app/"));
+        webserver.use(bodyParser.urlencoded({ extended: false }));
+        webserver.use(cookieParser());
+        webserver.use(express.static('./public'));
+
+
 
       webserver.get('/app',function(req,res) {
         var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=19936248482.21489538647"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
