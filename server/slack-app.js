@@ -6,9 +6,10 @@
 
 // required libraries
 global.base_path      = __dirname;
+console.log(base_path);
 global.Config         = {};
 
-global.ModuleLoader   = require(base_path + '/src/library/moduleLoader.js');
+global.ModuleLoader   = require(base_path + '/library/moduleLoader.js');
 
 var Botkit            = require('botkit');
 var hangoutsBot       = require('hangouts-bot');

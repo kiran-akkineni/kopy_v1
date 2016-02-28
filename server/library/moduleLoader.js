@@ -5,15 +5,19 @@
 'use strict';
 module.exports = {
   model : function (model) {
-    return load(model, '/src/models/');
+    return load(model, '/models/');
   },
 
   bot : function (bot) {
-    return load(bot, '/src/');
+    return load(bot, '/bots/');
+  },
+
+  controller : function (controller) {
+    return load(controller, '/controllers/');
   },
 
   service : function (service) {
-    return load(service, '/src/services/');
+    return load(service, '/services/');
   }
 };
 
@@ -27,6 +31,6 @@ function load(module, directory) {
   if(module.constructor === Array) {
     return console.log('yup it\'s an array');
   }
-};
+}
 
 
