@@ -3,10 +3,10 @@
  */
 
 "use strict";
-var slackModel  = ModuleLoader.model('slack');
-var express     = require('express');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+var slackModel      = ModuleLoader.model('slack');
+var express         = require('express');
+var bodyParser      = require('body-parser');
+var cookieParser    = require('cookie-parser');
 
 module.exports =  function(Botkit)  {
     //Set debug to false
@@ -42,10 +42,10 @@ module.exports =  function(Botkit)  {
         //serving static
         webserver.use(express.static("./node_modules/"));
         webserver.use(express.static("./app/"));
+
         webserver.use(bodyParser.urlencoded({ extended: false }));
         webserver.use(cookieParser());
         webserver.use(express.static('./public'));
-
 
 
       webserver.get('/app',function(req,res) {
