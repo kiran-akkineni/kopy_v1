@@ -7,6 +7,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <!-- Setting the right viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <link rel="icon" href="../../favicon.ico">
 
     <title>kopy App</title>
@@ -20,6 +24,8 @@
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
 
+    <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
+
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
     <script src="es6-shim/es6-shim.min.js"></script>
@@ -29,6 +35,8 @@
     <script src="systemjs/dist/system.src.js"></script>
     <script src="rxjs/bundles/Rx.js"></script>
     <script src="angular2/bundles/angular2.dev.js"></script>
+
+    <!-- Auth0 Lock script -->
 
 
     <!-- 2. Configure SystemJS -->
@@ -40,6 +48,9 @@
             format: 'register',
             defaultExtension: 'js'
           }
+        },
+         map: {
+        "angular2-jwt": "angular2-jwt/angular2-jwt"
         }
       });
 
@@ -55,35 +66,6 @@
 
   <body>
     <kopy-app>
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
-          </div>
-          <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </nav>
-
-      <div class="container">
-
-        <div class="starter-template">
-          <h1>Bootstrap starter template</h1>
-          <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-        </div>
-
-      </div><!-- /.container -->
     </kopy-app>
 
     <!-- Bootstrap core JavaScript

@@ -1,0 +1,34 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Kopy App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <!--<li [class.active]="isActive('')"><a [routerLink]="['/Home']">Todo</a></li>-->
+                <!--<li [class.active]="isActive('/about/Hello world')"><a [routerLink]="['/About', {'id': 'Hello world'}]">About</a></li>-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <!--<li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['/Profile']">Profile</a></li>-->
+              <li><a href="#" *ngIf="!loggedIn()" (click)="login()">Login</a></li>
+              <li><a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+<div class="starter-template">
+  <h1>Bootstrap starter template</h1>
+  <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+</div>
+
+</div><!-- /.container -->
