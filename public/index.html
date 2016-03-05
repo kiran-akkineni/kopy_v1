@@ -17,27 +17,18 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
 
+
+    <!-- Auth0 Lock script -->
     <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
 
     <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
-    <script src="es6-shim/es6-shim.min.js"></script>
-    <script src="systemjs/dist/system-polyfills.js"></script>
-
     <script src="angular2/bundles/angular2-polyfills.js"></script>
     <script src="systemjs/dist/system.src.js"></script>
-    <script src="rxjs/bundles/Rx.js"></script>
-    <script src="angular2/bundles/angular2.dev.js"></script>
-
-    <!-- Auth0 Lock script -->
-
 
     <!-- 2. Configure SystemJS -->
      <script>
@@ -50,7 +41,9 @@
           }
         },
          map: {
-        "angular2-jwt": "angular2-jwt/angular2-jwt"
+           "angular2-jwt": "angular2-jwt/angular2-jwt",
+           "angular2": "angular2",
+           "rxjs": "rxjs"
         }
       });
 
@@ -66,6 +59,7 @@
 
   <body>
     <kopy-app>
+       <img src="loading.gif" alt="Smiley face"  style="display:block;margin: 0 auto;" >
     </kopy-app>
 
     <!-- Bootstrap core JavaScript
