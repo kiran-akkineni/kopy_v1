@@ -3,7 +3,8 @@ import {ROUTER_PROVIDERS, RouterOutlet, RouteConfig, RouterLink, Location} from 
 import {tokenNotExpired, JwtHelper} from 'angular2-jwt';
 import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
-import { Profile } from './components/profile/profile';
+import { Home }     from './components/home/home';
+import { Profile }  from './components/profile/profile';
 
 declare var Auth0Lock;
 
@@ -15,6 +16,7 @@ declare var Auth0Lock;
 	directives: [RouterOutlet, RouterLink]
 })
 @RouteConfig([
+     { path: '/', component: Home, as: 'Home' },
      { path: '/profile', component: Profile, as: 'Profile' }
 ])
 
