@@ -15,7 +15,7 @@
                 <!--<li [class.active]="isActive('/about/Hello world')"><a [routerLink]="['/About', {'id': 'Hello world'}]">About</a></li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <!--<li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['/Profile']">Profile</a></li>-->
+              <li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['/Profile']">Profile</a></li>
               <li><a href="#" *ngIf="!loggedIn()" (click)="login()">Login</a></li>
               <li><a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
             </ul>
@@ -25,10 +25,7 @@
 
 
 <div class="container">
-
-<div class="starter-template">
-  <h1>Bootstrap starter template</h1>
-  <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-</div>
-
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
 </div><!-- /.container -->
