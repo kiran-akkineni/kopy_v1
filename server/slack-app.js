@@ -6,7 +6,6 @@
 
 // required libraries
 global.base_path      = __dirname;
-console.log(base_path);
 global.Config         = {};
 
 global.ModuleLoader   = require(base_path + '/library/moduleLoader.js');
