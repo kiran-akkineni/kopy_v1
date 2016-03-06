@@ -1,10 +1,10 @@
 import {Component, View} from 'angular2/core';
 
 @Component({
-	selector: 'Home'
+	selector: 'home'
 })
 @View({
-	template: `hELLO WORLD`
+	templateUrl: './components/home/home.html'
 })
 
 export class Home {

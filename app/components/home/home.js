@@ -21,10 +21,10 @@ System.register(['angular2/core'], function(exports_1) {
                 }
                 Home = __decorate([
                     core_1.Component({
-                        selector: 'Home'
+                        selector: 'home'
                     }),
                     core_1.View({
-                        template: "hELLO WORLD"
+                        templateUrl: './components/home/home.html'
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Home);

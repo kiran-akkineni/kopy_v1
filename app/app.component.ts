@@ -5,6 +5,7 @@ import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
 import { Home }     from './components/home/home';
 import { Profile }  from './components/profile/profile';
+import { Note }     from './components/Note/note';
 
 declare var Auth0Lock;
 
@@ -16,8 +17,9 @@ declare var Auth0Lock;
 	directives: [RouterOutlet, RouterLink]
 })
 @RouteConfig([
-     { path: '/', component: Home, as: 'Home' },
-     { path: '/profile', component: Profile, as: 'Profile' }
+     { path: '/home', name: 'Home',  component: Home, useAsDefault: true},
+     { path: '/note', name: 'Note',  component: Note},
+     { path: '/profile', name: 'Profile', component: Profile}
 ])
 
 export class AppComponent {
