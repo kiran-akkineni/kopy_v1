@@ -13,7 +13,7 @@ declare var Auth0Lock;
 	 selector: 'kopy-app'
 })
 @View({
-	templateUrl: './main.html',
+	templateUrl: './layout.html',
 	directives: [RouterOutlet, RouterLink]
 })
 @RouteConfig([

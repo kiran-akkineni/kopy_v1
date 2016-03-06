@@ -66,7 +66,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                         selector: 'kopy-app'
                     }),
                     core_1.View({
-                        templateUrl: './main.html',
+                        templateUrl: './layout.html',
                         directives: [router_1.RouterOutlet, router_1.RouterLink]
                     }),
                     router_1.RouteConfig([

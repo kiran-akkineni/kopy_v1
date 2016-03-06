@@ -11,18 +11,17 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li [class.active]="isActive('/')"><a [routerLink]="['/Home']">Home</a></li>
-                <li *ngIf="loggedIn()" [class.active]="isActive('/Task')"><a [routerLink]="['/Task']">Task</a></li>
+                <li [class.active]="isActive('/')"><a [routerLink]="['Home']">Home</a></li>
+                <li *ngIf="loggedIn()" [class.active]="isActive('/note')"><a [routerLink]="['Note']">Task</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['/Profile']">Profile</a></li>
+              <li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['Profile']">Profile</a></li>
               <li><a href="#" *ngIf="!loggedIn()" (click)="login()">Login</a></li>
               <li><a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
-
 
 
 <div class="container">
