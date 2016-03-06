@@ -5,7 +5,7 @@ import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
 import { Home }     from './components/home/home';
 import { Profile }  from './components/profile/profile';
-import { Note }     from './components/Note/note';
+import { Note }     from './components/note/note';
 
 declare var Auth0Lock;
 
