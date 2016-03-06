@@ -3,10 +3,10 @@ import {CanActivate} from 'angular2/router';
 import {tokenNotExpired} from 'angular2-jwt';
 
 @Component({
-	selector: 'Note'
+	selector: 'note'
 })
 @View({
-	template: `hELLO WORLD`
+	templateUrl: './components/note/note.html'
 })
 @CanActivate(() => tokenNotExpired())
 export class Note {

@@ -70,7 +70,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                         directives: [router_1.RouterOutlet, router_1.RouterLink]
                     }),
                     router_1.RouteConfig([
-                        { path: '/home', name: 'Home', component: home_1.Home, useAsDefault: true },
+                        { path: '/', name: 'Home', component: home_1.Home, useAsDefault: true },
                         { path: '/note', name: 'Note', component: note_1.Note },
                         { path: '/profile', name: 'Profile', component: profile_1.Profile }
                     ]), 

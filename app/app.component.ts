@@ -17,7 +17,7 @@ declare var Auth0Lock;
 	directives: [RouterOutlet, RouterLink]
 })
 @RouteConfig([
-     { path: '/home', name: 'Home',  component: Home, useAsDefault: true},
+     { path: '/', name: 'Home',  component: Home, useAsDefault: true},
      { path: '/note', name: 'Note',  component: Note},
      { path: '/profile', name: 'Profile', component: Profile}
 ])
