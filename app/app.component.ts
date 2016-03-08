@@ -1,7 +1,7 @@
-import {Component, View, bind} from 'angular2/core';
+import {Component, View, bind}                                             from 'angular2/core';
 import {ROUTER_PROVIDERS, RouterOutlet, RouteConfig, RouterLink, Location} from 'angular2/router';
-import {tokenNotExpired, JwtHelper} from 'angular2-jwt';
-import {LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {tokenNotExpired, JwtHelper}                                        from 'angular2-jwt';
+import {LocationStrategy, HashLocationStrategy}                            from 'angular2/router';
 
 import { Home }     from './components/home/home';
 import { Profile }  from './components/profile/profile';

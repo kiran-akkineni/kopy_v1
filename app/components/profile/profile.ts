@@ -1,7 +1,7 @@
-import {Component, View} from 'angular2/core';
-import {CanActivate} from 'angular2/router';
-import {tokenNotExpired} from 'angular2-jwt';
-import {AuthHttp} from 'angular2-jwt';
+import {Component, View}    from 'angular2/core';
+import {CanActivate}        from 'angular2/router';
+import {tokenNotExpired}    from 'angular2-jwt';
+import {AuthHttp}           from 'angular2-jwt';
 
 @Component({
 	selector: 'profile'
