@@ -47,10 +47,11 @@ module.exports =  function(Botkit)  {
         webserver.use(cookieParser());
         webserver.use(express.static('./public'));
 
-
-      webserver.get('/app',function(req,res) {
-        var html = '<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=19936248482.21489538647"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>';
-        res.send(html);
+      webserver.get('/message', function(req,res) {
+          slackModel.find(function(result) {
+            console.log(result);
+            res.json(result);
+        });
       });
 
       webserver.get('/migrate',function(req,res) {
