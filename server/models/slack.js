@@ -9,7 +9,9 @@ var util  = require('util');
 
 module.exports = {
 
-    query: function(queryString) {
+    query: function(queryString, cb) {
+        var results = [];
+
         // Get a Postgres client from the connection pool
         pg.connect(Config.conString, function(err, client, done) {
             // Handle conString errors
@@ -24,13 +26,17 @@ module.exports = {
 
             // Stream results back one row at a time
             query.on('row', function(row) {
-                console.log(row)
+                if(row){
+                    results.push(row);
+                }
+
             });
 
             // After all data is returned, close connection and return results
             query.on('end', function() {
-                done();
-                return true;
+                if(cb) {
+                    cb(results);
+                }
             });
         });
     },
@@ -45,7 +51,7 @@ module.exports = {
                                      data.app_group_name);
 
         var self = this;
-        self.query(queryString);
+        self.query(queryString, null);
     },
 
     migrate: function() {
@@ -57,8 +63,14 @@ module.exports = {
                           "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
         var self = this;
-        self.query(queryString);
+        self.query(queryString, null);
         console.log('Migration Ended');
+    },
+
+    find: function(cb) {
+        var queryString = "SELECT * FROM messages ORDER BY id ASC";
+        var self        = this;
+        self.query(queryString, cb);
     }
 };
 
