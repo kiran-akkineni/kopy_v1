@@ -6,19 +6,19 @@
             <div class="col-md-12 lead">Profile<hr></div>
           </div>
           <div class="row">
-			<div class="col-md-4 text-center">
-              <img class="img-circle avatar avatar-original" style="-webkit-user-select:none; display:block; margin:auto;" src="{{profile.picture}}">
+			<div class="col-md-4 text-left">
+              <img class="img-circle avatar avatar-original" style="-webkit-user-select:none;" src="{{profile.picture}}">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 text-right">
               <div class="row">
-                <div class="col-md-12">
-                  <h1 class="only-bottom-margin">{{profile.nickname}}</h1>
+                <div class="col-md-12 text-right">
+                  <h1 class="only-bottom-margin">{{profile.nickname.toUpperCase() }}</h1>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12 text-right">
                   <span class="text-muted">Email:</span> {{profile.email}}<br>
-                  <span class="text-muted">Birth date:</span>{{ profile.created_at}}<br>
+                  <span class="text-muted">Created Date:</span>{{ profile.created_at}}<br>
                   <br>
                 </div>
               </div>
