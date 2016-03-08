@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/Note/note'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, home_1, profile_1, note_1;
+    var core_1, router_1, angular2_jwt_1, home_1, profile_1, note_1, app_1;
     var AppComponent;
     return {
         setters:[
@@ -29,6 +29,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
             },
             function (note_1_1) {
                 note_1 = note_1_1;
+            },
+            function (app_1_1) {
+                app_1 = app_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -72,6 +75,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                     router_1.RouteConfig([
                         { path: '/', name: 'Home', component: home_1.Home, useAsDefault: true },
                         { path: '/note', name: 'Note', component: note_1.Note },
+                        { path: '/app', name: 'App', component: app_1.App },
                         { path: '/profile', name: 'Profile', component: profile_1.Profile }
                     ]), 
                     __metadata('design:paramtypes', [router_1.Location])

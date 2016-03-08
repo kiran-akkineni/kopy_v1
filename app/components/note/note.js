@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-jwt', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,40 +10,46 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, angular2_jwt_2;
-    var Profile;
+    var core_1, http_1, router_1, angular2_jwt_1;
+    var Note;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
             },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
-                angular2_jwt_2 = angular2_jwt_1_1;
-            }],
+            },
+            function (_1) {}],
         execute: function() {
-            Profile = (function () {
-                function Profile(authHttp) {
-                    this.authHttp = authHttp;
-                    this.profile = JSON.parse(localStorage.getItem('profile'));
+            Note = (function () {
+                function Note(http) {
+                    var _this = this;
+                    http.get('http://localhost:5000/message')
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (data) { _this.notes = data; }, function (err) { return console.error(err); }, function () { return console.log('done'); });
                 }
-                Profile = __decorate([
+                Note = __decorate([
                     core_1.Component({
-                        selector: 'profile'
+                        selector: 'note',
+                        viewProviders: [http_1.HTTP_PROVIDERS]
                     }),
                     core_1.View({
-                        template: "hELLO WORLD"
+                        templateUrl: './components/note/note.html'
                     }),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp])
-                ], Profile);
-                return Profile;
+                    __metadata('design:paramtypes', [http_1.Http])
+                ], Note);
+                return Note;
             }());
-            exports_1("Profile", Profile);
+            exports_1("Note", Note);
         }
     }
 });
-//# sourceMappingURL=profile.js.map
+//# sourceMappingURL=note.js.map
