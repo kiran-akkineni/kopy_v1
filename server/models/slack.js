@@ -18,7 +18,6 @@ module.exports = {
             if(err) {
               done();
               console.log(err);
-              return false;
             }
 
             // SQL Query > Insert Data

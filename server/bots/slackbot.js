@@ -39,17 +39,16 @@ module.exports =  function(Botkit)  {
       });
 
 
-        //serving static
-        webserver.use(express.static("./node_modules/"));
-        webserver.use(express.static("./app/"));
+     //serving static
+     webserver.use(express.static("./node_modules/"));
+     webserver.use(express.static("./app/"));
 
-        webserver.use(bodyParser.urlencoded({ extended: false }));
-        webserver.use(cookieParser());
-        webserver.use(express.static('./public'));
+     webserver.use(bodyParser.urlencoded({ extended: false }));
+     webserver.use(cookieParser());
+     webserver.use(express.static('./public'));
 
       webserver.get('/message', function(req,res) {
           slackModel.find(function(result) {
-            console.log(result);
             res.json(result);
         });
       });
