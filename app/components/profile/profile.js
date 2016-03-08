@@ -27,13 +27,14 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
                 function Profile(authHttp) {
                     this.authHttp = authHttp;
                     this.profile = JSON.parse(localStorage.getItem('profile'));
+                    console.log(this.profile);
                 }
                 Profile = __decorate([
                     core_1.Component({
                         selector: 'profile'
                     }),
                     core_1.View({
-                        template: "hELLO WORLD"
+                        templateUrl: './components/profile/profile.html'
                     }),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
                     __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp])

@@ -7,7 +7,7 @@ import {AuthHttp} from 'angular2-jwt';
 	selector: 'profile'
 })
 @View({
-	template: `hELLO WORLD`
+	templateUrl: './components/profile/profile.html'
 })
 @CanActivate(() => tokenNotExpired())
 export class Profile {
@@ -15,5 +15,6 @@ export class Profile {
 
   constructor(public authHttp: AuthHttp) {
     this.profile = JSON.parse(localStorage.getItem('profile'));
+      console.log(this.profile)
   }
 }

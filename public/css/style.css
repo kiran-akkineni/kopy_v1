@@ -5,3 +5,7 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+.navbar-footer {
+  border-color: #e7e7e7;
+}
