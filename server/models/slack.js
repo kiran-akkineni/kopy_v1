@@ -29,7 +29,6 @@ module.exports = {
                 if(row){
                     results.push(row);
                 }
-
             });
 
             // After all data is returned, close connection and return results

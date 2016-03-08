@@ -55,7 +55,7 @@ module.exports =  function(Botkit)  {
       });
 
       webserver.get('/migrate',function(req,res) {
-        dbMigrate();
+        slackModel.migrate();
         res.send('DB migration is done.');
       });
     });
