@@ -18,6 +18,7 @@ module.exports = {
             if(err) {
               done();
               console.log(err);
+              return false;
             }
 
             // SQL Query > Insert Data
@@ -35,6 +36,7 @@ module.exports = {
                 if(cb) {
                     cb(results);
                 }
+                return true;
             });
         });
     },
