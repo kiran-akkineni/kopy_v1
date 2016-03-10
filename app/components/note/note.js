@@ -1,4 +1,6 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-jwt', 'rxjs/add/operator/map'], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-jwt', './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, angular2_jwt_1;
+    var core_1, http_1, router_1, angular2_jwt_1, app_setting_1;
     var Note;
     return {
         setters:[
@@ -24,12 +26,16 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
             },
+            function (app_setting_1_1) {
+                app_setting_1 = app_setting_1_1;
+            },
             function (_1) {}],
         execute: function() {
             Note = (function () {
                 function Note(http) {
                     var _this = this;
-                    http.get('http://localhost:5000/message')
+                    var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/message/";
+                    http.get(NoteRequestUrl)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { _this.notes = data; }, function (err) { return console.error(err); }, function () { return console.log('done'); });
                 }
@@ -45,7 +51,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
                     __metadata('design:paramtypes', [http_1.Http])
                 ], Note);
                 return Note;
-            })();
+            }());
             exports_1("Note", Note);
         }
     }

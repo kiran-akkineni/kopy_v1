@@ -1,0 +1,1 @@
+{"version":3,"file":"app.setting.js","sourceRoot":"","sources":["app.setting.ts"],"names":["AppSettings","AppSettings.constructor","AppSettings.API_ENDPOINT"],"mappings":";;;;;YAAA;gBAAAA;gBAEAC,CAACA;gBADED,sBAAkBA,2BAAYA;yBAA9BA,cAA2CE,MAAMA,CAACA,6BAA6BA,CAACA,CAACA,CAACA;;;mBAAAF;gBACrFA,kBAACA;YAADA,CAACA,AAFD,IAEC;YAFD,qCAEC,CAAA"}
