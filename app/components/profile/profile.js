@@ -29,7 +29,6 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
                 function Profile(authHttp) {
                     this.authHttp = authHttp;
                     this.profile = JSON.parse(localStorage.getItem('profile'));
-                    console.log(this.profile);
                 }
                 Profile = __decorate([
                     core_1.Component({

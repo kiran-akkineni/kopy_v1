@@ -15,6 +15,5 @@ export class Profile {
 
   constructor(public authHttp: AuthHttp) {
     this.profile = JSON.parse(localStorage.getItem('profile'));
-      console.log(this.profile)
   }
 }
