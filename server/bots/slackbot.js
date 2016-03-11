@@ -57,6 +57,8 @@ module.exports =  function(Botkit)  {
       webserver.get('/message', function(req,res) {
 
           slackModel.find(function(result) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             res.json(result);
         });
       });
