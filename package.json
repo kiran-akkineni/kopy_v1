@@ -1,6 +1,9 @@
 {
   "name": "kopychat",
   "version": "1.0.0",
+  "engines": {
+    "node": "5.8.0"
+  },
   "description": "Save notes from messaging apps",
   "main": "slack-app.js",
   "scripts": {
