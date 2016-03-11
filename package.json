@@ -5,8 +5,8 @@
   "main": "slack-app.js",
   "scripts": {
     "start": "node server/slack-app.js",
-    "build": "tsc -w",
-    "postinstall": "typings install && tsc"
+    "build": "tsc -w"//,
+    //"postinstall": "typings install && tsc"
   },
   "repository": {
     "type": "git",
