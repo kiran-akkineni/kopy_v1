@@ -1,6 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +39,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
                     __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp])
                 ], Profile);
                 return Profile;
-            }());
+            })();
             exports_1("Profile", Profile);
         }
     }
