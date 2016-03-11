@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server/slack-app.js",
     "build": "tsc -w",
-    "postinstall": "typings install && tsc"
+    "postinstall": "npm run typings install && tsc"
   },
   "repository": {
     "type": "git",
