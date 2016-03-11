@@ -57,7 +57,7 @@ module.exports =  function(Botkit)  {
       webserver.get('/message', function(req,res) {
 
           slackModel.find(function(result) {
-            res.send(result);
+            res.json(result);
         });
       });
 

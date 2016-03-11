@@ -1,5 +1,5 @@
 import {Component, View, Inject}    	from 'angular2/core';
-import {Http, HTTP_PROVIDERS, Response} from 'angular2/http';
+import {Http, HTTP_PROVIDERS, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable} 					from 'rxjs/Rx';
 import {CanActivate} 					from 'angular2/router';
 import {tokenNotExpired} 				from 'angular2-jwt';
@@ -19,8 +19,11 @@ export class Note {
 	public notes;
 
 	 constructor(http:Http) {
+		 let headers  = new Headers({ 'Content-Type': 'application/json' });
+		 let options  = new RequestOptions({ headers: headers });
+
 		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/message/";
-		 http.get(NoteRequestUrl)
+		 http.get(NoteRequestUrl, options)
 		     .map((res:Response) => res.json())
       		 .subscribe(
         		data	 => { this.notes = data},
