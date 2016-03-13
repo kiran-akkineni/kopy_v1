@@ -144,6 +144,6 @@ module.exports =  function(Botkit)  {
 
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
       slackModel.savekopy(data);
-    })
+    });
 };
 
