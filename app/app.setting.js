@@ -7,7 +7,7 @@ System.register([], function(exports_1) {
                 function AppSettings() {
                 }
                 Object.defineProperty(AppSettings, "API_ENDPOINT", {
-                    get: function () { return 'http://kopychat.heroku.com'; },
+                    get: function () { return 'https://kopychat.heroku.com'; },
                     enumerable: true,
                     configurable: true
                 });
