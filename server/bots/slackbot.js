@@ -43,6 +43,8 @@ module.exports =  function(Botkit)  {
      webserver.use(express.static("./node_modules/"));
      webserver.use(express.static("./app/"));
 
+
+     webserver.use(bodyParser.json());
      webserver.use(bodyParser.urlencoded({ extended: false }));
      webserver.use(cookieParser());
      webserver.use(express.static('./public'));
