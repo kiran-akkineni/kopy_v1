@@ -43,6 +43,7 @@ export class AppComponent {
           throw new Error(err);
         }
 
+          console.log(profile);
         localStorage.setItem('profile', JSON.stringify(profile));
         localStorage.setItem('id_token', id_token);
 

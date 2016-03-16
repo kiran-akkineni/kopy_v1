@@ -21,8 +21,6 @@ export class Note {
 	public notes;
 
 	 constructor(http:Http) {
-		 let headers  = new Headers({'Content-Type': 'application/json'});
-		 let options  = new RequestOptions({ headers: headers });
 
 		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/message";
 		 http.get(NoteRequestUrl)

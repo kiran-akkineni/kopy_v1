@@ -1,6 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -49,6 +47,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                         if (err) {
                             throw new Error(err);
                         }
+                        console.log(profile);
                         localStorage.setItem('profile', JSON.stringify(profile));
                         localStorage.setItem('id_token', id_token);
                         console.log(_this.jwtHelper.decodeToken(id_token), _this.jwtHelper.getTokenExpirationDate(id_token), _this.jwtHelper.isTokenExpired(id_token));
@@ -83,7 +82,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                     __metadata('design:paramtypes', [router_1.Location])
                 ], AppComponent);
                 return AppComponent;
-            }());
+            })();
             exports_1("AppComponent", AppComponent);
         }
     }

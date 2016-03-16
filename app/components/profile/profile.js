@@ -1,6 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, angular2_jwt_2;
+    var core_1, router_1, angular2_jwt_1;
     var Profile;
     return {
         setters:[
@@ -22,7 +20,6 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
             },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
-                angular2_jwt_2 = angular2_jwt_1_1;
             }],
         execute: function() {
             Profile = (function () {
@@ -38,10 +35,10 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
                         templateUrl: './components/profile/profile.html'
                     }),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
                 ], Profile);
                 return Profile;
-            }());
+            })();
             exports_1("Profile", Profile);
         }
     }
