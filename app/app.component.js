@@ -1,4 +1,6 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './app.setting'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, home_1, profile_1, note_1, app_1;
+    var core_1, router_1, angular2_jwt_1, home_1, profile_1, note_1, app_1, app_setting_1;
     var AppComponent;
     return {
         setters:[
@@ -32,11 +34,14 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
             },
             function (app_1_1) {
                 app_1 = app_1_1;
+            },
+            function (app_setting_1_1) {
+                app_setting_1 = app_setting_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
                 function AppComponent(location) {
-                    this.lock = new Auth0Lock('NP6xIevUidzEWHmBDvBlhzjWlMCibg4l', 'kopy.auth0.com');
+                    this.lock = new Auth0Lock(app_setting_1.AppSettings.AUTH_CLIRNT_ID, app_setting_1.AppSettings.AUTH_APP_URL);
                     this.jwtHelper = new angular2_jwt_1.JwtHelper();
                     this.location = location;
                 }
@@ -82,7 +87,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                     __metadata('design:paramtypes', [router_1.Location])
                 ], AppComponent);
                 return AppComponent;
-            })();
+            }());
             exports_1("AppComponent", AppComponent);
         }
     }

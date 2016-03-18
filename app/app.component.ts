@@ -1,12 +1,14 @@
-import {Component, View, bind}                                             from 'angular2/core';
-import {ROUTER_PROVIDERS, RouterOutlet, RouteConfig, RouterLink, Location} from 'angular2/router';
-import {tokenNotExpired, JwtHelper}                                        from 'angular2-jwt';
-import {LocationStrategy, HashLocationStrategy}                            from 'angular2/router';
+import {Component, View, bind}                      from 'angular2/core';
+import {ROUTER_PROVIDERS, RouterOutlet,
+        RouteConfig, RouterLink, Location}          from 'angular2/router';
+import {tokenNotExpired, JwtHelper}                 from 'angular2-jwt';
+import {LocationStrategy, HashLocationStrategy}     from 'angular2/router';
 
-import { Home }     from './components/home/home';
-import { Profile }  from './components/profile/profile';
-import { Note }     from './components/note/note';
-import { App }      from './components/app/app';
+import { Home }                                     from './components/home/home';
+import { Profile }                                  from './components/profile/profile';
+import { Note }                                     from './components/note/note';
+import { App }                                      from './components/app/app';
+import {AppSettings} 					            from './app.setting';
 
 declare var Auth0Lock;
 
@@ -25,8 +27,8 @@ declare var Auth0Lock;
 ])
 
 export class AppComponent {
-    lock  = new  Auth0Lock('NP6xIevUidzEWHmBDvBlhzjWlMCibg4l',
-                           'kopy.auth0.com');
+    lock  = new  Auth0Lock(AppSettings.AUTH_CLIRNT_ID,
+                           AppSettings.AUTH_APP_URL);
 
     jwtHelper: JwtHelper = new JwtHelper();
 
