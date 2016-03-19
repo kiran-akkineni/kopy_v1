@@ -3,12 +3,16 @@ import {ROUTER_PROVIDERS, RouterOutlet,
         RouteConfig, RouterLink, Location}          from 'angular2/router';
 import {tokenNotExpired, JwtHelper}                 from 'angular2-jwt';
 import {LocationStrategy, HashLocationStrategy}     from 'angular2/router';
+import {Http, Headers, HTTP_PROVIDERS}              from 'angular2/http';
 
 import { Home }                                     from './components/home/home';
 import { Profile }                                  from './components/profile/profile';
 import { Note }                                     from './components/note/note';
 import { App }                                      from './components/app/app';
-import {AppSettings} 					            from './app.setting';
+import { User }                                     from './components/user/user';
+import { AppSettings } 					            from './app.setting';
+
+import 'rxjs/add/operator/map';
 
 declare var Auth0Lock;
 
@@ -27,13 +31,15 @@ declare var Auth0Lock;
 ])
 
 export class AppComponent {
-    lock  = new  Auth0Lock(AppSettings.AUTH_CLIRNT_ID,
-                           AppSettings.AUTH_APP_URL);
+    lock                 = new  Auth0Lock(AppSettings.AUTH_CLIRNT_ID,
+                                          AppSettings.AUTH_APP_URL);
 
+    user                 = new User();
     jwtHelper: JwtHelper = new JwtHelper();
 
     location: Location;
-    constructor(location: Location) {
+
+    constructor(location: Location, public http: Http) {
             this.location = location;
     }
 
@@ -44,10 +50,12 @@ export class AppComponent {
         if (err) {
           throw new Error(err);
         }
-
-          console.log(profile);
         localStorage.setItem('profile', JSON.stringify(profile));
         localStorage.setItem('id_token', id_token);
+
+        this.user.saveUser(this.http, profile);
+
+
 
         console.log(
           this.jwtHelper.decodeToken(id_token),

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './app.setting'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/http', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './components/user/user', './app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, home_1, profile_1, note_1, app_1, app_setting_1;
+    var core_1, router_1, angular2_jwt_1, http_1, home_1, profile_1, note_1, app_1, user_1, app_setting_1;
     var AppComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
             },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (home_1_1) {
                 home_1 = home_1_1;
@@ -35,13 +38,19 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
             function (app_1_1) {
                 app_1 = app_1_1;
             },
+            function (user_1_1) {
+                user_1 = user_1_1;
+            },
             function (app_setting_1_1) {
                 app_setting_1 = app_setting_1_1;
-            }],
+            },
+            function (_1) {}],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(location) {
+                function AppComponent(location, http) {
+                    this.http = http;
                     this.lock = new Auth0Lock(app_setting_1.AppSettings.AUTH_CLIRNT_ID, app_setting_1.AppSettings.AUTH_APP_URL);
+                    this.user = new user_1.User();
                     this.jwtHelper = new angular2_jwt_1.JwtHelper();
                     this.location = location;
                 }
@@ -52,9 +61,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                         if (err) {
                             throw new Error(err);
                         }
-                        console.log(profile);
                         localStorage.setItem('profile', JSON.stringify(profile));
                         localStorage.setItem('id_token', id_token);
+                        _this.user.saveUser(_this.http, profile);
                         console.log(_this.jwtHelper.decodeToken(id_token), _this.jwtHelper.getTokenExpirationDate(id_token), _this.jwtHelper.isTokenExpired(id_token));
                         self.loggedIn();
                     });
@@ -84,7 +93,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', './componen
                         { path: '/app', name: 'App', component: app_1.App },
                         { path: '/profile', name: 'Profile', component: profile_1.Profile }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Location])
+                    __metadata('design:paramtypes', [router_1.Location, http_1.Http])
                 ], AppComponent);
                 return AppComponent;
             }());
