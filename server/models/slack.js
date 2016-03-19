@@ -67,7 +67,7 @@ module.exports = {
         self.query(queryString, null);
 
         //user table creation
-        var queryString = "CREATE TABLE IF NOT EXISTS user (ID bigserial PRIMARY KEY, " +
+        var queryString = "CREATE TABLE IF NOT EXISTS users (ID bigserial PRIMARY KEY, " +
                           "auth_user_id VARCHAR(200) null, auth_type VARCHAR(100) null, email VARCHAR(200) null," +
                           "name VARCHAR(300) null, create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 

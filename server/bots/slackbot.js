@@ -69,6 +69,29 @@ module.exports =  function(Botkit)  {
         slackModel.migrate();
         res.send('DB migration is done.');
       });
+
+      webserver.post('/user',function(req,res) {
+
+          var user          = {};
+          user.name         = req.body.name;
+          user.email        = req.body.email;
+          var auth          = req.body.user_id.split("|");
+          console.log(auth);
+          user.auth_type    = auth[0];
+          user.auth_user_id = (auth.length > 1)? auth[1]:'';
+
+          var userModel     = ModuleLoader.model('user');
+
+          userModel.findbyEmail(user.email, function (results) {
+              if (results.length > 0) {
+                    console.log('user already exit')
+              } else {
+                    userModel.save(user);
+              }
+          });
+
+          res.json({status: 'okay'});
+      });
     });
 
     // just a simple way to make sure we don't
