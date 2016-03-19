@@ -57,12 +57,20 @@ module.exports = {
     migrate: function() {
         console.log('Migration started ...');
 
+        var self        = this;
+        //note table creation
         var queryString = "CREATE TABLE IF NOT EXISTS messages (ID bigserial PRIMARY KEY, " +
                           "user_id VARCHAR(200) null, message TEXT null, app_name VARCHAR(100) null," +
                           "app_user_name VARCHAR(100) null, app_group_name VARCHAR(100) null, " +
                           "create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
-        var self = this;
+        self.query(queryString, null);
+
+        //user table creation
+        var queryString = "CREATE TABLE IF NOT EXISTS user (ID bigserial PRIMARY KEY, " +
+                          "auth_user_id VARCHAR(200) null, auth_type VARCHAR(100) null, email VARCHAR(200) null," +
+                          "name VARCHAR(300) null, create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
+
         self.query(queryString, null);
         console.log('Migration Ended');
     },
