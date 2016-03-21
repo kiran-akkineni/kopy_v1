@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/http', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './components/user/user', './app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/http', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './components/user/user', './components/setting/setting', './app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1, home_1, profile_1, note_1, app_1, user_1, app_setting_1;
+    var core_1, router_1, angular2_jwt_1, http_1, home_1, profile_1, note_1, app_1, user_1, setting_1, app_setting_1;
     var AppComponent;
     return {
         setters:[
@@ -40,6 +40,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
             },
             function (user_1_1) {
                 user_1 = user_1_1;
+            },
+            function (setting_1_1) {
+                setting_1 = setting_1_1;
             },
             function (app_setting_1_1) {
                 app_setting_1 = app_setting_1_1;
@@ -91,7 +94,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                         { path: '/', name: 'Home', component: home_1.Home, useAsDefault: true },
                         { path: '/note', name: 'Note', component: note_1.Note },
                         { path: '/app', name: 'App', component: app_1.App },
-                        { path: '/profile', name: 'Profile', component: profile_1.Profile }
+                        { path: '/profile', name: 'Profile', component: profile_1.Profile },
+                        { path: '/setting', name: 'Setting', component: setting_1.Setting }
                     ]), 
                     __metadata('design:paramtypes', [router_1.Location, http_1.Http])
                 ], AppComponent);

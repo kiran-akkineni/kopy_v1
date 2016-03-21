@@ -10,6 +10,7 @@ import { Profile }                                  from './components/profile/p
 import { Note }                                     from './components/note/note';
 import { App }                                      from './components/app/app';
 import { User }                                     from './components/user/user';
+import { Setting }                                  from './components/setting/setting';
 import { AppSettings } 					            from './app.setting';
 
 import 'rxjs/add/operator/map';
@@ -27,7 +28,8 @@ declare var Auth0Lock;
      { path: '/',           name: 'Home',    component: Home, useAsDefault: true},
      { path: '/note',       name: 'Note',    component: Note},
      { path: '/app',        name: 'App',     component: App},
-     { path: '/profile',    name: 'Profile', component: Profile}
+     { path: '/profile',    name: 'Profile', component: Profile},
+     { path: '/setting',    name: 'Setting', component: Setting}
 ])
 
 export class AppComponent {
