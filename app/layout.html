@@ -16,9 +16,15 @@
                 <li *ngIf="loggedIn()" [class.active]="isActive('/note')"><a [routerLink]="['Note']">Notes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['Profile']">Profile</a></li>
+              <li *ngIf="loggedIn()" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li *ngIf="loggedIn()" [class.active]="isActive('/setting')"><a [routerLink]="['Setting']">Setting</a></li>
+                    <li *ngIf="loggedIn()" [class.active]="isActive('/profile')"><a [routerLink]="['Profile']">Profile</a></li>
+                    <li><a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
+                  </ul>
+              </li>
               <li><a href="#" *ngIf="!loggedIn()" (click)="login()">Login</a></li>
-              <li><a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
             </ul>
         </div>
     </div>
