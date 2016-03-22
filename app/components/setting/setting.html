@@ -1,11 +1,17 @@
-<form [ng-form-model]="form">
+<form #configurationForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="exampleInputEmail1">Slack Company Name</label>
-    <input type="email" ng-control="company_name" class="form-control" id="exampleInputEmail1" placeholder="Email">
+    <input type="text" ngControl="company_name"
+           [(ngModel)]="configuration.company_name"
+           class="form-control" id="exampleInputEmail1" placeholder="Company Name"
+           required>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Slack Username</label>
-    <input type="password" ng-control="slack_username" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <input type="text" ngControl="slack_username"
+           [(ngModel)]="configuration.slack_username"
+           class="form-control" id="exampleInputPassword1" placeholder="Slack Username"
+           required>
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>

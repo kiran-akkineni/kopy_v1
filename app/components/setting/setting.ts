@@ -1,24 +1,32 @@
-import {FORM_DIRECTIVES, ControlGroup, Control,}              from 'angular2/common';
-import {Component, View}                                      from 'angular2/core';
+import {Component, OnInit}                                    from 'angular2/core';
 import {CanActivate}                                          from 'angular2/router';
 import {tokenNotExpired}                                      from 'angular2-jwt';
 import {Http}                                                 from "angular2/http";
+import {Configuration}                                        from './../../models/configuration';
 
 @Component({
 	selector: 'setting',
-    directives: [FORM_DIRECTIVES]
+    templateUrl: './components/setting/setting.html'
 })
-@View({
-	templateUrl: './components/setting/setting.html'
-})
+
 @CanActivate(() => tokenNotExpired())
-export class Setting {
+export class Setting implements OnInit
+{
+    configuration: Configuration;
     public http: Http;
-    settingForm  = new ControlGroup({
-        company_name    : new Control(),
-        slack_username  : new Control()});
+
 
   constructor(http:Http) {
       this.http = http;
+
+  }
+
+    ngOnInit() {
+        this.configuration = {company_name:"", slack_username:""};
+    }
+
+
+  onSubmit(){
+      console.log(this.configuration);
   }
 }

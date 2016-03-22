@@ -1,4 +1,4 @@
-System.register(['angular2/common', 'angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,13 +10,10 @@ System.register(['angular2/common', 'angular2/core', 'angular2/router', 'angular
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var common_1, core_1, router_1, angular2_jwt_1, http_1;
+    var core_1, router_1, angular2_jwt_1, http_1;
     var Setting;
     return {
         setters:[
-            function (common_1_1) {
-                common_1 = common_1_1;
-            },
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -32,17 +29,17 @@ System.register(['angular2/common', 'angular2/core', 'angular2/router', 'angular
         execute: function() {
             Setting = (function () {
                 function Setting(http) {
-                    this.settingForm = new common_1.ControlGroup({
-                        company_name: new common_1.Control(),
-                        slack_username: new common_1.Control() });
                     this.http = http;
                 }
+                Setting.prototype.ngOnInit = function () {
+                    this.configuration = { company_name: "", slack_username: "" };
+                };
+                Setting.prototype.onSubmit = function () {
+                    console.log(this.configuration);
+                };
                 Setting = __decorate([
                     core_1.Component({
                         selector: 'setting',
-                        directives: [common_1.FORM_DIRECTIVES]
-                    }),
-                    core_1.View({
                         templateUrl: './components/setting/setting.html'
                     }),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 

@@ -1,5 +1,5 @@
 import {AppSettings} 			 from './../../app.setting';
-import {Headers} from 'angular2/http';
+import {Headers}                 from 'angular2/http';
 import 'rxjs/add/operator/map';
 
 
