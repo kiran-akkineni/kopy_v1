@@ -52,6 +52,6 @@ export class Setting implements OnInit
                  );
 
         //redirect note page
-        this.router.navigate(['Note']);
+        //this.router.navigate(['Note']);
     }
 }

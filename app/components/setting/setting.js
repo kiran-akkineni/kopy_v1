@@ -54,7 +54,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { data = _this.data; }, function (err) { return console.log(err); }, function () { return console.log('mapping is done'); });
                     //redirect note page
-                    this.router.navigate(['Note']);
+                    //this.router.navigate(['Note']);
                 };
                 Setting = __decorate([
                     core_1.Component({
