@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http", './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1;
+    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1;
     var Setting;
     return {
         setters:[
@@ -25,7 +25,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             },
             function (http_1_1) {
                 http_1 = http_1_1;
-            }],
+            },
+            function (app_setting_1_1) {
+                app_setting_1 = app_setting_1_1;
+            },
+            function (_1) {}],
         execute: function() {
             Setting = (function () {
                 function Setting(http) {
@@ -35,7 +39,15 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                     this.configuration = { company_name: "", slack_username: "" };
                 };
                 Setting.prototype.onSubmit = function () {
-                    console.log(this.configuration);
+                    var _this = this;
+                    var profile = JSON.parse(localStorage.getItem('profile'));
+                    var creds = "email=" + profile.email + "&app_group_name=" + this.configuration.company_name + "&app_user_name=" + this.configuration.slack_username;
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    var userRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/user_note_map";
+                    this.http.post(userRequestUrl, creds, { headers: headers })
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (data) { data = _this.data; }, function (err) { return console.log(err); }, function () { return console.log('mapping is done'); });
                 };
                 Setting = __decorate([
                     core_1.Component({

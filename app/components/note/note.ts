@@ -21,8 +21,9 @@ export class Note {
 	public notes;
 
 	 constructor(http:Http) {
+		 let profile = JSON.parse(localStorage.getItem('profile'));
 
-		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/message";
+		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/message?email=" +profile.email;
 		 http.get(NoteRequestUrl)
 		     .map(res => res.json())
       		 .subscribe(
