@@ -5,13 +5,20 @@ import {Http, Headers}                                        from "angular2/htt
 import {Configuration}                                        from './../../models/configuration';
 import {AppSettings} 			                              from './../../app.setting';
 import {RouteConfig, Router, ROUTER_DIRECTIVES}               from 'angular2/router';
+import { Note }                                               from './../note/note';
 
 import 'rxjs/add/operator/map';
+
+
 
 @Component({
 	selector: 'setting',
     templateUrl: './components/setting/setting.html'
 })
+
+@RouteConfig([
+     { path: '/note',       name: 'Note',    component: Note},
+])
 
 @CanActivate(() => tokenNotExpired())
 export class Setting implements OnInit
@@ -44,6 +51,7 @@ export class Setting implements OnInit
                   () => console.log('mapping is done')
                  );
 
-        this.router.navigateByUrl(['/note']);
+        //redirect note page
+        this.router.navigate(['Note']);
     }
 }

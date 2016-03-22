@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http", './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http", './../../app.setting', './../note/note', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1, router_2;
+    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1, router_2, note_1;
     var Setting;
     return {
         setters:[
@@ -29,6 +29,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             },
             function (app_setting_1_1) {
                 app_setting_1 = app_setting_1_1;
+            },
+            function (note_1_1) {
+                note_1 = note_1_1;
             },
             function (_1) {}],
         execute: function() {
@@ -50,13 +53,17 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                     this.http.post(userRequestUrl, creds, { headers: headers })
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { data = _this.data; }, function (err) { return console.log(err); }, function () { return console.log('mapping is done'); });
-                    this.router.navigateByUrl(['/note']);
+                    //redirect note page
+                    this.router.navigate(['Note']);
                 };
                 Setting = __decorate([
                     core_1.Component({
                         selector: 'setting',
                         templateUrl: './components/setting/setting.html'
                     }),
+                    router_2.RouteConfig([
+                        { path: '/note', name: 'Note', component: note_1.Note },
+                    ]),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
                     __metadata('design:paramtypes', [http_1.Http, router_2.Router])
                 ], Setting);
