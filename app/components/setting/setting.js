@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http", './../../app.setting', './../note/note', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http", './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1, router_2, note_1;
+    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1;
     var Setting;
     return {
         setters:[
@@ -19,7 +19,6 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-                router_2 = router_1_1;
             },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
@@ -30,14 +29,10 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             function (app_setting_1_1) {
                 app_setting_1 = app_setting_1_1;
             },
-            function (note_1_1) {
-                note_1 = note_1_1;
-            },
             function (_1) {}],
         execute: function() {
             Setting = (function () {
-                function Setting(http, router) {
-                    this.router = router;
+                function Setting(http) {
                     this.http = http;
                 }
                 Setting.prototype.ngOnInit = function () {
@@ -61,11 +56,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                         selector: 'setting',
                         templateUrl: './components/setting/setting.html'
                     }),
-                    router_2.RouteConfig([
-                        { path: '/note', name: 'Note', component: note_1.Note },
-                    ]),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [http_1.Http, router_2.Router])
+                    __metadata('design:paramtypes', [http_1.Http])
                 ], Setting);
                 return Setting;
             }());

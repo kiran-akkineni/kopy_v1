@@ -4,8 +4,6 @@ import {tokenNotExpired}                                      from 'angular2-jwt
 import {Http, Headers}                                        from "angular2/http";
 import {Configuration}                                        from './../../models/configuration';
 import {AppSettings} 			                              from './../../app.setting';
-import {RouteConfig, Router, ROUTER_DIRECTIVES}               from 'angular2/router';
-import { Note }                                               from './../note/note';
 
 import 'rxjs/add/operator/map';
 
@@ -16,10 +14,6 @@ import 'rxjs/add/operator/map';
     templateUrl: './components/setting/setting.html'
 })
 
-@RouteConfig([
-     { path: '/note',       name: 'Note',    component: Note},
-])
-
 @CanActivate(() => tokenNotExpired())
 export class Setting implements OnInit
 {
@@ -27,7 +21,7 @@ export class Setting implements OnInit
     configuration: Configuration;
     public http: Http;
 
-    constructor(http:Http, private router: Router) {
+    constructor(http:Http) {
       this.http = http;
     }
 
