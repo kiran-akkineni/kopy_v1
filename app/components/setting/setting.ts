@@ -15,18 +15,15 @@ export class Setting implements OnInit
     configuration: Configuration;
     public http: Http;
 
-
-  constructor(http:Http) {
+    constructor(http:Http) {
       this.http = http;
-
-  }
+    }
 
     ngOnInit() {
         this.configuration = {company_name:"", slack_username:""};
     }
 
-
-  onSubmit(){
+    onSubmit(){
       console.log(this.configuration);
-  }
+    }
 }
