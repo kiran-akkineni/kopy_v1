@@ -53,8 +53,25 @@ module.exports = {
         self.query(queryString, null);
     },
 
-    findbyEmail: function(email, cb) {
+    userNoteSave: function(data) {
+
+      var queryString = util.format("INSERT INTO user_note (email, app_group_name, app_user_name) VALUES ('%s','%s','%s')",
+                                     data.email,
+                                     data.app_group_name,
+                                     data.app_user_name);
+
+        var self = this;
+        self.query(queryString, null);
+    },
+
+    findUserbyEmail: function(email, cb) {
         var queryString = "SELECT * FROM users where email='" + email + "'";
+        var self        = this;
+        self.query(queryString, cb);
+    },
+
+    findMapbyEmail: function(email, cb) {
+        var queryString = "SELECT * FROM user_note where email='" + email + "'";
         var self        = this;
         self.query(queryString, cb);
     }

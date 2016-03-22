@@ -72,10 +72,22 @@ module.exports = {
                           "name VARCHAR(300) null, create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
         self.query(queryString, null);
+
+        //user_note map
+        var queryString = "CREATE TABLE IF NOT EXISTS user_note (email VARCHAR(200), app_group_name VARCHAR(100)," +
+            " app_user_name VARCHAR(100), create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
+
+        self.query(queryString, null);
         console.log('Migration Ended');
     },
 
-    find: function(cb) {
+    findAppUserName: function(app_user_name, cb) {
+        var queryString = "SELECT * FROM messages WHERE app_user_name='"+ app_user_name+"' ORDER BY id ASC";
+        var self        = this;
+        self.query(queryString, cb);
+    },
+
+    findBy: function(cb) {
         var queryString = "SELECT * FROM messages ORDER BY id ASC";
         var self        = this;
         self.query(queryString, cb);

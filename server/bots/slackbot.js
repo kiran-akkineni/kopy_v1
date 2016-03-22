@@ -4,6 +4,7 @@
 
 "use strict";
 var slackModel      = ModuleLoader.model('slack');
+var userModel       = ModuleLoader.model('user');
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
@@ -58,11 +59,22 @@ module.exports =  function(Botkit)  {
 
       webserver.get('/message', function(req,res) {
 
-          slackModel.find(function(result) {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            res.json(result);
-        });
+
+
+          userModel.findMapbyEmail(req.query.email, function (results) {
+              if (results.length > 0) {
+                    slackModel.findAppUserName(results[0].app_user_name, function(notes) {
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+                        res.json(notes);
+                    })
+              } else {
+                    res.json([]);
+              }
+          });
+
+
       });
 
       webserver.get('/migrate',function(req,res) {
@@ -80,13 +92,31 @@ module.exports =  function(Botkit)  {
           user.auth_type    = auth[0];
           user.auth_user_id = (auth.length > 1)? auth[1]:'';
 
-          var userModel     = ModuleLoader.model('user');
-
-          userModel.findbyEmail(user.email, function (results) {
+          userModel.findUserbyEmail(user.email, function (results) {
               if (results.length > 0) {
                     console.log('user already exit')
               } else {
                     userModel.save(user);
+              }
+          });
+
+          res.json({status: 'okay'});
+      });
+
+      webserver.post('/user_note_map',function(req,res) {
+
+          var map                   = {};
+          map.email                 = req.body.email;
+          map.app_group_name        = req.body.app_group_name;
+          map.app_user_name         = req.body.app_user_name;
+
+          var userModel     = ModuleLoader.model('user');
+
+          userModel.findMapbyEmail(map.email, function (results) {
+              if (results.length > 0) {
+                    console.log('mapping is already exit')
+              } else {
+                    userModel.userNoteSave(map);
               }
           });
 
