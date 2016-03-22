@@ -50,8 +50,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
             function (_1) {}],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(location, http) {
+                function AppComponent(location, http, router) {
                     this.http = http;
+                    this.router = router;
                     this.lock = new Auth0Lock(app_setting_1.AppSettings.AUTH_CLIRNT_ID, app_setting_1.AppSettings.AUTH_APP_URL);
                     this.user = new user_1.User();
                     this.jwtHelper = new angular2_jwt_1.JwtHelper();
@@ -67,8 +68,15 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                         localStorage.setItem('profile', JSON.stringify(profile));
                         localStorage.setItem('id_token', id_token);
                         _this.user.saveUser(_this.http, profile);
-                        console.log(_this.jwtHelper.decodeToken(id_token), _this.jwtHelper.getTokenExpirationDate(id_token), _this.jwtHelper.isTokenExpired(id_token));
+                        /*
+                        console.log(
+                          this.jwtHelper.decodeToken(id_token),
+                          this.jwtHelper.getTokenExpirationDate(id_token),
+                          this.jwtHelper.isTokenExpired(id_token)
+                        );*/
                         self.loggedIn();
+                        //redirect note page
+                        _this.router.navigate(['Note']);
                     });
                 };
                 AppComponent.prototype.logout = function () {
@@ -97,7 +105,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                         { path: '/profile', name: 'Profile', component: profile_1.Profile },
                         { path: '/setting', name: 'Setting', component: setting_1.Setting }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Location, http_1.Http])
+                    __metadata('design:paramtypes', [router_1.Location, http_1.Http, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

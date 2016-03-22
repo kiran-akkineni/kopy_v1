@@ -1,5 +1,5 @@
 import {Component, View, bind}                      from 'angular2/core';
-import {ROUTER_PROVIDERS, RouterOutlet,
+import {Router, ROUTER_PROVIDERS, RouterOutlet,
         RouteConfig, RouterLink, Location}          from 'angular2/router';
 import {tokenNotExpired, JwtHelper}                 from 'angular2-jwt';
 import {LocationStrategy, HashLocationStrategy}     from 'angular2/router';
@@ -41,7 +41,7 @@ export class AppComponent {
 
     location: Location;
 
-    constructor(location: Location, public http: Http) {
+    constructor(location: Location, public http: Http, private router: Router) {
             this.location = location;
     }
 
@@ -56,16 +56,17 @@ export class AppComponent {
         localStorage.setItem('id_token', id_token);
 
         this.user.saveUser(this.http, profile);
-
-
-
+        /*
         console.log(
           this.jwtHelper.decodeToken(id_token),
           this.jwtHelper.getTokenExpirationDate(id_token),
           this.jwtHelper.isTokenExpired(id_token)
-        );
+        );*/
 
         self.loggedIn();
+
+        //redirect note page
+        this.router.navigate(['Note']);
       });
     }
 
