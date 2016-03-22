@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1;
+    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1, router_2;
     var Setting;
     return {
         setters:[
@@ -19,6 +19,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+                router_2 = router_1_1;
             },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
@@ -32,7 +33,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             function (_1) {}],
         execute: function() {
             Setting = (function () {
-                function Setting(http) {
+                function Setting(http, router) {
+                    this.router = router;
                     this.http = http;
                 }
                 Setting.prototype.ngOnInit = function () {
@@ -48,6 +50,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                     this.http.post(userRequestUrl, creds, { headers: headers })
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { data = _this.data; }, function (err) { return console.log(err); }, function () { return console.log('mapping is done'); });
+                    this.router.navigateByUrl(['/note']);
                 };
                 Setting = __decorate([
                     core_1.Component({
@@ -55,7 +58,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                         templateUrl: './components/setting/setting.html'
                     }),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [http_1.Http, router_2.Router])
                 ], Setting);
                 return Setting;
             }());

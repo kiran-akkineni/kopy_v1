@@ -4,6 +4,7 @@ import {tokenNotExpired}                                      from 'angular2-jwt
 import {Http, Headers}                                        from "angular2/http";
 import {Configuration}                                        from './../../models/configuration';
 import {AppSettings} 			                              from './../../app.setting';
+import {RouteConfig, Router, ROUTER_DIRECTIVES}               from 'angular2/router';
 
 import 'rxjs/add/operator/map';
 
@@ -19,7 +20,7 @@ export class Setting implements OnInit
     configuration: Configuration;
     public http: Http;
 
-    constructor(http:Http) {
+    constructor(http:Http, private router: Router) {
       this.http = http;
     }
 
@@ -42,5 +43,7 @@ export class Setting implements OnInit
                   err => console.log(err),
                   () => console.log('mapping is done')
                  );
+
+        this.router.navigateByUrl(['/note']);
     }
 }
