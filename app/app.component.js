@@ -65,10 +65,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                         if (err) {
                             throw new Error(err);
                         }
-                        var profile = JSON.stringify(profile);
-                        localStorage.setItem('profile', profile);
+                        localStorage.setItem('profile', JSON.stringify(profile));
                         localStorage.setItem('id_token', id_token);
-                        _this.user.saveUser(_this.http, profile);
                         /*
                         console.log(
                           this.jwtHelper.decodeToken(id_token),
@@ -76,6 +74,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                           this.jwtHelper.isTokenExpired(id_token)
                         );*/
                         self.loggedIn();
+                        //save into db
+                        _this.user.saveUser(_this.http);
                         //redirect note page
                         _this.router.navigate(['Note']);
                     });

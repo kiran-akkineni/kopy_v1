@@ -16,11 +16,9 @@ System.register(['./../../app.setting', 'angular2/http', 'rxjs/add/operator/map'
             User = (function () {
                 function User() {
                 }
-                User.prototype.saveUser = function (http, profile) {
+                User.prototype.saveUser = function (http) {
                     var _this = this;
-                    console.log("imhere");
-                    console.log(profile['email']);
-                    console.log("imhere too0000000000000000");
+                    var profile = JSON.parse(localStorage.getItem('profile'));
                     var creds = "email=" + profile.email + "&name=" + profile.name + "&user_id=" + profile.user_id;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');

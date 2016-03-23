@@ -52,12 +52,10 @@ export class AppComponent {
         if (err) {
           throw new Error(err);
         }
-
-        var profile  = JSON.stringify(profile);
-        localStorage.setItem('profile', profile);
+        localStorage.setItem('profile',  JSON.stringify(profile));
         localStorage.setItem('id_token', id_token);
 
-        this.user.saveUser(this.http, profile);
+
         /*
         console.log(
           this.jwtHelper.decodeToken(id_token),
@@ -66,6 +64,9 @@ export class AppComponent {
         );*/
 
         self.loggedIn();
+
+        //save into db
+        this.user.saveUser(this.http);
 
         //redirect note page
         this.router.navigate(['Note']);
