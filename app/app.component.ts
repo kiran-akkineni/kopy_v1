@@ -52,7 +52,9 @@ export class AppComponent {
         if (err) {
           throw new Error(err);
         }
-        localStorage.setItem('profile', JSON.stringify(profile));
+
+        var profile  = JSON.stringify(profile);
+        localStorage.setItem('profile', profile);
         localStorage.setItem('id_token', id_token);
 
         this.user.saveUser(this.http, profile);
