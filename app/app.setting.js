@@ -9,12 +9,12 @@ System.register([], function(exports_1, context_1) {
                 function AppSettings() {
                 }
                 Object.defineProperty(AppSettings, "API_ENDPOINT", {
-                    get: function () { return 'http://localhost:5000'; },
+                    //public static get API_ENDPOINT(): string { return 'http://localhost:5000'; }
+                    get: function () { return 'https://kopychat.herokuapp.com'; },
                     enumerable: true,
                     configurable: true
                 });
                 Object.defineProperty(AppSettings, "AUTH_CLIRNT_ID", {
-                    //public static get API_ENDPOINT(): string { return 'https://kopychat.herokuapp.com'; }
                     get: function () { return 'kWSNpHIdfmhITKDVYu9dZ5UB57sQZ6JQ'; },
                     enumerable: true,
                     configurable: true
