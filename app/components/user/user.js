@@ -19,7 +19,7 @@ System.register(['./../../app.setting', 'angular2/http', 'rxjs/add/operator/map'
                 User.prototype.saveUser = function (http, profile) {
                     var _this = this;
                     console.log("imhere");
-                    console.log(profile);
+                    console.log(profile["email"]);
                     console.log("imhere too");
                     var creds = "email=" + profile.email + "&name=" + profile.name + "&user_id=" + profile.user_id;
                     var headers = new http_1.Headers();
