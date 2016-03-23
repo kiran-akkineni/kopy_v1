@@ -65,7 +65,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                         if (err) {
                             throw new Error(err);
                         }
-                        localStorage.setItem('profile', JSON.stringify(profile));
+                        var profile = JSON.stringify(profile);
+                        localStorage.setItem('profile', profile);
                         localStorage.setItem('id_token', id_token);
                         _this.user.saveUser(_this.http, profile);
                         /*

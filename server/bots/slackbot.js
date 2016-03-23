@@ -57,7 +57,7 @@ module.exports =  function(Botkit)  {
          next();
      });
 
-      webserver.get('/message', function(req,res) {
+      webserver.get('/note', function(req,res) {
 
 
 

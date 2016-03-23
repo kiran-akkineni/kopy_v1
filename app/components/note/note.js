@@ -35,7 +35,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
                 function Note(http) {
                     var _this = this;
                     var profile = JSON.parse(localStorage.getItem('profile'));
-                    var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/message?email=" + profile.email;
+                    var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note?email=" + profile.email;
                     http.get(NoteRequestUrl)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { _this.notes = data; }, function (err) { return console.error(err); }, function () { return console.log(_this.notes); });
