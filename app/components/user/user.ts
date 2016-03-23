@@ -6,8 +6,8 @@ export class User {
     data;
     saveUser(http, profile) {
         console.log("imhere");
-        console.log(profile);
-        console.log("imhere too");
+        console.log(profile['email']);
+        console.log("imhere too0000000000000000");
         var creds = "email=" + profile.email + "&name=" + profile.name+"&user_id=" +profile.user_id;
         var headers = new Headers();
           headers.append('Content-Type', 'application/x-www-form-urlencoded');
