@@ -5,8 +5,10 @@ import 'rxjs/add/operator/map';
 export class User {
     data;
     saveUser(http, profile) {
+        console.log("imhere");
         console.log(profile);
-        var creds = "email=" + profile.profile + "&name=" + profile.name+"&user_id=" +profile.user_id;
+        console.log("imhere too");
+        var creds = "email=" + profile.email + "&name=" + profile.name+"&user_id=" +profile.user_id;
         var headers = new Headers();
           headers.append('Content-Type', 'application/x-www-form-urlencoded');
 

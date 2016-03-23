@@ -18,8 +18,10 @@ System.register(['./../../app.setting', 'angular2/http', 'rxjs/add/operator/map'
                 }
                 User.prototype.saveUser = function (http, profile) {
                     var _this = this;
+                    console.log("imhere");
                     console.log(profile);
-                    var creds = "email=" + profile.profile + "&name=" + profile.name + "&user_id=" + profile.user_id;
+                    console.log("imhere too");
+                    var creds = "email=" + profile.email + "&name=" + profile.name + "&user_id=" + profile.user_id;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
                     var userRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/user";
