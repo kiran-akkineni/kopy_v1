@@ -94,13 +94,14 @@ module.exports =  function(Botkit)  {
 
           userModel.findUserbyEmail(user.email, function (results) {
               if (results.length > 0) {
-                    console.log('user already exit')
+                    res.json({status: 'user alrewady save'});
               } else {
-                    userModel.save(user);
+                  userModel.save(user);
+                  res.json({status: 'okay'});
               }
           });
 
-          res.json({status: 'okay'});
+
       });
 
       webserver.post('/user_note_map',function(req,res) {
