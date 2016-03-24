@@ -87,14 +87,15 @@ module.exports =  function(Botkit)  {
           var user          = {};
           user.name         = req.body.name;
           user.email        = req.body.email;
+
           var auth          = req.body.user_id.split("|");
-          console.log(auth);
+
           user.auth_type    = auth[0];
           user.auth_user_id = (auth.length > 1)? auth[1]:'';
 
           userModel.findUserbyEmail(user.email, function (results) {
               if (results.length > 0) {
-                    res.json({status: 'user alrewady save'});
+                    res.json({status: 'user already saved'});
               } else {
                   userModel.save(user);
                   res.json({status: 'okay'});
