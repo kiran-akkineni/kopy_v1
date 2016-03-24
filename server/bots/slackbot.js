@@ -59,8 +59,6 @@ module.exports =  function(Botkit)  {
 
       webserver.get('/note', function(req,res) {
 
-
-
           userModel.findMapbyEmail(req.query.email, function (results) {
               if (results.length > 0) {
                     slackModel.findAppUserName(results[0].app_user_name, function(notes) {
