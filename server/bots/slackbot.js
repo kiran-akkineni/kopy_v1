@@ -110,8 +110,6 @@ module.exports =  function(Botkit)  {
           map.app_group_name        = req.body.app_group_name;
           map.app_user_name         = req.body.app_user_name;
 
-          var userModel     = ModuleLoader.model('user');
-
           userModel.findMapbyEmail(map.email, function (results) {
               if (results.length > 0) {
                     console.log('mapping is already exit')
@@ -121,6 +119,17 @@ module.exports =  function(Botkit)  {
           });
 
           res.json({status: 'okay'});
+      });
+
+      webserver.get('/user_note_map',function(req,res) {
+
+          userModel.findMapbyEmail(req.query.email, function (results) {
+              if (results.length > 0) {
+                    res.json(results);
+              } else {
+                    res.json([]);
+              }
+          });
       });
     });
 

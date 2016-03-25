@@ -36,7 +36,19 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                     this.http = http;
                 }
                 Setting.prototype.ngOnInit = function () {
+                    var _this = this;
+                    var profile = JSON.parse(localStorage.getItem('profile'));
                     this.configuration = { company_name: "", slack_username: "" };
+                    var userRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/user_note_map?email=" + profile.email;
+                    this.http.get(userRequestUrl)
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (data) { _this.data = data; }, function (err) { return console.error(err); }, function () { return _this.getValue(_this.data); });
+                };
+                Setting.prototype.getValue = function (data) {
+                    if (data.length > 0) {
+                        this.configuration.company_name = data[0].app_group_name;
+                        this.configuration.slack_username = data[0].app_user_name;
+                    }
                 };
                 Setting.prototype.onSubmit = function () {
                     var _this = this;

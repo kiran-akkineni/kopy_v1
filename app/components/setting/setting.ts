@@ -26,8 +26,26 @@ export class Setting implements OnInit
     }
 
     ngOnInit() {
+        let profile = JSON.parse(localStorage.getItem('profile'));
         this.configuration = {company_name:"", slack_username:""};
+        var userRequestUrl  = AppSettings.API_ENDPOINT + "/user_note_map?email=" +profile.email;
+        this.http.get(userRequestUrl)
+		     .map(res => res.json())
+      		 .subscribe(
+        		data	 =>  {this.data = data},
+        		err 	 => console.error(err),
+        		() 		 => this.getValue(this.data));
+
     }
+
+
+    getValue (data) {
+        if(data.length > 0 ) {
+            this.configuration.company_name = data[0].app_group_name;
+            this.configuration.slack_username = data[0].app_user_name;
+        }
+    }
+
 
     onSubmit(){
         let profile = JSON.parse(localStorage.getItem('profile'));
