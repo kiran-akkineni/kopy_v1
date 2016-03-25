@@ -62,9 +62,6 @@ module.exports =  function(Botkit)  {
           userModel.findMapbyEmail(req.query.email, function (results) {
               if (results.length > 0) {
                     slackModel.findAppUserName(results[0].app_user_name, function(notes) {
-                        res.header("Access-Control-Allow-Origin", "*");
-                        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
                         res.json(notes);
                     })
               } else {

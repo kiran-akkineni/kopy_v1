@@ -1,11 +1,9 @@
-import {Component, View, Inject}    	from 'angular2/core';
-import {Http, HTTP_PROVIDERS,
-	   Response, Headers,
-	   RequestOptions, URLSearchParams} from 'angular2/http'
-import {Observable} 					from 'rxjs/Rx';
+import {Component, View}  		  		from 'angular2/core';
+import {Http, HTTP_PROVIDERS} 			from 'angular2/http'
 import {CanActivate} 					from 'angular2/router';
 import {tokenNotExpired} 				from 'angular2-jwt';
 import {AppSettings} 					from './../../app.setting';
+
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -28,7 +26,7 @@ export class Note {
 		     .map(res => res.json())
       		 .subscribe(
         		data	 => { this.notes = data},
-        		err 	 => console.error(err),
+        		err 	 => console.log(err),
         		() 		 => console.log(this.notes));
 	 }
 }

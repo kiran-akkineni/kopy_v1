@@ -38,7 +38,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
                     var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note?email=" + profile.email;
                     http.get(NoteRequestUrl)
                         .map(function (res) { return res.json(); })
-                        .subscribe(function (data) { _this.notes = data; }, function (err) { return console.error(err); }, function () { return console.log(_this.notes); });
+                        .subscribe(function (data) { _this.notes = data; }, function (err) { return console.log(err); }, function () { return console.log(_this.notes); });
                 }
                 Note = __decorate([
                     core_1.Component({
