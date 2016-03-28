@@ -33,4 +33,4 @@ var hangoutbot        = ModuleLoader.bot('hangoutsbot')(hangoutsBot);
 
 //Calling function to create database tables
 var slackModel        = ModuleLoader.model('slack');
-slackModel.migrate();
+//slackModel.migrate();
