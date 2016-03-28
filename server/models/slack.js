@@ -77,6 +77,21 @@ module.exports = {
         var queryString = "CREATE TABLE IF NOT EXISTS user_note (email VARCHAR(200), app_group_name VARCHAR(100)," +
             " app_user_name VARCHAR(100), create_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW())";
 
+
+        self.query(queryString, null);
+        //user_note map
+        var queryString = "CREATE INDEX index_user_note_email ON user_note (email);";
+
+
+        self.query(queryString, null);
+        //user_note map
+        var queryString = "CREATE INDEX index_message_app_group_name ON messages (app_group_name);";
+
+        self.query(queryString, null);
+
+        //user_note map
+        var queryString = "CREATE INDEX index_message_app_user_name ON messages (app_user_name);";
+
         self.query(queryString, null);
         console.log('Migration Ended');
     },
