@@ -4,6 +4,8 @@
 
 "use strict";
 var slackModel      = ModuleLoader.model('slack');
+var message         = ModuleLoader.model('message');
+
 var userModel       = ModuleLoader.model('user');
 var express         = require('express');
 var bodyParser      = require('body-parser');
@@ -70,11 +72,6 @@ module.exports =  function(Botkit)  {
           });
 
 
-      });
-
-      webserver.get('/migrate',function(req,res) {
-        slackModel.migrate();
-        res.send('DB migration is done.');
       });
 
       webserver.post('/user',function(req,res) {
@@ -175,7 +172,9 @@ module.exports =  function(Botkit)  {
     // give the bot something to listen for.
     controller.hears(["[A-Za-z0-9_^kopylist]"],
                      ["direct_message", "direct_mention", "mention", "message_received"], function(bot, message) {
-      var data = {};
+      var data             = {app_name    : 'slack',
+                              created_at  : new Date(),
+                              updated_at  : new Date()};
 
       data.user_id        = message.user;
       data.message        = message.text;
@@ -185,7 +184,12 @@ module.exports =  function(Botkit)  {
 
       bot.api.users.info({'user': message.user}, function(err, response) {
         data.app_user_name  = response.user.name;
-        slackModel.savekopy(data);
+        new message(data).save()
+                       .then(function (result) {
+                           console.log("slack message is saved. count: " + result.length);
+                       }, function (err) {
+                          console.log('failed');
+                       });
       });
 
       bot.startPrivateConversation(message,function(err,dm) {
@@ -194,17 +198,24 @@ module.exports =  function(Botkit)  {
     });
 
     controller.on('slash_command', function(bot,message) {
-      var data = {};
+      var data              = {app_name    : 'slack',
+                               created_at  : new Date(),
+                               updated_at  : new Date()};
 
       data.user_id          = message.user_id;
       data.message          = message.text;
-      data.app_name         = 'slack';
       data.app_user_name    = message.user_name;
       data.app_group_name   = message.team_domain;
 
 
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
-      slackModel.savekopy(data);
+
+      new message(data).save()
+                       .then(function (result) {
+                           console.log("slack message is saved. count: " + result.length);
+                       }, function (err) {
+                          console.log('failed');
+                       });
     });
 };
 
