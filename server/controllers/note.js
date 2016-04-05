@@ -9,10 +9,10 @@ var userNoteModel     = ModuleLoader.model('user_note');
 var noteModel         = ModuleLoader.model('note');
     
 NoteController.get = function (req, res) {
-    
+
     userNoteModel.findByEmail(req.query.email, function (results) {
         if (results.length > 0) {
-            noteModel.find({app_user_name: results[0].app_user_name}, function(notes) {
+            noteModel.find({app_user_name: results[0].app_user_name}, function(err, notes) {
                 res.json(notes);
             })
         } else {
