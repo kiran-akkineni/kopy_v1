@@ -20,8 +20,8 @@ Config.redirect_uri   = process.env.REDIRECT_URI  || 'https://kopychat.heroku.co
 
 //Database inputs
 Config.port           = process.env.PORT          || 5000;
-//Config.conString    = 'mongodb://kopychat:kopychat@ds025429.mlab.com:25429/heroku_kdbnfgkk';
-Config.conString      = 'mongodb://localhost/kopy';
+Config.conString    = 'mongodb://kopychat:kopychat@ds025429.mlab.com:25429/heroku_kdbnfgkk';
+//Config.conString      = 'mongodb://localhost/kopy';
 
 //hangouts
 Config.username       = process.env.USERNAME      || 'kopychat@gmail.com';
