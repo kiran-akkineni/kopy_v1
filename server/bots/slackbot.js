@@ -3,10 +3,9 @@
  */
 
 "use strict";
-var slackModel      = ModuleLoader.model('slack');
-var message         = ModuleLoader.model('message');
-
-var userModel       = ModuleLoader.model('user');
+var message         = ModuleLoader.model('note');
+var userController  = ModuleLoader.controller('user');
+var noteController  = ModuleLoader.controller('note');
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
@@ -42,88 +41,37 @@ module.exports =  function(Botkit)  {
       });
 
 
-     //serving static
-     webserver.use(express.static("./node_modules/"));
-     webserver.use(express.static("./app/"));
+      //serving static
+      webserver.use(express.static("./node_modules/"));
+      webserver.use(express.static("./app/"));
 
 
-     webserver.use(bodyParser.json());
-     webserver.use(bodyParser.urlencoded({ extended: false }));
-     webserver.use(cookieParser());
-     webserver.use(express.static('./public'));
+      webserver.use(bodyParser.json());
+      webserver.use(bodyParser.urlencoded({ extended: false }));
+      webserver.use(cookieParser());
+      webserver.use(express.static('./public'));
 
-     webserver.use(function (req, res, next) {
+      webserver.use(function (req, res, next) {
          res.header("Access-Control-Allow-Origin", "*");
          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
          next();
-     });
+      });
 
       webserver.get('/note', function(req,res) {
-
-          userModel.findMapbyEmail(req.query.email, function (results) {
-              if (results.length > 0) {
-                    slackModel.findAppUserName(results[0].app_user_name, function(notes) {
-                        res.json(notes);
-                    })
-              } else {
-                    res.json([]);
-              }
-          });
-
-
+         noteController.get(req, res);
       });
 
       webserver.post('/user',function(req,res) {
-
-          var user          = {};
-          user.name         = req.body.name;
-          user.email        = req.body.email;
-
-          var auth          = req.body.user_id.split("|");
-
-          user.auth_type    = auth[0];
-          user.auth_user_id = (auth.length > 1)? auth[1]:'';
-
-          userModel.findUserbyEmail(user.email, function (results) {
-              if (results.length > 0) {
-                    res.json({status: 'user already saved'});
-              } else {
-                  userModel.save(user);
-                  res.json({status: 'okay'});
-              }
-          });
-
-
+          userController.post(req, res);
       });
 
-      webserver.post('/user_note_map',function(req,res) {
-
-          var map                   = {};
-          map.email                 = req.body.email;
-          map.app_group_name        = req.body.app_group_name;
-          map.app_user_name         = req.body.app_user_name;
-
-          userModel.findMapbyEmail(map.email, function (results) {
-              if (results.length > 0) {
-                    console.log('mapping is already exit')
-              } else {
-                    userModel.userNoteSave(map);
-              }
-          });
-
-          res.json({status: 'okay'});
+      webserver.post('/user_note_map', function(req,res) {
+          userController.createUserNoteMap(req, res);
       });
 
-      webserver.get('/user_note_map',function(req,res) {
-
-          userModel.findMapbyEmail(req.query.email, function (results) {
-              if (results.length > 0) {
-                    res.json(results);
-              } else {
-                    res.json([]);
-              }
-          });
+      webserver.get('/user_note_map', function(req,res) {
+          userController.getUserNoteMap(req, res);
       });
     });
 
