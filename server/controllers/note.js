@@ -14,7 +14,7 @@ NoteController.get = function (req, res) {
         if (results.length > 0) {
             noteModel.find({app_user_name: results[0].app_user_name}, function(err, notes) {
                 res.json(notes);
-            })
+            });
         } else {
             res.json([]);
         }
