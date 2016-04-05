@@ -2,80 +2,43 @@
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
 
-"use strict";
+'use strict';
 
-var pg    = require('pg');
-var util  = require('util');
+var mongoose = ModuleLoader.service('mongo'),
+    Schema   = mongoose.Schema,
+    util     = require('util');
 
-module.exports = {
+var User = new Schema({
+  auth_user_id: {
+    type: String
+  },
+  auth_type: {
+    type: String
+  },
+  name: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  created_at  : Date,
+  updated_at  : {
+    type: Date,
+    default: Date.now }
+});
 
-    query: function(queryString, cb) {
-        var results = [];
-
-        // Get a Postgres client from the connection pool
-        pg.connect(Config.conString, function(err, client, done) {
-            // Handle conString errors
-            if(err) {
-              done();
-              console.log(err);
-              return false;
-            }
-
-            // SQL Query > Insert Data
-            var query = client.query(queryString);
-
-            // Stream results back one row at a time
-            query.on('row', function(row) {
-                if(row){
-                    results.push(row);
-                }
-            });
-
-            // After all data is returned, close connection and return results
-            query.on('end', function() {
-                if(cb) {
-                    cb(results);
-                }
-                return true;
-            });
-        });
-    },
-
-    save: function(data) {
-
-      var queryString = util.format("INSERT INTO users (auth_user_id,auth_type,email,name) VALUES ('%s','%s','%s','%s')",
-                                     data.auth_user_id,
-                                     data.auth_type,
-                                     data.email,
-                                     data.name);
-
-        var self = this;
-        self.query(queryString, null);
-    },
-
-    userNoteSave: function(data) {
-
-      var queryString = util.format("INSERT INTO user_note (email, app_group_name, app_user_name) VALUES ('%s','%s','%s')",
-                                     data.email,
-                                     data.app_group_name,
-                                     data.app_user_name);
-
-        var self = this;
-        self.query(queryString, null);
-    },
-
-    findUserbyEmail: function(email, cb) {
-        var queryString = "SELECT * FROM users where email='" + email + "'";
-        var self        = this;
-        self.query(queryString, cb);
-    },
-
-    findMapbyEmail: function(email, cb) {
-        var queryString = "SELECT * FROM user_note where email='" + email + "'";
-        var self        = this;
-        self.query(queryString, cb);
-    }
+User.statics.findByEmail =  function(email, cb) {
+    this.find({email: email}, function (err, result) {
+      if (err) {
+        throw err;
+      } else {
+        if (cb) cb(result);
+      }
+    });
 };
+
+module.exports = mongoose.model('user', User);
+
 
 
 
