@@ -4,11 +4,11 @@
 
 'use strict';
 
-var mongoose = LoadModule.service('mongo'),
+var mongoose = ModuleLoader.service('mongo'),
     Schema   = mongoose.Schema,
     util     = require('util');
 
-var Message = new Schema({
+var Note = new Schema({
   user_id: {
     type: String
   },
@@ -25,10 +25,10 @@ var Message = new Schema({
   app_group_name: {
     type: String
   },
-    created_at  : Date,
+  created_at  : Date,
   updated_at  : {
-    type: Date,
-    default: Date.now }
+    type    : Date,
+    default : Date.now }
 });
 
-module.exports = mongoose.model('message', Message);
+module.exports = mongoose.model('note', Note);
