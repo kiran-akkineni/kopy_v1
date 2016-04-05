@@ -3,7 +3,7 @@
  */
 
 "use strict";
-var message         = ModuleLoader.model('note');
+var nodeModel       = ModuleLoader.model('note');
 var userController  = ModuleLoader.controller('user');
 var noteController  = ModuleLoader.controller('note');
 var express         = require('express');
@@ -131,13 +131,12 @@ module.exports =  function(Botkit)  {
 
 
       bot.api.users.info({'user': message.user}, function(err, response) {
-        data.app_user_name  = response.user.name;
-        new message(data).save()
-                       .then(function (result) {
-                           console.log("slack message is saved. count: " + result.length);
-                       }, function (err) {
-                          console.log('failed');
-                       });
+
+          data.app_user_name  = response.user.name;
+
+        nodeModel(data).save(function () {
+          console.log("slack message is saved.");
+        });
       });
 
       bot.startPrivateConversation(message,function(err,dm) {
@@ -158,12 +157,9 @@ module.exports =  function(Botkit)  {
 
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
 
-      new message(data).save()
-                       .then(function (result) {
-                           console.log("slack message is saved. count: " + result.length);
-                       }, function (err) {
-                          console.log('failed');
-                       });
+      nodeModel(data).save(function () {
+          console.log("slack message is saved.");
+      });
     });
 };
 
