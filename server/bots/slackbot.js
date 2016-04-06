@@ -145,18 +145,16 @@ module.exports =  function(Botkit)  {
     });
 
     controller.on('slash_command', function(bot,message) {
-      var data              = {app_name    : 'slack',
-                               created_at  : new Date(),
-                               updated_at  : new Date()};
-
+      var data              = {};
       data.user_id          = message.user_id;
       data.message          = message.text;
+      data.app_name         = 'slack';
       data.app_user_name    = message.user_name;
       data.app_group_name   = message.team_domain;
-
+      data.created_at       = new Date();
 
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
-
+        
       nodeModel(data).save(function () {
           console.log("slack message is saved.");
       });
