@@ -16,7 +16,8 @@ var Usernote = new Schema({
     type: String
   },
   email: {
-    type: String
+    type  : String,
+    index : true
   },
   created_at  : Date,
   updated_at  : {
