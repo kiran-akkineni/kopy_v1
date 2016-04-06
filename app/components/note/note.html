@@ -1,5 +1,8 @@
 <p class="lead"><strong>Notes</strong></p>
-<table class="table table-striped">
+<div *ngIf="notes && notes.length == 0" class="alert alert-info">
+  <strong>Info!</strong> Please update you <a [routerLink]="['Setting']"><u>Setting</u></a>.
+</div>
+<table class="table table-striped" *ngIf="notes && notes.length > 0">
     <thead>
     <tr>
         <th>#</th>

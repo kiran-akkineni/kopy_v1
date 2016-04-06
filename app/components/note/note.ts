@@ -1,6 +1,7 @@
 import {Component, View}  		  		from 'angular2/core';
 import {Http, HTTP_PROVIDERS} 			from 'angular2/http'
-import {CanActivate} 					from 'angular2/router';
+import {CanActivate,RouterLink, RouterOutlet} from 'angular2/router';
+
 import {tokenNotExpired} 				from 'angular2-jwt';
 import {AppSettings} 					from './../../app.setting';
 
@@ -11,7 +12,8 @@ import 'rxjs/add/operator/map';
 	viewProviders: [HTTP_PROVIDERS]
 })
 @View({
-	templateUrl: './components/note/note.html'
+	templateUrl: './components/note/note.html',
+	directives: [RouterOutlet, RouterLink]
 })
 
 @CanActivate(() => tokenNotExpired())
