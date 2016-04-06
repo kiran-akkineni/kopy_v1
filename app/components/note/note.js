@@ -46,7 +46,8 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
                         viewProviders: [http_1.HTTP_PROVIDERS]
                     }),
                     core_1.View({
-                        templateUrl: './components/note/note.html'
+                        templateUrl: './components/note/note.html',
+                        directives: [router_1.RouterOutlet, router_1.RouterLink]
                     }),
                     router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
                     __metadata('design:paramtypes', [http_1.Http])
