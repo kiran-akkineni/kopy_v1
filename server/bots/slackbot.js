@@ -119,7 +119,8 @@ module.exports =  function(Botkit)  {
 
     // give the bot something to listen for.
     controller.hears(["[A-Za-z0-9_^kopylist]"],
-                     ["direct_message", "direct_mention", "mention", "message_received"], function(bot, message) {
+                     ["direct_message", "direct_mention",
+                      "mention", "message_received"], function(bot, message) {
       var data             = {app_name    : 'slack',
                               created_at  : new Date(),
                               updated_at  : new Date()};
