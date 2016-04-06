@@ -31,4 +31,6 @@ var Note = new Schema({
     default : Date.now }
 });
 
+//compound
+Note.index({ app_user_name: 1, app_group_name: -1 });
 module.exports = mongoose.model('note', Note);
