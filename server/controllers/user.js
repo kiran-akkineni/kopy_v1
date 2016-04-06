@@ -41,6 +41,8 @@ UserController.createUserNoteMap = function (req, res) {
     map.email            = req.body.email;
     map.app_group_name   = req.body.app_group_name;
     map.app_user_name    = req.body.app_user_name;
+    map.created_at       = new Date();
+    map.updated_at       = new Date();
 
     userNoteModel.findByEmail(map.email, function (results) {
 
