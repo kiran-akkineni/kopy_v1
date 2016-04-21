@@ -5,9 +5,9 @@
     "node": "5.8.0"
   },
   "description": "Save notes from messaging apps",
-  "main": "slack-app.js",
+  "main": "slack-app.js && tsc -w",
   "scripts": {
-    "start": "node server/slack-app.js",
+    "start": "node server/slack-app.js && tsc -w",
     "build": "tsc -w"
   },
   "repository": {
