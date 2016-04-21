@@ -5,10 +5,11 @@
     "node": "5.8.0"
   },
   "description": "Save notes from messaging apps",
-  "main": "slack-app.js && tsc -w",
+  "main": "slack-app.js",
   "scripts": {
-    "start": "node server/slack-app.js && tsc -w",
-    "build": "tsc -w"
+    "start":  "tsc && concurrently \"npm run tsc:w\" \"node server/slack-app.js\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
   },
   "repository": {
     "type": "git",
@@ -30,23 +31,23 @@
   },
   "homepage": "https://github.com/kiran-akkineni/kopy_v1#readme",
   "dependencies": {
-    "angular2": "2.0.0-beta.7",
+   "angular2": "2.0.0-beta.15",
+   "systemjs": "0.19.26",
     "angular2-jwt": "0.1.6",
     "botkit": "0.0.5",
     "cookie-parser": "^1.4.1",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
+    "es6-shim": "^0.35.0",
     "hangouts-bot": "^0.2.1",
     "mongoose": "^4.4.11",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "systemjs": "0.19.22",
+    "zone.js": "0.6.10",
     "util": "^0.10.3"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
-    "lite-server": "^2.1.0",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.8"
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings":"^0.7.12"
   }
 }
