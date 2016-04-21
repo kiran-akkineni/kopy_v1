@@ -9,7 +9,7 @@
   "scripts": {
     "start":  "tsc && concurrently \"npm run tsc:w\" \"node server/slack-app.js\" ",
     "tsc": "tsc",
-    "tsc:w": "tsc -w",
+    "tsc:w": "tsc -w"
   },
   "repository": {
     "type": "git",
