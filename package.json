@@ -7,7 +7,7 @@
   "description": "Save notes from messaging apps",
   "main": "slack-app.js",
   "scripts": {
-    "start":  "\"npm run tsc:w\" \"node server/slack-app.js\" ",
+    "start":  "node server/slack-app.js",
     "tsc": "tsc",
     "tsc:w": "tsc -w"
   },
