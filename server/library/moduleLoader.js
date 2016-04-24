@@ -24,10 +24,9 @@ module.exports = {
 function load(module, directory) {
   if(typeof module === 'string') {
     var moduleLocation = [base_path, directory, module, '.js'].join('');
-    console.log(moduleLocation);
-
     return require(moduleLocation);
   }
+  
   if(module.constructor === Array) {
     return console.log('yup it\'s an array');
   }
