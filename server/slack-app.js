@@ -16,7 +16,7 @@ var hangoutsBot       = require('hangouts-bot');
 //Inputs from Slack
 Config.clientId       = process.env.CLIENT_ID     || '19936248482.21489538647';
 Config.clientSecret   = process.env.CLIENT_SECRET || 'c71c603cf8fce0c4d840ad9ca794c9c3';
-Config.redirect_uri   = process.env.REDIRECT_URI  || 'https://kopychat.heroku.com';
+Config.redirect_uri   = process.env.REDIRECT_URI  || 'https://bot.ofra.in';
 
 //Database inputs
 Config.port           = process.env.PORT          || 5000;
