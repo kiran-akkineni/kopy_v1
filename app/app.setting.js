@@ -10,7 +10,7 @@ System.register([], function(exports_1, context_1) {
                 }
                 Object.defineProperty(AppSettings, "API_ENDPOINT", {
                     //public static get API_ENDPOINT(): string { return 'http://localhost:5000'; }
-                    get: function () { return 'https://kopychat.herokuapp.com'; },
+                    get: function () { return 'https://bot.ofra.in'; },
                     enumerable: true,
                     configurable: true
                 });
