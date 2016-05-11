@@ -58,6 +58,22 @@ module.exports =  function(Botkit)  {
          next();
       });
 
+      webserver.get('/fb/webhook', function(req,res) {
+         if (req.query['hub.verify_token'] === Config.fb_token) {
+
+             console.log(req.query);
+            res.send(req.query['hub.challenge']);
+          } else {
+            res.send('Error, wrong validation token');
+          }
+      });
+
+      webserver.post('/fb/webhook', function(req,res) {
+         console.log(req.body);
+          console.log(req.query);
+      });
+
+
       webserver.get('/note', function(req,res) {
          noteController.get(req, res);
       });
