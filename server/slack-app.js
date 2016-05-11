@@ -27,6 +27,10 @@ Config.conString      = 'mongodb://localhost/kopy';
 Config.username       = process.env.USERNAME      || 'kopychat@gmail.com';
 Config.password       = process.env.PASSWORD      || 'slashkopy0';
 
+//fb
+Config.fb_token       = process.env.FB_TOKEN      || 'fb_kopy';
+Config.page_token     = "EAABz2BdMM9YBAIPboReAd8yAeckd86UEEVdDGrJZB2PJAiR9NE9AZAwCbSTD5v7jdA2qTcTK7ARyCxCuYOI1Fxo6fZBQMrWOW4SsTZBqMRaWrOem8dC5z9Kub04kYzxpfalPcrVdmZC5pwR1Ock1X8mgZAMmQI327O367Fxhy55QZDZD";
+
 
 
 var slackbot          = ModuleLoader.bot('slackbot')(Botkit);
