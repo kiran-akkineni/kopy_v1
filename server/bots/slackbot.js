@@ -65,6 +65,8 @@ module.exports =  function(Botkit)  {
       });
 
       webserver.post('/fb/webhook', function(req, res) {
+
+          console.log('fb request came');
          var message        = req.body.entry[0].messaging[0];
          var jsonData       = {};
 
