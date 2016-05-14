@@ -12,8 +12,9 @@ global.ModuleLoader   = require(base_path + '/library/moduleLoader.js');
 
 var Botkit            = require('botkit');
 var hangoutsBot       = require('hangouts-bot');
-var rest              = require('restler');
-global.rest           = rest;
+var request           = require('request-json');
+global.client         = request.createClient('https://graph.facebook.com/');
+
 
 //Inputs from Slack
 Config.clientId       = process.env.CLIENT_ID     || '19936248482.21489538647';

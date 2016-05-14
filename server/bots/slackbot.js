@@ -71,7 +71,9 @@ module.exports =  function(Botkit)  {
          jsonData.recipient = {id: message.sender.id};
          jsonData.message   = {text: "Got it, boss :)"};
 
-         rest.postJson('https://graph.facebook.com/v2.6/me/messages?access_token=' + Config.page_token, jsonData).on('complete', function(data, response) {});
+          client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
+              console.log(res.statusCode);
+          });
       });
 
 
