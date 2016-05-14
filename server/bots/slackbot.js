@@ -64,12 +64,12 @@ module.exports =  function(Botkit)  {
           }
       });
 
-      webserver.post('/fb/webhook', function(req,res) {
-         var message = req.body.entry[0].messaging[0];
-         var jsonData = {};
+      webserver.post('/fb/webhook', function(req, res) {
+         var message        = req.body.entry[0].messaging[0];
+         var jsonData       = {};
 
          jsonData.recipient = {id: message.sender.id};
-         jsonData.message = {text: "Got it, boss :)"};
+         jsonData.message   = {text: "Got it, boss :)"};
 
          rest.postJson('https://graph.facebook.com/v2.6/me/messages?access_token=' + Config.page_token, jsonData).on('complete', function(data, response) {});
       });
