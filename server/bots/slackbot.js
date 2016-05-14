@@ -12,18 +12,13 @@ var cookieParser    = require('cookie-parser');
 
 module.exports =  function(Botkit)  {
     //Set debug to false
-    var controller = Botkit.slackbot({
-      debug: false
-    });
+    var controller = Botkit.slackbot({debug: false});
 
     // connect the bot to a stream of messages
-    controller.configureSlackApp({
-        clientId      : Config.clientId,
-        clientSecret  : Config.clientSecret,
-        redirect_uri  : Config.redirect_uri,
-        scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook'],
-      }
-    );
+    controller.configureSlackApp({clientId      : Config.clientId,
+                                  clientSecret  : Config.clientSecret,
+                                  redirect_uri  : Config.redirect_uri,
+                                  scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook']});
 
     controller.setupWebserver(Config.port, function(err, webserver) {
       controller.createWebhookEndpoints(controller.webserver);
@@ -91,6 +86,8 @@ module.exports =  function(Botkit)  {
       });
     });
 
+
+
     // just a simple way to make sure we don't
     // connect to the RTM twice for the same team
     var _bots = {};
@@ -99,6 +96,7 @@ module.exports =  function(Botkit)  {
     }
 
 
+    //creating bot
     controller.on('create_bot', function(bot,config) {
 
       if (_bots[bot.config.token]) {
@@ -136,7 +134,8 @@ module.exports =  function(Botkit)  {
     // give the bot something to listen for.
     controller.hears(["[A-Za-z0-9_^kopylist]"],
                      ["direct_message", "direct_mention",
-                      "mention", "message_received"], function(bot, message) {
+                      "mention"], function(bot, message) {
+
       var data             = {app_name    : 'slack',
                               created_at  : new Date(),
                               updated_at  : new Date()};
@@ -149,18 +148,23 @@ module.exports =  function(Botkit)  {
 
       bot.api.users.info({'user': message.user}, function(err, response) {
 
-          data.app_user_name  = response.user.name;
+        data.app_user_name  = response.user.name;
 
+        //saving bot message
         nodeModel(data).save(function () {
           console.log("slack message is saved.");
         });
       });
 
+      //response back that message is saved
       bot.startPrivateConversation(message,function(err,dm) {
         dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
       });
     });
 
+
+
+    //slash command
     controller.on('slash_command', function(bot,message) {
       var data              = {};
       data.user_id          = message.user_id;
