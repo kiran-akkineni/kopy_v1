@@ -9,6 +9,7 @@ var noteController  = ModuleLoader.controller('note');
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
+var lastText        = "";
 
 module.exports =  function(Botkit)  {
     //Set debug to false
@@ -68,14 +69,17 @@ module.exports =  function(Botkit)  {
 
           console.log('fb request came');
          var message        = req.body.entry[0].messaging[0];
+         lastText           =  message.message.text;
          var jsonData       = {};
 
          jsonData.recipient = {id: message.sender.id};
          jsonData.message   = {text: "Got it, boss :)"};
 
-          client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
-              console.log(res.statusCode);
-          });
+          if(lastText != message.message.text) {
+                client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
+                  console.log(res.statusCode);
+              });
+          }
       });
 
 
