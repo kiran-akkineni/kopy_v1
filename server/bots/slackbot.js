@@ -69,7 +69,6 @@ module.exports =  function(Botkit)  {
 
           console.log('fb request came');
          var message        = req.body.entry[0].messaging[0];
-         lastText           =  message.message.text;
          var jsonData       = {};
 
          jsonData.recipient = {id: message.sender.id};
@@ -77,6 +76,7 @@ module.exports =  function(Botkit)  {
 
           if(lastText != message.message.text) {
                 client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
+                  lastText =  message.message.text;
                   console.log('response sent successfully. Status: ' + res.statusCode);
               });
           }
