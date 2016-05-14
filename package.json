@@ -41,6 +41,7 @@
     "hangouts-bot": "^0.2.1",
     "mongoose": "^4.4.11",
     "reflect-metadata": "0.1.2",
+    "restler": "^3.4.0",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "0.19.22",
     "util": "^0.10.3"

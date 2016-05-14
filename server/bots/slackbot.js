@@ -53,6 +53,7 @@ module.exports =  function(Botkit)  {
          next();
       });
 
+      //for verifying fb auth
       webserver.get('/fb/webhook', function(req,res) {
          if (req.query['hub.verify_token'] === Config.fb_token) {
 
@@ -64,8 +65,13 @@ module.exports =  function(Botkit)  {
       });
 
       webserver.post('/fb/webhook', function(req,res) {
-         console.log(req.body);
-          console.log(req.query);
+         var message = req.body.entry[0].messaging[0];
+         var jsonData = {};
+
+         jsonData.recipient = {id: message.sender.id};
+         jsonData.message = {text: "Got it, boss :)"};
+
+         rest.postJson('https://graph.facebook.com/v2.6/me/messages?access_token=' + Config.page_token, jsonData).on('complete', function(data, response) {});
       });
 
 

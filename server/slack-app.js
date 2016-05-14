@@ -12,6 +12,8 @@ global.ModuleLoader   = require(base_path + '/library/moduleLoader.js');
 
 var Botkit            = require('botkit');
 var hangoutsBot       = require('hangouts-bot');
+var rest              = require('restler');
+global.rest           = rest;
 
 //Inputs from Slack
 Config.clientId       = process.env.CLIENT_ID     || '19936248482.21489538647';
@@ -29,7 +31,7 @@ Config.password       = process.env.PASSWORD      || 'slashkopy0';
 
 //fb
 Config.fb_token       = process.env.FB_TOKEN      || 'fb_kopy';
-Config.page_token     = "EAABz2BdMM9YBAIPboReAd8yAeckd86UEEVdDGrJZB2PJAiR9NE9AZAwCbSTD5v7jdA2qTcTK7ARyCxCuYOI1Fxo6fZBQMrWOW4SsTZBqMRaWrOem8dC5z9Kub04kYzxpfalPcrVdmZC5pwR1Ock1X8mgZAMmQI327O367Fxhy55QZDZD";
+Config.page_token     = "EAABz2BdMM9YBAEn9pYZBCqwx6ZC5ZBB4DNJvB2lGDL7HjeRtBcV6ihvEmJS2tHMTF1tDrZBK21ZCHM8jj2QFCsNgO5MDo4HZAUC0uwCnvoiuZAzHSpnwMxRPD2uz1ZBBbbbe07ayGslfC7PuB3fFhUpesFQ6vwOYsGUaCC1xuXmAdwZDZD";
 
 
 
