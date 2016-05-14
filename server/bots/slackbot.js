@@ -77,7 +77,7 @@ module.exports =  function(Botkit)  {
 
           if(lastText != message.message.text) {
                 client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
-                  console.log(res.statusCode);
+                  console.log('response sent successfully. Status: ' + res.statusCode);
               });
           }
       });
