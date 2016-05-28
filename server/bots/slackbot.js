@@ -72,7 +72,21 @@ module.exports =  function(Botkit)  {
          jsonData.recipient = {id: message.sender.id};
          jsonData.message   = {text: "Got it, boss :)"};
 
+         var data              = {};
+         data.user_id          = message.sender.id;
+         data.message          = message.message.text;
+         data.app_name         = 'facebook';
+         data.app_user_name    = message.sender.id;
+         data.app_group_name   = 'kopy';
+         data.created_at       = new Date();
+
+        //saving bot message
+        nodeModel(data).save(function () {
+          console.log("fb message is saved.");
+        });
+
         client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
+            //local logging purposes..
           console.log('response sent successfully. Status: ' + res.statusCode);
         });
 
