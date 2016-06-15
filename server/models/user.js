@@ -24,6 +24,11 @@ var User = new Schema({
   password: {
     type: String
   },
+
+  is_password_created: {
+    type   : Boolean,
+    default: false
+  },
   created_at  : Date,
   updated_at  : {
     type: Date,
