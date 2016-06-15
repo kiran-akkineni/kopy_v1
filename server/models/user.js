@@ -21,6 +21,9 @@ var User = new Schema({
   email: {
     type: String
   },
+  password: {
+    type: String
+  },
   created_at  : Date,
   updated_at  : {
     type: Date,
