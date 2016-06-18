@@ -13,12 +13,7 @@ var cookieParser    = require('cookie-parser');
 module.exports =  function(Botkit)  {
     //Set debug to false
     var controller = Botkit.slackbot({debug: false});
-
-    // connect the bot to a stream of messages
-    controller.configureSlackApp({clientId      : Config.clientId,
-                                  clientSecret  : Config.clientSecret,
-                                  redirect_uri  : Config.redirect_uri,
-                                  scopes        : ['bot', 'commands', 'team:read', 'users:read', 'outgoing-webhook']});
+    ModuleLoader.library('loadConfiguration')(controller);    
 
     controller.setupWebserver(Config.port, function(err, webserver) {
       controller.createWebhookEndpoints(controller.webserver);
@@ -113,48 +108,6 @@ module.exports =  function(Botkit)  {
 
 
 
-    // just a simple way to make sure we don't
-    // connect to the RTM twice for the same team
-    var _bots = {};
-    function trackBot(bot) {
-      _bots[bot.config.token] = bot;
-    }
-
-
-    //creating bot
-    controller.on('create_bot', function(bot,config) {
-
-      if (_bots[bot.config.token]) {
-        // already online! do nothing.
-      } else {
-        bot.startRTM(function(err) {
-
-          if (!err) {
-            trackBot(bot);
-          }
-
-          bot.startPrivateConversation({user: config.createdBy}, function(err,convo) {
-            if (err) {
-              console.log(err);
-            } else {
-              convo.say("Hi, I'm kopy!");
-              convo.say("Use me or /kopy command to save important notes for later :sun_with_face:");
-            }
-          });
-
-        });
-      }
-    });
-
-
-    // Handle events related to the websocket connection to Slack
-    controller.on('rtm_open', function(bot) {
-      console.log('The RTM api just connected!');
-    });
-
-    controller.on('rtm_close', function(bot) {
-      console.log('The RTM api just closed');
-    });
 
     // give the bot something to listen for.
     controller.hears(["[A-Za-z0-9_^kopylist]"],
@@ -189,7 +142,7 @@ module.exports =  function(Botkit)  {
 
 
 
-    //slash command
+    //Slash command
     controller.on('slash_command', function(bot,message) {
       var data              = {};
       data.user_id          = message.user_id;
@@ -200,7 +153,7 @@ module.exports =  function(Botkit)  {
       data.created_at       = new Date();
 
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
-        
+
       nodeModel(data).save(function () {
           console.log("slack message is saved.");
       });
