@@ -12,6 +12,10 @@ module.exports = {
     return load(bot, '/bots/');
   },
 
+  library : function (lib) {
+    return load(lib, '/library/');
+  },
+
   controller : function (controller) {
     return load(controller, '/controllers/');
   },
