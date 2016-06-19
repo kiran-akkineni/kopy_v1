@@ -9,7 +9,7 @@ var mongoose = ModuleLoader.service('mongo'),
     util     = require('util');
 
 var User = new Schema({
-  auth_user_id: {
+  username: {
     type: String
   },
   auth_type: {
@@ -29,7 +29,7 @@ var User = new Schema({
     type   : Boolean,
     default: false
   },
-  created_at  : Date,
+  created_at  : {type: Date},
   updated_at  : {
     type: Date,
     default: Date.now }
@@ -43,6 +43,10 @@ User.statics.findByEmail =  function(email, cb) {
         if (cb) cb(result);
       }
     });
+};
+
+User.statics.findByUsernameAndAuthType =  function(user_name, auth_type) {
+    return this.find({username: user_name, auth_type: auth_type});
 };
 
 module.exports = mongoose.model('user', User);
