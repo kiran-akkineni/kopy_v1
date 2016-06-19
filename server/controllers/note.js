@@ -7,7 +7,41 @@
 var NoteController    = {};
 var userNoteModel     = ModuleLoader.model('user_note');
 var noteModel         = ModuleLoader.model('note');
-    
+var userModel         = ModuleLoader.model('user');
+var randomstring      = require("randomstring");
+
+NoteController.post = function (bot, data, cb) {
+    //saving bot message
+    noteModel(data).save(function () {
+      console.log("slack message is saved.");
+    });
+
+    userModel.findByUsernameAndAuthType(data.app_user_name, data.app_name)
+             .then(function (result) {
+
+                if (result.length == 0) {
+                    var user                    = {};
+                    user.auth_type              = data.app_name;
+                    user.username               = data.app_user_name;
+                    user.is_password_created    = true;
+                    user.created_at             = new Date();
+                    user.password               = randomstring.generate({length: 8, charset: 'alphabetic'});
+
+                    userModel(user).save(function () {
+                      console.log("New user and password generated.");
+
+                      //password generation tigger
+                      cb(user);
+                    });
+                } else {
+                    cb(false);
+                }
+            });
+
+};
+
+
+
 NoteController.get = function (req, res) {
 
     userNoteModel.findByEmail(req.query.email, function (results) {
@@ -22,5 +56,3 @@ NoteController.get = function (req, res) {
 };
 
 var exports = module.exports  = NoteController;
-
-
