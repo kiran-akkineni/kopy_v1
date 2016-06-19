@@ -125,19 +125,23 @@ module.exports =  function(Botkit)  {
 
 
       bot.api.users.info({'user': message.user}, function(err, response) {
-
         data.app_user_name  = response.user.name;
 
-        //saving bot message
-        nodeModel(data).save(function () {
-          console.log("slack message is saved.");
-        });
+          noteController.post(bot, data, function (user) {
+              if(user) {
+                  //response back that message is saved
+                  bot.startPrivateConversation(message, function(err,dm) {
+                    dm.say('Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
+                  });
+              } else {
+                  //response back that message is saved
+                  bot.startPrivateConversation(message, function(err,dm) {
+                    dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
+                  });
+              }
+          })
       });
 
-      //response back that message is saved
-      bot.startPrivateConversation(message,function(err,dm) {
-        dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
-      });
     });
 
 
