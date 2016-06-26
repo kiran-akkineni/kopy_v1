@@ -1,5 +1,5 @@
 export function tokenNotExpired(){
-    if (localStorage.removeItem('token') === null) {
+    if (localStorage.getItem('token') === null) {
         return false;
     }
 

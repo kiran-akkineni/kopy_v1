@@ -44,15 +44,17 @@ System.register(['angular2/core', 'angular2/router', './components/home/home', '
             function (_1) {}],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(location) {
+                function AppComponent(location, router) {
+                    this.router = router;
                     this.location = location;
                 }
                 AppComponent.prototype.logout = function () {
                     localStorage.removeItem('profile');
-                    localStorage.removeItem('id_token');
-                    this.loggedIn();
+                    localStorage.removeItem('token');
+                    this.router.navigate(['Home']);
                 };
                 AppComponent.prototype.loggedIn = function () {
+                    console.log(authcheckservice_1.tokenNotExpired());
                     return authcheckservice_1.tokenNotExpired();
                 };
                 AppComponent.prototype.isActive = function (path) {
@@ -74,7 +76,7 @@ System.register(['angular2/core', 'angular2/router', './components/home/home', '
                         { path: '/profile', name: 'Profile', component: profile_1.Profile },
                         { path: '/setting', name: 'Setting', component: setting_1.Setting }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Location])
+                    __metadata('design:paramtypes', [router_1.Location, router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             }());

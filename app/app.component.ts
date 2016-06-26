@@ -10,10 +10,7 @@ import { App }                                      from './components/app/app';
 import { Login }                                     from './components/login/login';
 import { Setting }                                  from './components/setting/setting';
 import {tokenNotExpired}                            from './services/authcheckservice';
-
 import 'rxjs/add/operator/map';
-
-declare var Auth0Lock;
 
 @Component({
 	 selector: 'kopy-app'
@@ -35,18 +32,19 @@ export class AppComponent {
 
     location: Location;
 
-    constructor(location: Location) {
+    constructor(location: Location, private router:Router) {
             this.location = location;
     }
     
     logout() {
       localStorage.removeItem('profile');
-      localStorage.removeItem('id_token');
+      localStorage.removeItem('token');
+      this.router.navigate(['Home']);
 
-      this.loggedIn();
     }
 
     loggedIn() {
+        console.log(tokenNotExpired());
       return tokenNotExpired();
     }
 
