@@ -4,6 +4,7 @@
 
 "use strict";
 var nodeModel       = ModuleLoader.model('note');
+var authController  = ModuleLoader.controller('auth');
 var userController  = ModuleLoader.controller('user');
 var noteController  = ModuleLoader.controller('note');
 var express         = require('express');
@@ -93,8 +94,8 @@ module.exports =  function(Botkit)  {
          noteController.get(req, res);
       });
 
-      webserver.post('/user',function(req,res) {
-          userController.post(req, res);
+      webserver.post('/authenticate',function(req,res) {
+          authController.post(req, res);
       });
 
       webserver.post('/user_note_map', function(req,res) {
