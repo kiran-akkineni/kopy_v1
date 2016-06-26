@@ -24,7 +24,7 @@
                     <li><a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a></li>
                   </ul>
               </li>
-              <li><a href="#" *ngIf="!loggedIn()" (click)="login()">Login</a></li>
+              <li><a href="#" *ngIf="!loggedIn()" [routerLink]="['Login']">Login</a></li>
             </ul>
         </div>
     </div>

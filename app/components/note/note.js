@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-jwt', './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', './../../services/authcheckservice', './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, angular2_jwt_1, app_setting_1;
+    var core_1, http_1, router_1, authcheckservice_1, app_setting_1;
     var Note;
     return {
         setters:[
@@ -23,8 +23,8 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (angular2_jwt_1_1) {
-                angular2_jwt_1 = angular2_jwt_1_1;
+            function (authcheckservice_1_1) {
+                authcheckservice_1 = authcheckservice_1_1;
             },
             function (app_setting_1_1) {
                 app_setting_1 = app_setting_1_1;
@@ -49,7 +49,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', 'angular2-
                         templateUrl: './components/note/note.html',
                         directives: [router_1.RouterOutlet, router_1.RouterLink]
                     }),
-                    router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
+                    router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
                     __metadata('design:paramtypes', [http_1.Http])
                 ], Note);
                 return Note;

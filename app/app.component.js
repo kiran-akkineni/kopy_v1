@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/http', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './components/user/user', './components/setting/setting', './app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './components/home/home', './components/profile/profile', './components/note/note', './components/app/app', './components/login/login', './components/setting/setting', './services/authcheckservice', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1, home_1, profile_1, note_1, app_1, user_1, setting_1, app_setting_1;
+    var core_1, router_1, home_1, profile_1, note_1, app_1, login_1, setting_1, authcheckservice_1;
     var AppComponent;
     return {
         setters:[
@@ -19,12 +19,6 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            },
-            function (angular2_jwt_1_1) {
-                angular2_jwt_1 = angular2_jwt_1_1;
-            },
-            function (http_1_1) {
-                http_1 = http_1_1;
             },
             function (home_1_1) {
                 home_1 = home_1_1;
@@ -38,55 +32,28 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
             function (app_1_1) {
                 app_1 = app_1_1;
             },
-            function (user_1_1) {
-                user_1 = user_1_1;
+            function (login_1_1) {
+                login_1 = login_1_1;
             },
             function (setting_1_1) {
                 setting_1 = setting_1_1;
             },
-            function (app_setting_1_1) {
-                app_setting_1 = app_setting_1_1;
+            function (authcheckservice_1_1) {
+                authcheckservice_1 = authcheckservice_1_1;
             },
             function (_1) {}],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(location, http, router) {
-                    this.http = http;
-                    this.router = router;
-                    this.lock = new Auth0Lock(app_setting_1.AppSettings.AUTH_CLIRNT_ID, app_setting_1.AppSettings.AUTH_APP_URL);
-                    this.user = new user_1.User();
-                    this.jwtHelper = new angular2_jwt_1.JwtHelper();
+                function AppComponent(location) {
                     this.location = location;
                 }
-                AppComponent.prototype.login = function () {
-                    var _this = this;
-                    var self = this;
-                    this.lock.show(function (err, profile, id_token) {
-                        if (err) {
-                            throw new Error(err);
-                        }
-                        localStorage.setItem('profile', JSON.stringify(profile));
-                        localStorage.setItem('id_token', id_token);
-                        /*
-                        console.log(
-                          this.jwtHelper.decodeToken(id_token),
-                          this.jwtHelper.getTokenExpirationDate(id_token),
-                          this.jwtHelper.isTokenExpired(id_token)
-                        );*/
-                        self.loggedIn();
-                        //save into db
-                        _this.user.saveUser(_this.http);
-                        //redirect note page
-                        _this.router.navigate(['Note']);
-                    });
-                };
                 AppComponent.prototype.logout = function () {
                     localStorage.removeItem('profile');
                     localStorage.removeItem('id_token');
                     this.loggedIn();
                 };
                 AppComponent.prototype.loggedIn = function () {
-                    return angular2_jwt_1.tokenNotExpired();
+                    return authcheckservice_1.tokenNotExpired();
                 };
                 AppComponent.prototype.isActive = function (path) {
                     return this.location.path() === path;
@@ -101,12 +68,13 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', 'angular2/h
                     }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Home', component: home_1.Home, useAsDefault: true },
+                        { path: '/login', name: 'Login', component: login_1.Login },
                         { path: '/note', name: 'Note', component: note_1.Note },
                         { path: '/app', name: 'App', component: app_1.App },
                         { path: '/profile', name: 'Profile', component: profile_1.Profile },
                         { path: '/setting', name: 'Setting', component: setting_1.Setting }
                     ]), 
-                    __metadata('design:paramtypes', [router_1.Location, http_1.Http, router_1.Router])
+                    __metadata('design:paramtypes', [router_1.Location])
                 ], AppComponent);
                 return AppComponent;
             }());

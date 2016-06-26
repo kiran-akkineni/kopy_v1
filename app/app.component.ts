@@ -1,16 +1,15 @@
 import {Component, View}                            from 'angular2/core';
 import {Router, RouterOutlet,
         RouteConfig, RouterLink, Location}          from 'angular2/router';
-import {tokenNotExpired, JwtHelper}                 from 'angular2-jwt';
 import {Http}                                       from 'angular2/http';
 
 import { Home }                                     from './components/home/home';
 import { Profile }                                  from './components/profile/profile';
 import { Note }                                     from './components/note/note';
 import { App }                                      from './components/app/app';
-import { User }                                     from './components/user/user';
+import { Login }                                     from './components/login/login';
 import { Setting }                                  from './components/setting/setting';
-import { AppSettings } 					            from './app.setting';
+import {tokenNotExpired}                            from './services/authcheckservice';
 
 import 'rxjs/add/operator/map';
 
@@ -25,6 +24,7 @@ declare var Auth0Lock;
 })
 @RouteConfig([
      { path: '/',           name: 'Home',    component: Home, useAsDefault: true},
+     { path: '/login',      name: 'Login',   component: Login },
      { path: '/note',       name: 'Note',    component: Note},
      { path: '/app',        name: 'App',     component: App},
      { path: '/profile',    name: 'Profile', component: Profile},
@@ -32,46 +32,13 @@ declare var Auth0Lock;
 ])
 
 export class AppComponent {
-    lock                 = new  Auth0Lock(AppSettings.AUTH_CLIRNT_ID,
-                                          AppSettings.AUTH_APP_URL);
-
-    user                 = new User();
-    jwtHelper: JwtHelper = new JwtHelper();
 
     location: Location;
 
-    constructor(location: Location, public http: Http, private router: Router) {
+    constructor(location: Location) {
             this.location = location;
     }
-
-
-    login() {
-      var self = this;
-      this.lock.show((err: string, profile: string, id_token: string) => {
-        if (err) {
-          throw new Error(err);
-        }
-        localStorage.setItem('profile',  JSON.stringify(profile));
-        localStorage.setItem('id_token', id_token);
-
-
-        /*
-        console.log(
-          this.jwtHelper.decodeToken(id_token),
-          this.jwtHelper.getTokenExpirationDate(id_token),
-          this.jwtHelper.isTokenExpired(id_token)
-        );*/
-
-        self.loggedIn();
-
-        //save into db
-        this.user.saveUser(this.http);
-
-        //redirect note page
-        this.router.navigate(['Note']);
-      });
-    }
-
+    
     logout() {
       localStorage.removeItem('profile');
       localStorage.removeItem('id_token');
