@@ -1,6 +1,6 @@
 {
   "name": "kopychat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "node": "5.8.0"
   },
