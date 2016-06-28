@@ -41,6 +41,7 @@
     "express": "^4.13.3",
     "hangouts-bot": "^0.2.1",
     "mongoose": "^4.4.11",
+    "node-uuid": "^1.4.7",
     "randomstring": "^1.1.5",
     "reflect-metadata": "0.1.2",
     "request-json": "^0.5.6",
