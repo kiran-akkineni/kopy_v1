@@ -9,6 +9,7 @@ var userNoteModel     = ModuleLoader.model('user_note');
 var noteModel         = ModuleLoader.model('note');
 var userModel         = ModuleLoader.model('user');
 var randomstring      = require("randomstring");
+var encryptService    = ModuleLoader.service('encrypt');
 
 NoteController.post = function (bot, data, cb) {
     //saving bot message
@@ -25,7 +26,8 @@ NoteController.post = function (bot, data, cb) {
                     user.username               = data.app_user_name;
                     user.is_password_created    = true;
                     user.created_at             = new Date();
-                    user.password               = randomstring.generate({length: 8, charset: 'alphabetic'});
+                    var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
+                    user.password               = encryptService.encrypt(password);
 
                     userModel(user).save(function () {
                       console.log("New user and password generated.");
@@ -38,6 +40,9 @@ NoteController.post = function (bot, data, cb) {
                       noteModel(data).save(function () {
                         console.log("slack message is saved.");
                       });
+
+                      //updating the password
+                      user.password   = password;
 
                       //password generation tigger
                       cb(user);

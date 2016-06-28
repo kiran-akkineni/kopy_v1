@@ -7,7 +7,7 @@
 var UserController  = {};
 var userModel       = ModuleLoader.model('user');
 var userNoteModel   = ModuleLoader.model('user_note');
-var encryptService  = ModuleLoader.service('encrypt');
+
     
 UserController.post = function (req, res) {
     var data          = {};
@@ -28,7 +28,6 @@ UserController.post = function (req, res) {
                 res.json({status: 'user already exist.'});
             } else {
               userModel(data).save(function (err) {
-                  data.password = encryptService.encrypt(data.password);
                    if (err) throw err;
                     res.json({status: 'okay'});
                    });
