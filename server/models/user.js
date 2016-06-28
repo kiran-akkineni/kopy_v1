@@ -24,7 +24,9 @@ var User = new Schema({
   password: {
     type: String
   },
-
+  token: {
+    type: String
+  },
   is_password_created: {
     type   : Boolean,
     default: false
@@ -49,6 +51,7 @@ User.statics.findByUsernameAndAuthType =  function(user_name, auth_type) {
     return this.find({username: user_name, auth_type: auth_type});
 };
 
+User.index({ "token": 1 }, { sparse: true } );
 module.exports = mongoose.model('user', User);
 
 
