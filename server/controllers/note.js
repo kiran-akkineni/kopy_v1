@@ -30,10 +30,26 @@ NoteController.post = function (bot, data, cb) {
                     userModel(user).save(function () {
                       console.log("New user and password generated.");
 
+
+                      //update the reference to note
+                      data.user_id =  result._id;
+
+                      //saving bot message
+                      noteModel(data).save(function () {
+                        console.log("slack message is saved.");
+                      });
+
                       //password generation tigger
                       cb(user);
                     });
                 } else {
+                    //update the reference to note
+                     data.user_id =  result._id;
+
+                     //saving bot message
+                     noteModel(data).save(function () {
+                       console.log("slack message is saved.");
+                     });
                     cb(false);
                 }
             });
