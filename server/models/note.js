@@ -10,23 +10,23 @@ var mongoose = ModuleLoader.service('mongo'),
 
 var Note = new Schema({
   user_id: {
+    type: Schema.Types.ObjectId,
+    ref : 'user'},
+  message: {      //real note
     type: String
   },
-  message: {
+  app_name: {     //slack, fb, skype, hangout
+    type    : String,
+    default : 'slack'
+  },
+  app_user_name: {   //username inside app
     type: String
   },
-  app_name: {
-    type: String,
-    default: 'slack'
-  },
-  app_user_name: {
+  app_group_name: {   //not important always
     type: String
   },
-  app_group_name: {
-    type: String
-  },
-  created_at  : Date,
-  updated_at  : {
+  created_at : Date,
+  updated_at : {
     type    : Date,
     default : Date.now }
 });
