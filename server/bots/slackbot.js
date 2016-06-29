@@ -118,8 +118,6 @@ module.exports =  function(Botkit)  {
       var data             = {app_name    : 'slack',
                               created_at  : new Date(),
                               updated_at  : new Date()};
-
-      data.user_id        = message.user;
       data.message        = message.text;
       data.app_name       = 'slack';
       data.app_group_name = bot.config.name;
@@ -128,7 +126,7 @@ module.exports =  function(Botkit)  {
       bot.api.users.info({'user': message.user}, function(err, response) {
         data.app_user_name  = response.user.name;
 
-          noteService.post(data, function (user) {
+          noteService.save(data, function (user) {
               console.log(user);
               if(user) {
                   //response back that message is saved
@@ -150,8 +148,8 @@ module.exports =  function(Botkit)  {
 
     //Slash command
     controller.on('slash_command', function(bot,message) {
-      var data              = {};
-      data.user_id          = message.user_id;
+      var data              = {created_at  : new Date(),
+                               updated_at  : new Date()};
       data.message          = message.text;
       data.app_name         = 'slack';
       data.app_user_name    = message.user_name;
@@ -160,9 +158,20 @@ module.exports =  function(Botkit)  {
 
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
 
-      nodeModel(data).save(function () {
-          console.log("slack message is saved.");
-      });
+      noteService.save(data, function (user) {
+              console.log(user);
+              if(user) {
+                  //response back that message is saved
+                  bot.startPrivateConversation(message, function(err,dm) {
+                    dm.say('Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
+                  });
+              } else {
+                  //response back that message is saved
+                  bot.startPrivateConversation(message, function(err,dm) {
+                    dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
+                  });
+              }
+          })
     });
 };
 
