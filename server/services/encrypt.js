@@ -2,14 +2,11 @@
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
 // Require the bcrypt package
-var bcrypt = require('bcrypt');
+var bcrypt          = require('bcrypt');
+var salt            = bcrypt.genSaltSync(15512);
+var encryptService  = {};
 
-// Create a password salt
-var salt = bcrypt.genSaltSync("kopy");
-
-var encryptService = {};
-
-encryptService.prototype.encrypt  = function (password) {
+encryptService.encrypt  = function (password) {
     return bcrypt.hashSync(password, salt);
 };
 
