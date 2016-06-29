@@ -4,12 +4,10 @@
 
 'use strict';
 
-var UserController  = {};
+var UserService  = {};
 var userModel       = ModuleLoader.model('user');
-var userNoteModel   = ModuleLoader.model('user_note');
-
     
-UserController.post = function (req, res) {
+UserService.post = function (req, res) {
     var data          = {};
     data.name         = req.body.name;
     data.email        = req.body.email;
@@ -37,7 +35,7 @@ UserController.post = function (req, res) {
     
 };
 
-UserController.createUserNoteMap = function (req, res) {
+UserService.createUserNoteMap = function (req, res) {
     var map              = {};
     map.email            = req.body.email;
     map.app_group_name   = req.body.app_group_name;
@@ -59,7 +57,7 @@ UserController.createUserNoteMap = function (req, res) {
     res.json({status: 'okay'});
 };
 
-UserController.getUserNoteMap = function (req, res) {
+UserService.getUserNoteMap = function (req, res) {
 
     userNoteModel.findByEmail(req.query.email, function (results) {
       if (results.length > 0) {
@@ -70,6 +68,6 @@ UserController.getUserNoteMap = function (req, res) {
     });
 };
 
-var exports = module.exports  = UserController;
+var exports = module.exports  = UserService;
 
 

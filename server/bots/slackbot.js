@@ -4,9 +4,9 @@
 
 "use strict";
 var nodeModel       = ModuleLoader.model('note');
-var authController  = ModuleLoader.controller('auth');
-var userController  = ModuleLoader.controller('user');
-var noteController  = ModuleLoader.controller('note');
+var authService     = ModuleLoader.service('auth');
+var userService     = ModuleLoader.service('user');
+var noteService     = ModuleLoader.service('note');
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
@@ -91,19 +91,19 @@ module.exports =  function(Botkit)  {
 
 
       webserver.get('/note', function(req,res) {
-         noteController.get(req, res);
+         noteService.get(req, res);
       });
 
       webserver.post('/authenticate',function(req,res) {
-          authController.post(req, res);
+          authService.post(req, res);
       });
 
       webserver.post('/user_note_map', function(req,res) {
-          userController.createUserNoteMap(req, res);
+          userService.createUserNoteMap(req, res);
       });
 
       webserver.get('/user_note_map', function(req,res) {
-          userController.getUserNoteMap(req, res);
+          userService.getUserNoteMap(req, res);
       });
     });
 
@@ -128,7 +128,8 @@ module.exports =  function(Botkit)  {
       bot.api.users.info({'user': message.user}, function(err, response) {
         data.app_user_name  = response.user.name;
 
-          noteController.post(bot, data, function (user) {
+          noteService.post(data, function (user) {
+              console.log(user);
               if(user) {
                   //response back that message is saved
                   bot.startPrivateConversation(message, function(err,dm) {

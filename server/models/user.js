@@ -15,7 +15,7 @@ var User = new Schema({
   auth_type: {
     type: String
   },
-  name: {
+  name: {    //Full Name
     type: String
   },
   email: {

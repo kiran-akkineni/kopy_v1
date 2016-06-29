@@ -3,7 +3,7 @@
  */
 // Require the bcrypt package
 var bcrypt          = require('bcrypt');
-var salt            = bcrypt.genSaltSync(15512);
+var salt            = bcrypt.genSaltSync(10);
 var encryptService  = {};
 
 encryptService.encrypt  = function (password) {

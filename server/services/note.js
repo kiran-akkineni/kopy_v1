@@ -4,23 +4,21 @@
 
 'use strict';
 
-var NoteController    = {};
-var userNoteModel     = ModuleLoader.model('user_note');
+var NoteService    = {};
 var noteModel         = ModuleLoader.model('note');
 var userModel         = ModuleLoader.model('user');
 var randomstring      = require("randomstring");
 var encryptService    = ModuleLoader.service('encrypt');
 
-NoteController.post = function (bot, data, cb) {
-    //saving bot message
-    noteModel(data).save(function () {
-      console.log("slack message is saved.");
-    });
+NoteService.post = function (data, cb) {
+
+    console.log('imside note controller.');
 
     userModel.findByUsernameAndAuthType(data.app_user_name, data.app_name)
              .then(function (result) {
 
-                if (result.length == 0) {
+
+                if (result.length === 0) {
                     var user                    = {};
                     user.auth_type              = data.app_name;
                     user.username               = data.app_user_name;
@@ -29,10 +27,7 @@ NoteController.post = function (bot, data, cb) {
                     var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
                     user.password               = encryptService.encrypt(password);
 
-                    userModel(user).save(function () {
-                      console.log("New user and password generated.");
-
-
+                    userModel(user).save(function (err, result) {
                       //update the reference to note
                       data.user_id =  result._id;
 
@@ -44,10 +39,11 @@ NoteController.post = function (bot, data, cb) {
                       //updating the password
                       user.password   = password;
 
-                      //password generation tigger
+                      //password generation trigger
                       cb(user);
                     });
                 } else {
+                    console.log('else block');
                     //update the reference to note
                      data.user_id =  result._id;
 
@@ -63,7 +59,7 @@ NoteController.post = function (bot, data, cb) {
 
 
 
-NoteController.get = function (req, res) {
+NoteService.get = function (req, res) {
 
     userNoteModel.findByEmail(req.query.email, function (results) {
         if (results.length > 0) {
@@ -76,4 +72,4 @@ NoteController.get = function (req, res) {
     });
 };
 
-var exports = module.exports  = NoteController;
+var exports = module.exports  = NoteService;
