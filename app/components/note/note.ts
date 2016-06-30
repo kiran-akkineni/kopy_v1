@@ -20,9 +20,9 @@ export class Note {
 	public notes;
 
 	 constructor(http:Http) {
-		 let profile = JSON.parse(localStorage.getItem('profile'));
+		 let token = localStorage.getItem('token');
 
-		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/note?email=" +profile.email;
+		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/note?token=" +token;
 		 http.get(NoteRequestUrl)
 		     .map(res => res.json())
       		 .subscribe(
