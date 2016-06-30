@@ -91,19 +91,13 @@ module.exports =  function(Botkit)  {
 
 
       webserver.get('/note', function(req,res) {
-         noteService.get(req, res);
+         noteService.getByAuthUser(req.query.token, function(result){
+            res.json(result);
+         });
       });
 
       webserver.post('/authenticate',function(req,res) {
-          authService.post(req, res);
-      });
-
-      webserver.post('/user_note_map', function(req,res) {
-          userService.createUserNoteMap(req, res);
-      });
-
-      webserver.get('/user_note_map', function(req,res) {
-          userService.getUserNoteMap(req, res);
+          authService.authenticate(req, res);
       });
     });
 
