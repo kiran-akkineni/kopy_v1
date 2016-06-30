@@ -60,7 +60,6 @@ NoteService.save = function (data, cb) {
 //Return all note based on Auth User
 NoteService.getByAuthUser = function (token, cb) {
 
-
     if (typeof token === 'undefined') {
         cb([]);
     } else {
