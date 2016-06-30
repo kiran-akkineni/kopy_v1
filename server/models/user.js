@@ -37,18 +37,9 @@ var User = new Schema({
     default: Date.now }
 });
 
-User.statics.findByEmail =  function(email, cb) {
-    this.find({email: email}, function (err, result) {
-      if (err) {
-        throw err;
-      } else {
-        if (cb) cb(result);
-      }
-    });
-};
 
 User.statics.findByUsernameAndAuthType =  function(user_name, auth_type) {
-    return this.find({username: user_name, auth_type: auth_type});
+    return this.findOne({username: user_name, auth_type: auth_type});
 };
 
 User.index({ "token": 1 }, { sparse: true } );
