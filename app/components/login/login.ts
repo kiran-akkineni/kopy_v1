@@ -26,7 +26,7 @@ export class Login {
 		this.user.password = '';
 	}
 
-	login() {
+	onSubmit() {
 		this.authService.authenticate(this.user).then((res) => {
 			if(res) {
 				this.router.navigate(['Note']);

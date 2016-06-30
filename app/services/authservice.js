@@ -35,7 +35,7 @@ System.register(['angular2/core', 'angular2/http', './../app.setting'], function
                     var _this = this;
                     this.isLoggedin = false;
                     var headers = new http_1.Headers();
-                    var credentials = 'username=admin' + data.username + '&password=admin' + data.password;
+                    var credentials = 'username=' + data.username + '&password=' + data.password;
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
                     var authRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/authenticate";
                     return new Promise(function (resolve) {

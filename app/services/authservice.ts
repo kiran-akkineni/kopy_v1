@@ -18,7 +18,7 @@ export class AuthService {
     authenticate(data) {
         this.isLoggedin = false;
         var headers     = new Headers();
-        var credentials = 'username=admin'+data.username+'&password=admin'+data.password;
+        var credentials = 'username='+data.username+'&password='+data.password;
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         var authRequestUrl  = AppSettings.API_ENDPOINT + "/authenticate";
