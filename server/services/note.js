@@ -10,9 +10,9 @@ var userModel         = ModuleLoader.model('user');
 var randomstring      = require("randomstring");
 var encryptService    = ModuleLoader.service('encrypt');
 
-NoteService.post = function (data, cb) {
 
-    console.log('imside note controller.');
+//Save note with generate password for user if user and password doesn't exits
+NoteService.save = function (data, cb) {
 
     userModel.findByUsernameAndAuthType(data.app_user_name, data.app_name)
              .then(function (result) {
@@ -43,7 +43,6 @@ NoteService.post = function (data, cb) {
                       cb(user);
                     });
                 } else {
-                    console.log('else block');
                     //update the reference to note
                      data.user_id =  result._id;
 
@@ -58,18 +57,25 @@ NoteService.post = function (data, cb) {
 };
 
 
+//Return all note based on Auth User
+NoteService.getByAuthUser = function (token, cb) {
 
-NoteService.get = function (req, res) {
 
-    userNoteModel.findByEmail(req.query.email, function (results) {
-        if (results.length > 0) {
-            noteModel.find({app_user_name: results[0].app_user_name}, function(err, notes) {
-                res.json(notes);
+    if (typeof token === 'undefined') {
+        cb([]);
+    } else {
+
+        userModel.findOne({token: token})
+            .then(function (result) {
+                if (result.length === 0) {
+                    cb([]);
+                } else {
+                    noteModel.find({user_id: result._id}, function (err, notes) {
+                        cb(notes);
+                    });
+                }
             });
-        } else {
-            res.json([]);
-        }
-    });
+    }
 };
 
 var exports = module.exports  = NoteService;
