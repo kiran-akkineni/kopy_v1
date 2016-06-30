@@ -13,6 +13,7 @@ global.ModuleLoader   = require(base_path + '/library/moduleLoader.js');
 var Botkit            = require('botkit');
 var hangoutsBot       = require('hangouts-bot');
 var request           = require('request-json');
+global._              = require('lodash');
 global.client         = request.createClient('https://graph.facebook.com/');
 
 
