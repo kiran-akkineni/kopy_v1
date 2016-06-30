@@ -12,13 +12,17 @@ var uuid              = require('node-uuid');
 AuthService.authenticate = function (req, res) {
 
     var  token = uuid.v4();
+
+    console.log(req.body);
     
-    userModel.findOne({ username: req.body.username, password: encryptService.encrypt(req.body.password)}, function (err, user) {
-        if(user.length === 0) {
+    userModel.findOne({ username: req.body.username.trim(), password: encryptService.encrypt(req.body.password.trim())}, function (err, user) {
+        console.log(user);
+        if(_.isEmpty(user)) {
             res.json({success: false});
         } else {
             user.token = token;
             userModel(user).save(function (err) {
+                if ('')
                 res.json({success: true, profile:{name: user.name}, token: user.token});
             });
         }
