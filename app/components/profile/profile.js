@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './../../services/authcheckservice'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1;
+    var core_1, router_1, authcheckservice_1;
     var Profile;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (angular2_jwt_1_1) {
-                angular2_jwt_1 = angular2_jwt_1_1;
+            function (authcheckservice_1_1) {
+                authcheckservice_1 = authcheckservice_1_1;
             }],
         execute: function() {
             Profile = (function () {
@@ -36,8 +36,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt'], function(e
                     core_1.View({
                         templateUrl: './components/profile/profile.html'
                     }),
-                    router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
+                    router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
+                    __metadata('design:paramtypes', [Object])
                 ], Profile);
                 return Profile;
             }());

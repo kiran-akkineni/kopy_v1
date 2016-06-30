@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/http", './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './../../services/authcheckservice', "angular2/http", './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, angular2_jwt_1, http_1, app_setting_1;
+    var core_1, router_1, authcheckservice_1, http_1, app_setting_1;
     var Setting;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (angular2_jwt_1_1) {
-                angular2_jwt_1 = angular2_jwt_1_1;
+            function (authcheckservice_1_1) {
+                authcheckservice_1 = authcheckservice_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -68,7 +68,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2-jwt', "angular2/h
                         selector: 'setting',
                         templateUrl: './components/setting/setting.html'
                     }),
-                    router_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
+                    router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
                     __metadata('design:paramtypes', [http_1.Http])
                 ], Setting);
                 return Setting;

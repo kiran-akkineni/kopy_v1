@@ -8,7 +8,6 @@ import {AppComponent}               from './app.component'
 
 
 import {HTTP_PROVIDERS, Http}       from 'angular2/http';
-import {AuthHttp, AuthConfig}       from 'angular2-jwt';
 
 enableProdMode();
 bootstrap(AppComponent, [

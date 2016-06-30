@@ -1,6 +1,6 @@
 import {Component, View}                from 'angular2/core';
 import {CanActivate}                    from 'angular2/router';
-import {tokenNotExpired, AuthHttp}      from 'angular2-jwt';
+import {tokenNotExpired}                from './../../services/authcheckservice';
 
 @Component({
 	selector: 'profile'
