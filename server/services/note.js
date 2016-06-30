@@ -18,14 +18,14 @@ NoteService.save = function (data, cb) {
              .then(function (result) {
 
 
-                if (result.length === 0) {
+                if (_.isEmpty(result)) {
                     var user                    = {};
                     user.auth_type              = data.app_name;
                     user.username               = data.app_user_name;
                     user.is_password_created    = true;
                     user.created_at             = new Date();
                     var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
-                    user.password               = encryptService.encrypt(password);
+                    user.password               = encryptService.encrypt(password.trim());
 
                     userModel(user).save(function (err, result) {
                       //update the reference to note
@@ -37,7 +37,7 @@ NoteService.save = function (data, cb) {
                       });
 
                       //updating the password
-                      user.password   = password;
+                      user.password   = password.trim();
 
                       //password generation trigger
                       cb(user);
