@@ -10,7 +10,8 @@ import {AuthService} 		from './../../services/authservice';
 	providers: [AuthService]
 })
 @View({
-	templateUrl: './components/login/login.html'
+	templateUrl: './components/login/login.html',
+	styleUrls: ["./components/login/login.css"]
 })
 
 export class Login {
