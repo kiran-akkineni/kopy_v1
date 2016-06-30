@@ -9,7 +9,7 @@ var userModel         = ModuleLoader.model('user');
 var encryptService    = ModuleLoader.service('encrypt');
 var uuid              = require('node-uuid');
 
-AuthService.post = function (req, res) {
+AuthService.authenticate = function (req, res) {
 
     var  token = uuid.v4();
     
@@ -18,7 +18,7 @@ AuthService.post = function (req, res) {
             res.json({success: false});
         } else {
             user.token = token;
-            user.save(function (err) {
+            userModel(user).save(function (err) {
                 res.json({success: true, profile:{name: user.name}, token: user.token});
             });
         }
