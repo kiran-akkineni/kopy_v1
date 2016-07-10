@@ -69,22 +69,24 @@ module.exports =  function(Botkit)  {
          jsonData.message   = {text: "Got it, boss :)"};
 
          var data              = {};
-         data.user_id          = message.sender.id;
          data.message          = message.message.text;
          data.app_name         = 'facebook';
          data.app_user_name    = message.sender.id;
          data.app_group_name   = 'kopy';
          data.created_at       = new Date();
 
-        //saving bot message
-        nodeModel(data).save(function () {
-          console.log("fb message is saved.");
-        });
+        noteService.save(data, function (user) {
+              console.log(user);
+              if(user) {
+                  //response back that message is saved
+                  jsonData.message.text = 'Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password;
+              }
 
-        client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
-            //local logging purposes..
-          console.log('response sent successfully. Status: ' + res.statusCode);
-        });
+              client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
+                 //local logging purposes..
+                  console.log('response sent successfully. Status: ' + res.statusCode);
+              });
+          });
 
         res.sendStatus(200);
       });
@@ -153,19 +155,19 @@ module.exports =  function(Botkit)  {
       bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
 
       noteService.save(data, function (user) {
-              console.log(user);
-              if(user) {
-                  //response back that message is saved
-                  bot.startPrivateConversation(message, function(err,dm) {
-                    dm.say('Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
-                  });
-              } else {
-                  //response back that message is saved
-                  bot.startPrivateConversation(message, function(err,dm) {
-                    dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
-                  });
-              }
-          })
+          console.log(user);
+          if(user) {
+              //response back that message is saved
+              bot.startPrivateConversation(message, function(err,dm) {
+                dm.say('Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
+              });
+          } else {
+              //response back that message is saved
+              bot.startPrivateConversation(message, function(err,dm) {
+                dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
+              });
+          }
+      })
     });
 };
 
