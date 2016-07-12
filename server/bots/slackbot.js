@@ -141,7 +141,6 @@ module.exports =  function(Botkit)  {
     });
 
 
-
     //Slash command
     controller.on('slash_command', function(bot,message) {
       var data              = {created_at  : new Date(),
@@ -168,6 +167,25 @@ module.exports =  function(Botkit)  {
               });
           }
       })
+    });
+
+
+    //reset password
+    controller.hears(["kopy_reset_password"], function(bot, message) {
+      var data = {app_name : 'slack'};
+
+      bot.api.users.info({'user': message.user}, function(err, response) {
+        data.app_user_name  = response.user.name;
+
+          userService.resetPassword(data)
+                     .then(function (user) {
+                         //response back that message is saved
+                          bot.startPrivateConversation(message, function(err,dm) {
+                            dm.say('Boss!!! Your password has been reset. Username: ' + user.username + '  & Password: ' + user.password);
+                          });
+                     });
+      });
+
     });
 };
 
