@@ -7,8 +7,6 @@ import {AppSettings} 			                              from './../../app.setting'
 
 import 'rxjs/add/operator/map';
 
-
-
 @Component({
 	selector: 'setting',
     templateUrl: './components/setting/setting.html'
@@ -62,8 +60,5 @@ export class Setting implements OnInit
                   err => console.log(err),
                   () => console.log('mapping is done')
                  );
-
-        //redirect note page
-        //this.router.navigate(['Note']);
     }
 }
