@@ -9,7 +9,7 @@ var mongoose = ModuleLoader.service('mongo'),
     util     = require('util');
 
 var User = new Schema({
-  username: {
+  username: {   //unique
     type: String
   },
   auth_type: {
