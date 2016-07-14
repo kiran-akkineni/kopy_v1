@@ -1,22 +1,23 @@
-<p class="lead"><strong>Notes</strong></p>
+<p class="lead">
+    <strong>Notes</strong>
+</p>
+
 <div *ngIf="notes && notes.length == 0" class="alert alert-info">
   <strong>Info!</strong> Please update you <a [routerLink]="['Setting']"><u>Setting</u></a>.
 </div>
-<table class="table table-striped" *ngIf="notes && notes.length > 0">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Username</th>
-        <th>App Name</th>
-        <th>Note</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="#note of notes #idx=index" >
-    <tr>
-        <th scope="row">{{idx + 1 }}</th>
-        <td>{{ note.app_user_name}}</td>
-        <td>{{ note.app_name}}</td>
-        <td>{{ note.message }}</td>
-    </tr>
-    </tbody>
-</table>
+
+<div *ngIf="notes && notes.length > 0">
+    <div class="card-columns" *ngFor="note of notes">
+      <div class="card card-block">
+        <blockquote class="card-blockquote">
+          <h6>{{ note.app_name}}</h6>
+          <p>{{ note.message }}</p>
+          <footer>
+            <small class="text-muted">
+              Someone famous in <cite title="Source Title">Source Title</cite>
+            </small>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+</div>
