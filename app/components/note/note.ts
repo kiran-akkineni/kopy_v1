@@ -11,8 +11,9 @@ import 'rxjs/add/operator/map';
 	viewProviders: [HTTP_PROVIDERS]
 })
 @View({
-	templateUrl: './components/note/note.html',
-	directives: [RouterOutlet, RouterLink]
+	templateUrl : './components/note/note.html',
+	directives  : [RouterOutlet, RouterLink],
+	styleUrls   : ['./components/note/note.css']
 })
 
 @CanActivate(() => tokenNotExpired())
