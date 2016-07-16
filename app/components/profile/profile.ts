@@ -12,7 +12,6 @@ import {tokenNotExpired}                from './../../services/authcheckservice'
 export class Profile {
     profile: any;
 
-  constructor(public authHttp: AuthHttp) {
-    this.profile = JSON.parse(localStorage.getItem('profile'));
+  constructor() {
   }
 }
