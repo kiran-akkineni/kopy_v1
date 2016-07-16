@@ -25,14 +25,16 @@ export class AuthService {
 
         return new Promise((resolve) => {
 
-            this.http.post(authRequestUrl, credentials, {headers: headers}).subscribe((data) => {
+            this.http.post(authRequestUrl, credentials, {headers: headers}).map(response => response.json()).subscribe((response) => {
+
+                console.log(response);
 
 
 
-                if (data.json().success) {
+                if (response.success) {
                     this.isLoggedin = true;
-                    localStorage.setItem('profile',  data.json().profile);
-                    localStorage.setItem('token',    data.json().token);
+                    localStorage.setItem('profile',  response.profile);
+                    localStorage.setItem('token',    response.token);
                     resolve(this.isLoggedin);
                 }
             })
