@@ -7,14 +7,8 @@
 </div>
 
 
-<div class="card">
-  <div *ngFor="#note of notes" class="card card-block">
-    <blockquote class="card-blockquote">
-      <h6 class="card-subtitle text-muted">{{note.app_name}}</h6>
-      <p class="card-text">{{note.message}}</p>
-        <small class="text-muted">
-          Someone famous in <cite title="Source Title">Source Title</cite>
-        </small>
-    </blockquote>
+<div class="row">
+  <div *ngFor="#note of notes" class="item">
+      <div class="well">{{note.message}}</div>
   </div>
 </div>
