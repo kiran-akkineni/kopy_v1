@@ -6,18 +6,15 @@
   <strong>Info!</strong> Please update you <a [routerLink]="['Setting']"><u>Setting</u></a>.
 </div>
 
-<div *ngIf="notes && notes.length > 0">
-    <div class="card-columns" *ngFor="note of notes">
-      <div class="card card-block">
-        <blockquote class="card-blockquote">
-          <h6>{{ note.app_name}}</h6>
-          <p>{{ note.message }}</p>
-          <footer>
-            <small class="text-muted">
-              Someone famous in <cite title="Source Title">Source Title</cite>
-            </small>
-          </footer>
-        </blockquote>
-      </div>
-    </div>
+
+<div class="card">
+  <div *ngFor="#note of notes" class="card card-block">
+    <blockquote class="card-blockquote">
+      <h6 class="card-subtitle text-muted">{{note.app_name}}</h6>
+      <p class="card-text">{{note.message}}</p>
+        <small class="text-muted">
+          Someone famous in <cite title="Source Title">Source Title</cite>
+        </small>
+    </blockquote>
+  </div>
 </div>

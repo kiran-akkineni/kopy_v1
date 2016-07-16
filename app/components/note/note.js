@@ -34,6 +34,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './../../s
             Note = (function () {
                 function Note(http) {
                     var _this = this;
+                    this.notes = [];
                     var token = localStorage.getItem('token');
                     var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note?token=" + token;
                     http.get(NoteRequestUrl)
@@ -47,7 +48,8 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './../../s
                     }),
                     core_1.View({
                         templateUrl: './components/note/note.html',
-                        directives: [router_1.RouterOutlet, router_1.RouterLink]
+                        directives: [router_1.RouterOutlet, router_1.RouterLink],
+                        styleUrls: ['./components/note/note.css']
                     }),
                     router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
                     __metadata('design:paramtypes', [http_1.Http])
