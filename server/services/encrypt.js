@@ -1,13 +1,18 @@
 /**
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
-// Require the bcrypt package
-var bcrypt          = require('bcrypt');
-var salt            = bcrypt.genSaltSync(10);
-var encryptService  = {};
+var crypto              = require('crypto'),
+    algorithm           = 'aes-256-ctr',
+    password            = 'kopy',
+    encryptService      = {};
 
-encryptService.encrypt  = function (password) {
-    return bcrypt.hashSync(password, salt);
+
+encryptService.encrypt = function(text){
+  var cipher    = crypto.createCipher(algorithm,password),
+      crypted   = cipher.update(text,'utf8','hex');
+
+  crypted += cipher.final('hex');
+  return crypted;
 };
 
 var exports = module.exports  = encryptService;
