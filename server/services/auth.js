@@ -21,9 +21,14 @@ AuthService.authenticate = function (req, res) {
             res.json({success: false});
         } else {
             user.token = token;
-            userModel(user).save(function (err) {
-                if ('')
-                res.json({success: true, profile:{name: user.name}, token: user.token});
+            userModel(user).save(function (err, user) {
+                if(err) {
+                    res.json({success: false});
+                } else {
+                    console.log("authenticated successfully.");
+                    res.json({success: true, profile:{name: user.name}, token: user.token});
+                }
+
             });
         }
     })
