@@ -18,7 +18,6 @@ module.exports =  function(Botkit)  {
 
     controller.setupWebserver(Config.port, function(err, webserver) {
       controller.createWebhookEndpoints(controller.webserver);
-
       controller.createOauthEndpoints(controller.webserver,function(err,req,res) {
         if (err) {
           res.status(500).send('ERROR: ' + err);
@@ -27,21 +26,17 @@ module.exports =  function(Botkit)  {
         }
       });
 
-      webserver.get('/heartbeat',function(req,res) {
-        res.send('OK');
-      });
-
-
       //serving static
       webserver.use(express.static("./node_modules/"));
       webserver.use(express.static("./app/"));
 
-
+      //midlewares
       webserver.use(bodyParser.json());
       webserver.use(bodyParser.urlencoded({ extended: false }));
       webserver.use(cookieParser());
       webserver.use(express.static('./public'));
 
+      //cross-side request accept
       webserver.use(function (req, res, next) {
          res.header("Access-Control-Allow-Origin", "*");
          res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -92,15 +87,10 @@ module.exports =  function(Botkit)  {
       });
 
 
-      webserver.get('/note', function(req,res) {
-         noteService.getByAuthUser(req.query.token, function(result){
-            res.json(result);
-         });
-      });
-
-      webserver.post('/authenticate',function(req,res) {
-          authService.authenticate(req, res);
-      });
+      webserver.get('/heartbeat',function(req,res) { res.json({status:'Okay'})});
+      webserver.get('/note', function(req,res) { noteService.getByAuthUser(req,res)});
+      webserver.get('/profile', function(req,res) {userService.getByAuthUser(req,res)});
+      webserver.post('/authenticate',function(req,res) {authService.authenticate(req, res);});
     });
 
 
