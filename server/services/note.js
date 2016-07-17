@@ -58,22 +58,21 @@ NoteService.save = function (data, cb) {
 
 
 //Return all note based on Auth User
-NoteService.getByAuthUser = function (token, cb) {
+NoteService.getByAuthUser = function (req, res) {
 
-    if (typeof token === 'undefined') {
-        cb([]);
-    } else {
-
-        userModel.findOne({token: token})
+    if ('token' in req.query) {
+        userModel.findOne({token: req.query.token})
             .then(function (result) {
                 if (result.length === 0) {
-                    cb([]);
+                    res.json([]);
                 } else {
                     noteModel.find({user_id: result._id}, function (err, notes) {
-                        cb(notes);
+                        res.json(notes);
                     });
                 }
             });
+    } else {
+        res.json([]);
     }
 };
 

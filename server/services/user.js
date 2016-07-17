@@ -8,6 +8,23 @@ var UserService  = {};
 var Promise      = require('promise');
 var userModel    = ModuleLoader.model('user');
 
+
+UserService.getByAuthUser = function (req, res) {
+
+    if ('token' in req.query) {
+        userModel.findOne({token: req.query.token})
+            .then(function (result) {
+                if (result.length === 0) {
+                    res.json([]);
+                } else {
+                    res.json(result);
+                }
+            });
+    } else {
+        res.json([]);
+    }
+};
+
 UserService.resetPassword =  function (data) {
 
     return new Promise(function (resolve, reject) {
