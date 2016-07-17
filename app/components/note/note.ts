@@ -22,14 +22,17 @@ export class Note {
 
 	 constructor(http:Http) {
 	     this.notes = [];
-		 let token = localStorage.getItem('token');
+		 this.fetch(http);
+	 }
+
+
+	 fetch(client) {
+	 	let token = localStorage.getItem('token');
 
 		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/note?token=" +token;
-		 http.get(NoteRequestUrl)
-		     .map(res => res.json())
-      		 .subscribe(
-        		data	 => { this.notes = data},
-        		err 	 => console.log(err),
-        		() 		 => console.log(this.notes));
+		 client.get(NoteRequestUrl)
+		       .map(data => data.json())
+      		   .subscribe(data	 => { this.notes = data},
+        		    	  err 	 => console.log(err));
 	 }
 }
