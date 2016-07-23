@@ -22,6 +22,7 @@ AuthService.authenticate = function (req, res) {
         } else {
             user.token = token;
             userModel(user).save(function (err, user) {
+                console.log(err, user);
                 if(err) {
                     res.json({success: false});
                 } else {
