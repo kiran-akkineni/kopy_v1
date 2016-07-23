@@ -21,7 +21,7 @@ AuthService.authenticate = function (req, res) {
             res.json({success: false});
         } else {
             var id  = user._id;
-            delete user._id;
+            user = _.omit(user,'_id');
             user.token = token;
             console.log("user for update: ", user);
             userModel.findOneAndUpdate({_id: id}, user, function (err, user) {
