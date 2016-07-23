@@ -17,12 +17,11 @@ AuthService.authenticate = function (req, res) {
     console.log("requested password: ", encryptService.encrypt(req.body.password.trim()));
     userModel.findOne({ username: req.body.username.trim(), password: encryptService.encrypt(req.body.password.trim())}, function (err, user) {
         console.log("Auth user: ", user);
-        if (user  === null) {
+        if (_.isEmpty(user)) {
             res.json({success: false});
         } else {
             user.token = token;
-            userModel(user).save(function (err, user) {
-                console.log(err, user);
+            userModel(user).update(function (err, user) {
                 if(err) {
                     res.json({success: false});
                 } else {
