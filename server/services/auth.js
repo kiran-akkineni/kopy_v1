@@ -20,8 +20,10 @@ AuthService.authenticate = function (req, res) {
         if (_.isEmpty(user)) {
             res.json({success: false});
         } else {
+            var id  = user._id;
+            delete user._id;
             user.token = token;
-            userModel(user).update(function (err, user) {
+            userModel.update({_id: id}, user, function (err, user) {
                 console.log(err);
                 if(err) {
                     res.json({success: false});
