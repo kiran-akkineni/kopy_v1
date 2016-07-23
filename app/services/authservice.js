@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', './../app.setting'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', '../app.setting'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -39,11 +39,12 @@ System.register(['angular2/core', 'angular2/http', './../app.setting'], function
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
                     var authRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/authenticate";
                     return new Promise(function (resolve) {
-                        _this.http.post(authRequestUrl, credentials, { headers: headers }).subscribe(function (data) {
-                            if (data.json().success) {
+                        _this.http.post(authRequestUrl, credentials, { headers: headers }).map(function (response) { return response.json(); }).subscribe(function (response) {
+                            console.log(response);
+                            if (response.success) {
                                 _this.isLoggedin = true;
-                                localStorage.setItem('profile', data.json().profile);
-                                localStorage.setItem('token', data.json().token);
+                                localStorage.setItem('profile', response.profile);
+                                localStorage.setItem('token', response.token);
                                 resolve(_this.isLoggedin);
                             }
                         });

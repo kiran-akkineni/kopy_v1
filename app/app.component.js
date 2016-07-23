@@ -49,12 +49,10 @@ System.register(['angular2/core', 'angular2/router', './components/home/home', '
                     this.location = location;
                 }
                 AppComponent.prototype.logout = function () {
-                    localStorage.removeItem('profile');
                     localStorage.removeItem('token');
                     this.router.navigate(['Home']);
                 };
                 AppComponent.prototype.loggedIn = function () {
-                    console.log(authcheckservice_1.tokenNotExpired());
                     return authcheckservice_1.tokenNotExpired();
                 };
                 AppComponent.prototype.isActive = function (path) {
