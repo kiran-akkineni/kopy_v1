@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', './../../services/authcheckservice', './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', '../../services/authcheckservice', '../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -33,14 +33,17 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './../../s
         execute: function() {
             Note = (function () {
                 function Note(http) {
-                    var _this = this;
                     this.notes = [];
+                    this.fetch(http);
+                }
+                Note.prototype.fetch = function (client) {
+                    var _this = this;
                     var token = localStorage.getItem('token');
                     var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note?token=" + token;
-                    http.get(NoteRequestUrl)
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) { _this.notes = data; }, function (err) { return console.log(err); }, function () { return console.log(_this.notes); });
-                }
+                    client.get(NoteRequestUrl)
+                        .map(function (data) { return data.json(); })
+                        .subscribe(function (data) { _this.notes = data; }, function (err) { return console.log(err); });
+                };
                 Note = __decorate([
                     core_1.Component({
                         selector: 'note',

@@ -3,7 +3,7 @@
  */
 import {Component, View} 	from 'angular2/core';
 import {Router} 			from 'angular2/router'
-import {AuthService} 		from './../../services/authservice';
+import {AuthService} 		from '../../services/authservice';
 
 @Component({
 	selector: 'login',

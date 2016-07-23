@@ -1,4 +1,4 @@
-System.register(['./../../app.setting', 'angular2/http', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['../../app.setting', 'angular2/http', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var app_setting_1, http_1;

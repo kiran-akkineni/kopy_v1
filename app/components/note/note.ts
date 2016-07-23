@@ -2,8 +2,8 @@ import {Component, View}  		  				from 'angular2/core';
 import {Http, HTTP_PROVIDERS} 					from 'angular2/http'
 import {CanActivate,RouterLink, RouterOutlet} 	from 'angular2/router';
 
-import {tokenNotExpired}                        from './../../services/authcheckservice';
-import {AppSettings} 							from './../../app.setting';
+import {tokenNotExpired}                        from '../../services/authcheckservice';
+import {AppSettings} 							from '../../app.setting';
 import 'rxjs/add/operator/map';
 
 @Component({
