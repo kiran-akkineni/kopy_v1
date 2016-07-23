@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './../../services/authcheckservice', "angular2/http", './../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/authcheckservice', "angular2/http", '../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -60,8 +60,6 @@ System.register(['angular2/core', 'angular2/router', './../../services/authcheck
                     this.http.post(userRequestUrl, creds, { headers: headers })
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { data = _this.data; }, function (err) { return console.log(err); }, function () { return console.log('mapping is done'); });
-                    //redirect note page
-                    //this.router.navigate(['Note']);
                 };
                 Setting = __decorate([
                     core_1.Component({

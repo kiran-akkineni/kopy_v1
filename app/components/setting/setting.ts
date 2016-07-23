@@ -1,9 +1,9 @@
 import {Component, OnInit}                                    from 'angular2/core';
 import {CanActivate}                                          from 'angular2/router';
-import {tokenNotExpired}                                      from './../../services/authcheckservice';
+import {tokenNotExpired}                                      from '../../services/authcheckservice';
 import {Http, Headers}                                        from "angular2/http";
-import {Configuration}                                        from './../../models/configuration';
-import {AppSettings} 			                              from './../../app.setting';
+import {Configuration}                                        from '../../models/configuration';
+import {AppSettings} 			                              from '../../app.setting';
 
 import 'rxjs/add/operator/map';
 
