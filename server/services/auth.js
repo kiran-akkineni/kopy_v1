@@ -20,13 +20,14 @@ AuthService.authenticate = function (req, res) {
         if (_.isEmpty(user)) {
             res.json({success: false});
         } else {
-            userModel.update({_id: user._id}, {token:token}, function (err, user) {
+            userModel.update({_id: user._id}, {$set:{token:token}}, function (err, result) {
                 console.log(err);
                 if(err) {
                     res.json({success: false});
                 } else {
-                    console.log("authenticated successfully.");
-                    res.json({success: true, profile:{name: user.name}, token: user.token});
+                    console.log("authenticated successfully.", user);
+
+                    res.json({success: true, profile:{name: user.name}, token: token});
                 }
 
             });
