@@ -13,12 +13,11 @@ AuthService.authenticate = function (req, res) {
 
     var  token = uuid.v4();
 
-    console.log("request payloads: ", req.body);
+
     console.log("requested password: ", encryptService.encrypt(req.body.password.trim()));
-    
     userModel.findOne({ username: req.body.username.trim(), password: encryptService.encrypt(req.body.password.trim())}, function (err, user) {
         console.log("Auth user: ", user);
-        if(_.isEmpty(user)) {
+        if (user  === null) {
             res.json({success: false});
         } else {
             user.token = token;
