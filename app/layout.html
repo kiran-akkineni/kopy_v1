@@ -12,7 +12,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li [class.active]="isActive('/')"><a [routerLink]="['Home']">Home</a></li>
-                <li *ngIf="loggedIn()" [class.active]="isActive('/app')"><a [routerLink]="['App']">Apps</a></li>
+                <li [class.active]="isActive('/app')"><a [routerLink]="['App']">Apps</a></li>
                 <li *ngIf="loggedIn()" [class.active]="isActive('/note')"><a [routerLink]="['Note']">Notes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
