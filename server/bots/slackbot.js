@@ -110,7 +110,13 @@ module.exports =  function(Botkit)  {
 
 
       bot.api.users.info({'user': message.user}, function(err, response) {
-        data.app_user_name  = response.user.name;
+          data.app_user_name  = response.user.name;
+
+          if (response && response.user && response.user.profile) {
+                data.app_user_email     = response.user.profile.email;
+                data.app_user_fullname  = response.user.profile.real_name;
+                data.app_user_avater    = response.user.profile.image_24;
+          }
 
           noteService.save(data, function (user) {
               console.log(user);
@@ -141,27 +147,27 @@ module.exports =  function(Botkit)  {
       data.app_group_name   = message.team_domain;
       data.created_at       = new Date();
 
-      bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
+        bot.api.users.info({'user': message.user}, function(err, response) {
+            if (response && response.user && response.user.profile) {
+                data.app_user_email     = response.user.profile.email;
+                data.app_user_fullname  = response.user.profile.real_name;
+                data.app_user_avater    = response.user.profile.image_24;
+            }
+        });
 
+      //bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
       noteService.save(data, function (user) {
-          console.log(user);
-          if(user) {
-              //response back that message is saved
-              bot.startPrivateConversation(message, function(err,dm) {
-                dm.say('Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
-              });
+          if (user) {
+              bot.replyPrivate(message,'Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
           } else {
-              //response back that message is saved
-              bot.startPrivateConversation(message, function(err,dm) {
-                dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
-              });
+              bot.replyPrivate(message,':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
           }
       })
     });
 
 
     //reset password
-    controller.hears(["kopy_reset_password"], function(bot, message) {
+    controller.hears(["kopy_reset_password"],['message_received'], function(bot, message) {
       var data = {app_name : 'slack'};
 
       bot.api.users.info({'user': message.user}, function(err, response) {

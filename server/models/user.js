@@ -27,6 +27,9 @@ var User = new Schema({
   token: {
     type: String
   },
+  thumnil: {
+    type: String
+  },
   is_password_created: {
     type   : Boolean,
     default: false

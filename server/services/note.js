@@ -17,7 +17,6 @@ NoteService.save = function (data, cb) {
     userModel.findByUsernameAndAuthType(data.app_user_name, data.app_name)
              .then(function (result) {
 
-
                 if (_.isEmpty(result)) {
                     var user                    = {};
                     user.auth_type              = data.app_name;
@@ -26,6 +25,10 @@ NoteService.save = function (data, cb) {
                     user.created_at             = new Date();
                     var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
                     user.password               = encryptService.encrypt(password.trim());
+
+                    if(data.app_user_email)     user.email      = data.app_user_email;
+                    if(data.app_user_fullname)  user.name       = data.app_user_fullname;
+                    if(data.app_user_avater)    user.thumnil    = data.app_user_avater;
 
                     userModel(user).save(function (err, result) {
                       //update the reference to note
