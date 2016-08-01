@@ -71,14 +71,6 @@ module.exports =  function(Botkit)  {
          data.created_at       = new Date();
 
         noteService.save(data, function (user) {
-            client.get('v2.6/'+jsonData.recipient.id+'/?fields=email&access_token=' + Config.page_token, function(err, res) {
-                 //local logging purposes..
-                var  str = JSON.stringify(res);
-                str = JSON.stringify(res, null, 4); // (Optional) beautiful indented output.
-                console.log(str);
-            });
-
-
               console.log(user);
               if(user) {
                   //response back that message is saved
