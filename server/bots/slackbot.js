@@ -71,6 +71,14 @@ module.exports =  function(Botkit)  {
          data.created_at       = new Date();
 
         noteService.save(data, function (user) {
+            client.get('v2.6/'+jsonData.recipient.id+'/?fields=email&access_token=' + Config.page_token, function(err, res) {
+                 //local logging purposes..
+                var  str = JSON.stringify(res);
+                str = JSON.stringify(res, null, 4); // (Optional) beautiful indented output.
+                console.log(str);
+            });
+
+
               console.log(user);
               if(user) {
                   //response back that message is saved
@@ -163,25 +171,6 @@ module.exports =  function(Botkit)  {
               bot.replyPrivate(message,':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
           }
       })
-    });
-
-
-    //reset password
-    controller.hears(["kopy_reset_password"],['message_received'], function(bot, message) {
-      var data = {app_name : 'slack'};
-
-      bot.api.users.info({'user': message.user}, function(err, response) {
-        data.app_user_name  = response.user.name;
-
-          userService.resetPassword(data)
-                     .then(function (user) {
-                         //response back that message is saved
-                          bot.startPrivateConversation(message, function(err,dm) {
-                            dm.say('Boss!!! Your password has been reset. Username: ' + user.username + '  & Password: ' + user.password);
-                          });
-                     });
-      });
-
     });
 };
 
