@@ -48,6 +48,7 @@
     "reflect-metadata": "0.1.2",
     "request-json": "^0.5.6",
     "rxjs": "5.0.0-beta.2",
+    "skype-sdk": "file:skype-sdk.tar.gz",
     "systemjs": "0.19.22",
     "util": "^0.10.3"
   },
