@@ -20,7 +20,7 @@ NoteService.save = function (data, cb) {
                 if (_.isEmpty(result)) {
                     var user                    = {};
                     user.auth_type              = data.app_name;
-                    user.username               = data.app_user_name;
+                    user.username               = (_.isEmpty(data.app_user_email))? data.app_user_name:data.app_user_email;  //if you have email address, the auth username is your email
                     user.is_password_created    = true;
                     user.created_at             = new Date();
                     var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
