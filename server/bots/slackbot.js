@@ -3,7 +3,6 @@
  */
 
 "use strict";
-var nodeModel       = ModuleLoader.model('note');
 var authService     = ModuleLoader.service('auth');
 var userService     = ModuleLoader.service('user');
 var noteService     = ModuleLoader.service('note');
