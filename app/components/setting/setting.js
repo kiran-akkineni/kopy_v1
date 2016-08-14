@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/authcheckservice', "angular2/http", '../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/authcheckservice', '../../services/profileservice', "angular2/common", 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/authcheckse
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, authcheckservice_1, http_1, app_setting_1;
+    var core_1, router_1, authcheckservice_1, profileservice_1, common_1;
     var Setting;
     return {
         setters:[
@@ -23,51 +23,39 @@ System.register(['angular2/core', 'angular2/router', '../../services/authcheckse
             function (authcheckservice_1_1) {
                 authcheckservice_1 = authcheckservice_1_1;
             },
-            function (http_1_1) {
-                http_1 = http_1_1;
+            function (profileservice_1_1) {
+                profileservice_1 = profileservice_1_1;
             },
-            function (app_setting_1_1) {
-                app_setting_1 = app_setting_1_1;
+            function (common_1_1) {
+                common_1 = common_1_1;
             },
             function (_1) {}],
         execute: function() {
             Setting = (function () {
-                function Setting(http) {
-                    this.http = http;
+                function Setting(fromBuilder, profileService) {
+                    this.fromBuilder = fromBuilder;
+                    this.profileService = profileService;
                 }
                 Setting.prototype.ngOnInit = function () {
                     var _this = this;
-                    var profile = JSON.parse(localStorage.getItem('profile'));
-                    this.configuration = { company_name: "", slack_username: "" };
-                    var userRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/user_note_map?email=" + profile.email;
-                    this.http.get(userRequestUrl)
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) { _this.data = data; }, function (err) { return console.error(err); }, function () { return _this.getValue(_this.data); });
+                    this.usernameFrom = this.fromBuilder.group({ username: ["", common_1.Validators.required] });
+                    this.profileService.get()
+                        .then(function (data) {
+                        if (data && data.username)
+                            _this.usernameFrom.controls.username.updateValue(data.username);
+                    });
                 };
-                Setting.prototype.getValue = function (data) {
-                    if (data.length > 0) {
-                        this.configuration.company_name = data[0].app_group_name;
-                        this.configuration.slack_username = data[0].app_user_name;
-                    }
-                };
-                Setting.prototype.onSubmit = function () {
-                    var _this = this;
-                    var profile = JSON.parse(localStorage.getItem('profile'));
-                    var creds = "email=" + profile.email + "&app_group_name=" + this.configuration.company_name + "&app_user_name=" + this.configuration.slack_username;
-                    var headers = new http_1.Headers();
-                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-                    var userRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/user_note_map";
-                    this.http.post(userRequestUrl, creds, { headers: headers })
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) { data = _this.data; }, function (err) { return console.log(err); }, function () { return console.log('mapping is done'); });
+                Setting.prototype.saveUserName = function (event) {
+                    event.preventDefault();
                 };
                 Setting = __decorate([
                     core_1.Component({
                         selector: 'setting',
+                        providers: [profileservice_1.ProfileService, common_1.Validators],
                         templateUrl: './components/setting/setting.html'
                     }),
                     router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, profileservice_1.ProfileService])
                 ], Setting);
                 return Setting;
             }());
