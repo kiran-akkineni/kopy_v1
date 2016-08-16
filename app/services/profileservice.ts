@@ -23,13 +23,14 @@ export class ProfileService {
     }
 
     save(data) {
+        const token     = localStorage.getItem('token');
         var headers     = new Headers();
         var credentials = 'username='+data.username;
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var profileRequestUrl  = AppSettings.API_ENDPOINT + "/profile";
+        var profileRequestUrl  = AppSettings.API_ENDPOINT + "/profile/username?token=" +token;
 
         return new Promise((resolve) => {
-            this.http.post(profileRequestUrl, credentials, {headers: headers})
+            this.http.put(profileRequestUrl, credentials, {headers: headers})
                      .map(response => response.json())
                      .subscribe((response) => {
                         console.log(response);
