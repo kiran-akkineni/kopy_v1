@@ -9,6 +9,36 @@ var Promise      = require('promise');
 var userModel    = ModuleLoader.model('user');
 
 
+//Check username is exist or not. If not, then it's update
+UserService.updateUsernameForAuthUser = function (req, res) {
+
+    if ('token' in req.query) {
+        userModel.findOne({token: req.query.token})
+                 .then(function (user) {
+                    if (user.length === 0) {
+                        res.json({status:false, mgs: "Not a valid request"});
+                    } else {
+                        userModel.findOne({username: req.body.username})
+                                  .then(function (result) {
+                                      if (result === null) {
+                                        user.username = req.body.username;
+                                        userModel(user).save(function (err, result) {
+                                          res.json({"status":true});
+                                        });
+                                    } else {
+                                        res.json({"status":false, "mgs": "username is already taken."});
+                                    }
+                                 });
+                    }
+                 });
+    } else {
+         res.json({"status":false, "mgs": "Not a valid request"});
+    }
+};
+
+
+
+
 UserService.getByAuthUser = function (req, res) {
 
     if ('token' in req.query) {
