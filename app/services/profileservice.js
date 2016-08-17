@@ -45,15 +45,10 @@ System.register(['angular2/core', 'angular2/http', '../app.setting'], function(e
                     var credentials = 'username=' + data.username;
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
                     var profileRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/profile/username?token=" + token;
-                    return new Promise(function (resolve) {
+                    return new Promise(function (resolve, reject) {
                         _this.http.put(profileRequestUrl, credentials, { headers: headers })
-                            .map(function (response) { return response.json(); })
-                            .subscribe(function (response) {
-                            console.log(response);
-                            if (response.success) {
-                                resolve(response);
-                            }
-                        });
+                            .map(function (data) { return data.json(); })
+                            .subscribe(function (data) { return resolve(data); }, function (err) { return reject(err); });
                     });
                 };
                 ProfileService = __decorate([

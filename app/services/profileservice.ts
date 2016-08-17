@@ -29,15 +29,11 @@ export class ProfileService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var profileRequestUrl  = AppSettings.API_ENDPOINT + "/profile/username?token=" +token;
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this.http.put(profileRequestUrl, credentials, {headers: headers})
-                     .map(response => response.json())
-                     .subscribe((response) => {
-                        console.log(response);
-                        if (response.success) {
-                            resolve(response);
-                        }
-                     })
+                     .map(data => data.json())
+      		         .subscribe(data	 => resolve(data),
+        		        	    err 	 => reject(err));
         })
     }
 }
