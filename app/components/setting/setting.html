@@ -1,10 +1,29 @@
-<div class="panel-heading">
-  <h3 class="panel-title">Edit Username</h3>
+<div *ngIf="flashMessage.mgs.length > 0" class="{{flashMessage.type}}">
+  {{flashMessage.mgs}}
 </div>
-<div class="panel-body">
-  <form [ngFormModel]="usernameFrom" (submit)="saveUserName($event)">
-      <input ngControl="username" type="text" placeholder="Please enter username">
-      <button type="submit">Update</button>
-  </form>
+<div class="row">
+    <div class="panel-heading">
+      <h3 class="panel-title">Edit Username</h3>
+    </div>
+    <div class="panel-body">
+      <form [ngFormModel]="usernameFrom" (submit)="saveUserName()">
+          <input ngControl="username" type="text" placeholder="Please enter username">
+           <control-messages [control]="usernameFrom.controls.username"></control-messages>
+          <button type="submit">Update</button>
+      </form>
+    </div>
 </div>
 
+<div class="row">
+    <div class="panel-heading">
+      <h3 class="panel-title">Change Password</h3>
+    </div>
+    <div class="panel-body">
+      <form [ngFormModel]="passwordChangeFrom" (submit)="changePassword($event)">
+          <input ngControl="old_password" type="password" >
+          <input ngControl="password" type="password" >
+          <input ngControl="confirmPassword" type="password" >
+        <button type="submit">Save</button>
+      </form>
+    </div>
+</div>
