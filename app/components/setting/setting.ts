@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectorRef}              from 'angular2/core';
+import {Component, OnInit}              from 'angular2/core';
 import {CanActivate}                    from 'angular2/router';
 import {tokenNotExpired}                from '../../services/authcheckservice';
 import {ProfileService}                 from '../../services/profileservice';
@@ -19,7 +19,7 @@ export class Setting implements OnInit
     passwordChangeFrom:ControlGroup;
     flashMessage = {"mgs" : "",
                     "type": "success"};
-    constructor(private fromBuilder: FormBuilder, private profileService:ProfileService, private ref: ChangeDetectorRef) {}
+    constructor(private fromBuilder: FormBuilder, private profileService:ProfileService) {}
 
     ngOnInit() {
         this.usernameFrom = this.fromBuilder.group({username: ["", Validators.compose([Validators.required, Validators.minLength(4)])]});

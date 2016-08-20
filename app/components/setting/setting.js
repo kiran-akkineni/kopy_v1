@@ -32,10 +32,9 @@ System.register(['angular2/core', 'angular2/router', '../../services/authcheckse
             function (_1) {}],
         execute: function() {
             Setting = (function () {
-                function Setting(fromBuilder, profileService, ref) {
+                function Setting(fromBuilder, profileService) {
                     this.fromBuilder = fromBuilder;
                     this.profileService = profileService;
-                    this.ref = ref;
                     this.flashMessage = { "mgs": "",
                         "type": "success" };
                 }
@@ -93,7 +92,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/authcheckse
                         templateUrl: './components/setting/setting.html'
                     }),
                     router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, profileservice_1.ProfileService, core_1.ChangeDetectorRef])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, profileservice_1.ProfileService])
                 ], Setting);
                 return Setting;
             }());

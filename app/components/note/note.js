@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', '../../services/authcheckservice', '../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/common", '../../services/authcheckservice', '../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../../ser
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, authcheckservice_1, app_setting_1;
+    var core_1, http_1, router_1, common_1, authcheckservice_1, app_setting_1;
     var Note;
     return {
         setters:[
@@ -23,6 +23,9 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../../ser
             function (router_1_1) {
                 router_1 = router_1_1;
             },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
             function (authcheckservice_1_1) {
                 authcheckservice_1 = authcheckservice_1_1;
             },
@@ -32,15 +35,20 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../../ser
             function (_1) {}],
         execute: function() {
             Note = (function () {
-                function Note(http) {
-                    this.notes = [];
-                    this.fetch(http);
+                function Note(http, fromBuilder) {
+                    this.http = http;
+                    this.fromBuilder = fromBuilder;
                 }
-                Note.prototype.fetch = function (client) {
+                Note.prototype.ngOnInit = function () {
+                    this.notes = [];
+                    this.addNoteFrom = this.fromBuilder.group({ note: ["", common_1.Validators.required] });
+                    this.fetch();
+                };
+                Note.prototype.fetch = function () {
                     var _this = this;
                     var token = localStorage.getItem('token');
                     var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note?token=" + token;
-                    client.get(NoteRequestUrl)
+                    this.http.get(NoteRequestUrl)
                         .map(function (data) { return data.json(); })
                         .subscribe(function (data) { _this.notes = data; }, function (err) { return console.log(err); });
                 };
@@ -55,7 +63,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', '../../ser
                         styleUrls: ['./components/note/note.css']
                     }),
                     router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [http_1.Http, common_1.FormBuilder])
                 ], Note);
                 return Note;
             }());
