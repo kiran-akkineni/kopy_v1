@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/common", '../../services/authcheckservice', '../../app.setting', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/common", '../../services/authcheckservice', '../../services/noteservice', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1, common_1, authcheckservice_1, app_setting_1;
+    var core_1, http_1, router_1, common_1, authcheckservice_1, noteservice_1;
     var Note;
     return {
         setters:[
@@ -29,33 +29,46 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/
             function (authcheckservice_1_1) {
                 authcheckservice_1 = authcheckservice_1_1;
             },
-            function (app_setting_1_1) {
-                app_setting_1 = app_setting_1_1;
+            function (noteservice_1_1) {
+                noteservice_1 = noteservice_1_1;
             },
             function (_1) {}],
         execute: function() {
             Note = (function () {
-                function Note(http, fromBuilder) {
-                    this.http = http;
+                function Note(noteService, fromBuilder) {
+                    this.noteService = noteService;
                     this.fromBuilder = fromBuilder;
+                    this.flashMessage = { "mgs": "",
+                        "type": "success" };
                 }
                 Note.prototype.ngOnInit = function () {
+                    var _this = this;
                     this.notes = [];
                     this.addNoteFrom = this.fromBuilder.group({ note: ["", common_1.Validators.required] });
-                    this.fetch();
+                    this.noteService.get().then(function (notes) { return _this.notes = notes; });
                 };
-                Note.prototype.fetch = function () {
+                Note.prototype.saveNote = function () {
                     var _this = this;
-                    var token = localStorage.getItem('token');
-                    var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note?token=" + token;
-                    this.http.get(NoteRequestUrl)
-                        .map(function (data) { return data.json(); })
-                        .subscribe(function (data) { _this.notes = data; }, function (err) { return console.log(err); });
+                    this.noteService.save({ note: this.addNoteFrom.note.value })
+                        .then(function (data) {
+                        if (data.status == false) {
+                            _this.setFlashMessage("Somethins went worng", "danger");
+                        }
+                        else {
+                            _this.setFlashMessage("Note has been saved successfully.", "success");
+                        }
+                    });
+                };
+                Note.prototype.setFlashMessage = function (mgs, type) {
+                    if (type === void 0) { type = "success"; }
+                    this.flashMessage.mgs = mgs;
+                    this.flashMessage.type = "alert alert-" + type;
                 };
                 Note = __decorate([
                     core_1.Component({
                         selector: 'note',
-                        viewProviders: [http_1.HTTP_PROVIDERS]
+                        viewProviders: [http_1.HTTP_PROVIDERS],
+                        providers: [noteservice_1.NoteService],
                     }),
                     core_1.View({
                         templateUrl: './components/note/note.html',
@@ -63,7 +76,7 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/
                         styleUrls: ['./components/note/note.css']
                     }),
                     router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [http_1.Http, common_1.FormBuilder])
+                    __metadata('design:paramtypes', [noteservice_1.NoteService, common_1.FormBuilder])
                 ], Note);
                 return Note;
             }());
