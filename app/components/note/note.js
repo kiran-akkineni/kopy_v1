@@ -47,17 +47,22 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', "angular2/
                     this.addNoteFrom = this.fromBuilder.group({ note: ["", common_1.Validators.required] });
                     this.noteService.get().then(function (notes) { return _this.notes = notes; });
                 };
-                Note.prototype.saveNote = function () {
+                Note.prototype.saveNote = function (event) {
                     var _this = this;
-                    this.noteService.save({ note: this.addNoteFrom.note.value })
-                        .then(function (data) {
-                        if (data.status == false) {
-                            _this.setFlashMessage("Somethins went worng", "danger");
-                        }
-                        else {
-                            _this.setFlashMessage("Note has been saved successfully.", "success");
-                        }
-                    });
+                    if (this.addNoteFrom.valid) {
+                        this.noteService.save({ note: this.addNoteFrom.controls.note.value })
+                            .then(function (data) {
+                            if (data.status == false) {
+                                _this.setFlashMessage("Somethins went worng", "danger");
+                            }
+                            else {
+                                _this.setFlashMessage("Note has been saved successfully.", "success");
+                            }
+                        });
+                    }
+                    else {
+                        alert('not valid');
+                    }
                 };
                 Note.prototype.setFlashMessage = function (mgs, type) {
                     if (type === void 0) { type = "success"; }

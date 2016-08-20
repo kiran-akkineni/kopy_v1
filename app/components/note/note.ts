@@ -1,11 +1,10 @@
-import {Component, View, OnInit}  		  				from 'angular2/core';
-import {Http, HTTP_PROVIDERS} 					from 'angular2/http'
+import {Component, View, OnInit}  		  		from 'angular2/core';
+import {HTTP_PROVIDERS} 						from 'angular2/http'
 import {CanActivate,RouterLink, RouterOutlet} 	from 'angular2/router';
-import {ControlGroup, FormBuilder, Validators}                     from "angular2/common";
-
+import {ControlGroup, FormBuilder, Validators}  from "angular2/common";
 import {tokenNotExpired}                        from '../../services/authcheckservice';
 import {NoteService}	                        from '../../services/noteservice';
-import {AppSettings} 							from '../../app.setting';
+
 import 'rxjs/add/operator/map';
 
 
@@ -38,16 +37,19 @@ export class Note implements OnInit{
 
 
 
-	 saveNote() {
-	 	this.noteService.save({note: this.addNoteFrom.note.value})
-                               .then((data) => {
+	 saveNote(event) {
+	 	if (this.addNoteFrom.valid) {
+      		this.noteService.save({note: this.addNoteFrom.controls.note.value})
+            		        .then((data) => {
                                    if (data.status == false) {
                                        this.setFlashMessage("Somethins went worng","danger");
                                    } else {
                                         this.setFlashMessage("Note has been saved successfully.","success");
                                    }
                                });
-
+    	} else {
+    		alert('not valid');
+		}
 	 }
 
 	 setFlashMessage(mgs, type="success") {
