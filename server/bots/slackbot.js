@@ -91,6 +91,7 @@ module.exports =  function(Botkit)  {
       webserver.get('/profile', function(req,res) {userService.getByAuthUser(req,res)});
       webserver.post('/authenticate',function(req,res) {authService.authenticate(req, res);});
       webserver.put('/profile/username',function(req,res) {userService.updateUsernameForAuthUser(req, res);});
+      webserver.put('/note/export_csv',function(req,res) {noteService.exportCSVByAuthUser(req,res)});
     });
 
 
