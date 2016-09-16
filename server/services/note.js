@@ -9,6 +9,7 @@ var noteModel         = ModuleLoader.model('note');
 var userModel         = ModuleLoader.model('user');
 var randomstring      = require("randomstring");
 var encryptService    = ModuleLoader.service('encrypt');
+var csv               = require('csv');
 
 
 //Save note with generate password for user if user and password doesn't exits
@@ -78,5 +79,28 @@ NoteService.getByAuthUser = function (req, res) {
         res.json([]);
     }
 };
+
+NoteService.exportCSVByAuthUser = function (req, res) {
+    if ('token' in req.query) {
+        userModel.findOne({token: req.query.token})
+            .then(function (result) {
+                if (result.length === 0) {
+                    res.json([]);
+                } else {
+                    noteModel.find({user_id: result._id}, function (err, notes) {
+                        res.setHeader('Content-disposition', 'attachment; filename=note.csv');
+                        res.writeHead(200, {
+                            'Content-Type': 'text/csv'
+                        });
+
+                        csv().from(result).to(res);
+                    });
+                }
+            });
+    } else {
+        res.json([]);
+    }
+};
+
 
 var exports = module.exports  = NoteService;
