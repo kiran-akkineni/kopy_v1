@@ -22,6 +22,12 @@ export class NoteService {
         });
     }
 
+    getCSV() {
+        const token         = localStorage.getItem('token');
+		var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/note/export_csv?token=" +token;
+        return this.http.get(NoteRequestUrl)
+    }
+
     save(data) {
         const token     = localStorage.getItem('token');
         var headers     = new Headers();
