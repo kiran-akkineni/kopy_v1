@@ -4,8 +4,9 @@ import {CanActivate,RouterLink, RouterOutlet} 	from 'angular2/router';
 import {ControlGroup, FormBuilder, Validators}  from "angular2/common";
 import {tokenNotExpired}                        from '../../services/authcheckservice';
 import {NoteService}	                        from '../../services/noteservice';
-
+import {Headers}                                from "angular2/src/http/headers";
 import 'rxjs/add/operator/map';
+
 
 
 @Component({
@@ -35,22 +36,14 @@ export class Note implements OnInit{
 		this.noteService.get().then(notes => this.notes = notes);
 	 }
 
-
-
-	 saveNote(event) {
-	 	if (this.addNoteFrom.valid) {
-      		this.noteService.save({note: this.addNoteFrom.controls.note.value})
-            		        .then((data) => {
-                                   if (data.status == false) {
-                                       this.setFlashMessage("Somethins went worng","danger");
-                                   } else {
-                                        this.setFlashMessage("Note has been saved successfully.","success");
-                                   }
-                               });
-    	} else {
-    		alert('not valid');
-		}
-	 }
+	 exportCSV() {
+	      var headers = new Headers();
+          headers.append('responseType', 'arraybuffer');
+          this.noteService.getCSV().map(res => new Blob([res],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
+                                   .subscribe(data => window.open(window.URL.createObjectURL(data)),
+                                              error => console.log("Error downloading the file."),
+                                              () => console.log('Completed file download.'));
+     }
 
 	 setFlashMessage(mgs, type="success") {
         this.flashMessage.mgs       = mgs;

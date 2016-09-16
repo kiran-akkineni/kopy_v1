@@ -1,33 +1,10 @@
 <p class="lead">
         <strong>Notes</strong>
 </p>
-<button class="btn btn-default btn-sm text-right" style="float: right" data-toggle="modal" data-target=".addnode">Add Note</button>
-
-
-
+<button class="btn btn-default btn-sm text-right" style="float: right" (click)="exportCSV($event)" >Download CSV</button>
 <div class="row">
   <div *ngFor="#note of notes" class="item">
       <div class="well">{{note.message}}</div>
   </div>
 </div>
 
-<div class="modal fade addnode" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add  Note</h4>
-      </div>
-      <form [ngFormModel]="addNoteFrom">
-      <div class="modal-body">
-        <p><input ngControl="note" type="text" placeholder="Please type note" class="form-control"  #note="ngForm" required/></p>
-        <span [hidden]="!note.control.hasError('required')" style="text-decoration-color: red"><b>Note can't be empty</b></span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveNote($event)" data-dismiss="modal">Save</button>
-      </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
