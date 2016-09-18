@@ -24,8 +24,7 @@ export class NoteService {
 
     getCSV() {
         const token         = localStorage.getItem('token');
-		var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/note/export_csv?token=" +token;
-        return this.http.get(NoteRequestUrl)
+         window.location.href=AppSettings.API_ENDPOINT + "/note/export_csv?token=" +token;
     }
 
     save(data) {
