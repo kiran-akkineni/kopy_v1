@@ -40,8 +40,7 @@ System.register(['angular2/core', 'angular2/http', '../app.setting'], function(e
                 };
                 NoteService.prototype.getCSV = function () {
                     var token = localStorage.getItem('token');
-                    var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/note/export_csv?token=" + token;
-                    return this.http.get(NoteRequestUrl);
+                    window.location.href = app_setting_1.AppSettings.API_ENDPOINT + "/note/export_csv?token=" + token;
                 };
                 NoteService.prototype.save = function (data) {
                     var _this = this;
