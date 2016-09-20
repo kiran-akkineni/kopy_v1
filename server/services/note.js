@@ -88,12 +88,13 @@ NoteService.exportCSVByAuthUser = function (req, res) {
                     res.json([]);
                 } else {
                     noteModel.find({user_id: result._id}, function (err, notes) {
-                          res.set('Content-Type', 'text/csv');
+                          res.set('Content-Type', 'text/csv; charset=utf-8');
                           res.attachment('notes.csv');
                           var data;
 
-                          _.each(notes, function(note){
-                              data = [note['app_name'], note['app_user_name'], note['message'], note['created_at']].join(",") + "\n";
+                          _.each(notes, function(note) {
+                              console.log(note['app_name'], note['app_user_name'], note['message'], note['created_at']);
+                              data = [note['app_name'], note['app_user_name'], note['message'], note['created_at']].join(",") + '\n';
                               res.write(data);
                           });
 
