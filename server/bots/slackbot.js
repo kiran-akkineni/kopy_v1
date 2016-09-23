@@ -10,6 +10,9 @@ var express         = require('express');
 var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
 
+var skypebot        = ModuleLoader.bot('skype');
+
+
 module.exports =  function(Botkit)  {
     //Set debug to false
     var controller = Botkit.slackbot({debug: false});
@@ -92,6 +95,9 @@ module.exports =  function(Botkit)  {
       webserver.post('/authenticate',function(req,res) {authService.authenticate(req, res);});
       webserver.put('/profile/username',function(req,res) {userService.updateUsernameForAuthUser(req, res);});
       webserver.get('/note/export_csv',function(req,res) {noteService.exportCSVByAuthUser(req,res)});
+
+      //skypebot
+      skypebot(webserver);
     });
 
 
