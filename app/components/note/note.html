@@ -1,22 +1,10 @@
-<p class="lead"><strong>Notes</strong></p>
-<div *ngIf="notes && notes.length == 0" class="alert alert-info">
-  <strong>Info!</strong> Please update you <a [routerLink]="['Setting']"><u>Setting</u></a>.
+<p class="lead">
+        <strong>Notes</strong>
+</p>
+<button class="btn btn-default btn-sm text-right" style="float: right" (click)="exportCSV($event)" >Download CSV</button>
+<div class="row">
+  <div *ngFor="#note of notes" class="item">
+      <div class="well">{{note.message}}</div>
+  </div>
 </div>
-<table class="table table-striped" *ngIf="notes && notes.length > 0">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Username</th>
-        <th>App Name</th>
-        <th>Note</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="#note of notes #idx=index" >
-    <tr>
-        <th scope="row">{{idx + 1 }}</th>
-        <td>{{ note.app_user_name}}</td>
-        <td>{{ note.app_name}}</td>
-        <td>{{ note.message }}</td>
-    </tr>
-    </tbody>
-</table>
+

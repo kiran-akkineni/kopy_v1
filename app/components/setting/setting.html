@@ -1,17 +1,58 @@
-<form #configurationForm="ngForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Slack Company Name</label>
-    <input type="text" ngControl="company_name"
-           [(ngModel)]="configuration.company_name"
-           class="form-control" id="exampleInputEmail1" placeholder="Company Name"
-           required>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Slack Username</label>
-    <input type="text" ngControl="slack_username"
-           [(ngModel)]="configuration.slack_username"
-           class="form-control" id="exampleInputPassword1" placeholder="Slack Username"
-           required>
-  </div>
-  <button type="submit" class="btn btn-default">Update</button>
-</form>
+<div *ngIf="flashMessage.mgs.length > 0" class="{{flashMessage.type}}">
+  {{flashMessage.mgs}}
+</div>
+<div class="row">
+    <div class="panel-heading">
+      <h2 class="panel-title">Edit Username</h2>
+    </div>
+    <div class="panel-body">
+      <form [ngFormModel]="usernameFrom" (submit)="saveUserName()" class="form-horizontal">
+          <div class="form-group">
+           <label for="Username" class="col-sm-2 control-label">Username</label>
+           <div class="col-sm-4">
+               <input ngControl="username" type="text" placeholder="Please enter username" class="form-control" />
+           </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Update</button>
+            </div>
+          </div>
+      </form>
+    </div>
+</div>
+<hr/>
+
+<div class="row">
+    <div class="panel-heading">
+      <h2 class="panel-title">Change Password</h2>
+    </div>
+    <div class="panel-body">
+      <form [ngFormModel]="passwordChangeFrom" (submit)="changePassword($event)" class="form-horizontal">
+          <div class="form-group">
+              <label for="usernold_passwordame" class="col-sm-2 control-label">Old Password</label>
+              <div class="col-sm-4">
+              <input ngControl="old_password" type="password" class="form-control"/>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">New Password</label>
+              <div class="col-sm-4">
+              <input ngControl="password" type="password" class="form-control"/>
+              </div>
+          </div>
+         <div class="form-group">
+             <label for="confirmPassword" class="col-sm-2 control-label">Re-confirm Password</label>
+             <div class="col-sm-4">
+             <input ngControl="confirmPassword" type="password" class="form-control"/>
+             </div>
+         </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Save</button>
+            </div>
+          </div>
+
+      </form>
+    </div>
+</div>

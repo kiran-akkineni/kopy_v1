@@ -1,8 +1,6 @@
 import {Component, View}                            from 'angular2/core';
 import {Router, RouterOutlet,
         RouteConfig, RouterLink, Location}          from 'angular2/router';
-import {Http}                                       from 'angular2/http';
-
 import { Home }                                     from './components/home/home';
 import { Profile }                                  from './components/profile/profile';
 import { Note }                                     from './components/note/note';
@@ -37,14 +35,11 @@ export class AppComponent {
     }
     
     logout() {
-      localStorage.removeItem('profile');
       localStorage.removeItem('token');
       this.router.navigate(['Home']);
-
     }
 
     loggedIn() {
-        console.log(tokenNotExpired());
       return tokenNotExpired();
     }
 

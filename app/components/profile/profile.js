@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './../../services/authcheckservice'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/authcheckservice', '../../services/profileservice'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './../../services/authcheck
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, authcheckservice_1;
+    var core_1, router_1, authcheckservice_1, profileservice_1;
     var Profile;
     return {
         setters:[
@@ -22,22 +22,33 @@ System.register(['angular2/core', 'angular2/router', './../../services/authcheck
             },
             function (authcheckservice_1_1) {
                 authcheckservice_1 = authcheckservice_1_1;
+            },
+            function (profileservice_1_1) {
+                profileservice_1 = profileservice_1_1;
             }],
         execute: function() {
             Profile = (function () {
-                function Profile(authHttp) {
-                    this.authHttp = authHttp;
-                    this.profile = JSON.parse(localStorage.getItem('profile'));
+                function Profile(profileService) {
+                    this.profileService = profileService;
+                    this.profile = [];
                 }
+                Profile.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.profileService.get()
+                        .then(function (data) { _this.profile = data; })
+                        .catch(function (err) { return console.log("something wrong at profile page"); });
+                };
                 Profile = __decorate([
                     core_1.Component({
-                        selector: 'profile'
+                        selector: 'profile',
+                        providers: [profileservice_1.ProfileService]
                     }),
                     core_1.View({
-                        templateUrl: './components/profile/profile.html'
+                        templateUrl: './components/profile/profile.html',
+                        styleUrls: ['./components/profile/profile.css']
                     }),
                     router_1.CanActivate(function () { return authcheckservice_1.tokenNotExpired(); }), 
-                    __metadata('design:paramtypes', [Object])
+                    __metadata('design:paramtypes', [profileservice_1.ProfileService])
                 ], Profile);
                 return Profile;
             }());

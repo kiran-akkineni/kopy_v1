@@ -1,33 +1,52 @@
-import {Component, View}  		  				from 'angular2/core';
-import {Http, HTTP_PROVIDERS} 					from 'angular2/http'
+import {Component, View, OnInit}  		  		from 'angular2/core';
+import {HTTP_PROVIDERS} 						from 'angular2/http'
 import {CanActivate,RouterLink, RouterOutlet} 	from 'angular2/router';
-
-import {tokenNotExpired}                            from './../../services/authcheckservice';
-import {AppSettings} 							from './../../app.setting';
+import {ControlGroup, FormBuilder, Validators}  from "angular2/common";
+import {tokenNotExpired}                        from '../../services/authcheckservice';
+import {NoteService}	                        from '../../services/noteservice';
+import {Headers}                                from "angular2/src/http/headers";
 import 'rxjs/add/operator/map';
+
+
 
 @Component({
 	selector: 'note',
-	viewProviders: [HTTP_PROVIDERS]
+	viewProviders: [HTTP_PROVIDERS],
+	providers: [NoteService],
 })
 @View({
-	templateUrl: './components/note/note.html',
-	directives: [RouterOutlet, RouterLink]
+	templateUrl : './components/note/note.html',
+	directives  : [RouterOutlet, RouterLink],
+	styleUrls   : ['./components/note/note.css']
 })
 
 @CanActivate(() => tokenNotExpired())
-export class Note {
+export class Note implements OnInit{
 	public notes;
+	public addNoteFrom:ControlGroup;
+	public flashMessage = {"mgs" : "",
+                           "type": "success"};
 
-	 constructor(http:Http) {
-		 let token = localStorage.getItem('token');
+	 constructor(private noteService:NoteService, private fromBuilder: FormBuilder) {}
 
-		 var NoteRequestUrl  = AppSettings.API_ENDPOINT + "/note?token=" +token;
-		 http.get(NoteRequestUrl)
-		     .map(res => res.json())
-      		 .subscribe(
-        		data	 => { this.notes = data},
-        		err 	 => console.log(err),
-        		() 		 => console.log(this.notes));
+	 ngOnInit() {
+	 	this.notes = [];
+
+	 	this.addNoteFrom = this.fromBuilder.group({note: ["", Validators.required]});
+		this.noteService.get().then(notes => this.notes = notes);
 	 }
+
+	 exportCSV() {
+	      var headers = new Headers();
+          headers.append('responseType', 'arraybuffer');
+          this.noteService.getCSV().map(res => new Blob([res],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
+                                   .subscribe(data => window.open(window.URL.createObjectURL(data)),
+                                              error => console.log("Error downloading the file."),
+                                              () => console.log('Completed file download.'));
+     }
+
+	 setFlashMessage(mgs, type="success") {
+        this.flashMessage.mgs       = mgs;
+        this.flashMessage.type      = "alert alert-"+type;
+    }
 }

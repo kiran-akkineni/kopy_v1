@@ -9,7 +9,7 @@ var mongoose = ModuleLoader.service('mongo'),
     util     = require('util');
 
 var User = new Schema({
-  username: {
+  username: {   //unique
     type: String
   },
   auth_type: {
@@ -25,6 +25,9 @@ var User = new Schema({
     type: String
   },
   token: {
+    type: String
+  },
+  thumnil: {
     type: String
   },
   is_password_created: {

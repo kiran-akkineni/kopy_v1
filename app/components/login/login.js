@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './../../services/authservice'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/authservice'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -49,7 +49,8 @@ System.register(['angular2/core', 'angular2/router', './../../services/authservi
                         providers: [authservice_1.AuthService]
                     }),
                     core_1.View({
-                        templateUrl: './components/login/login.html'
+                        templateUrl: './components/login/login.html',
+                        styleUrls: ["./components/login/login.css"]
                     }), 
                     __metadata('design:paramtypes', [authservice_1.AuthService, router_1.Router])
                 ], Login);

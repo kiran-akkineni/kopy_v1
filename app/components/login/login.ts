@@ -3,14 +3,15 @@
  */
 import {Component, View} 	from 'angular2/core';
 import {Router} 			from 'angular2/router'
-import {AuthService} 		from './../../services/authservice';
+import {AuthService} 		from '../../services/authservice';
 
 @Component({
 	selector: 'login',
 	providers: [AuthService]
 })
 @View({
-	templateUrl: './components/login/login.html'
+	templateUrl: './components/login/login.html',
+	styleUrls: ["./components/login/login.css"]
 })
 
 export class Login {

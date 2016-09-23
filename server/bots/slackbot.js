@@ -3,13 +3,15 @@
  */
 
 "use strict";
-var nodeModel       = ModuleLoader.model('note');
 var authService     = ModuleLoader.service('auth');
 var userService     = ModuleLoader.service('user');
 var noteService     = ModuleLoader.service('note');
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
+
+var skypebot        = ModuleLoader.bot('skype');
+
 
 module.exports =  function(Botkit)  {
     //Set debug to false
@@ -18,7 +20,6 @@ module.exports =  function(Botkit)  {
 
     controller.setupWebserver(Config.port, function(err, webserver) {
       controller.createWebhookEndpoints(controller.webserver);
-
       controller.createOauthEndpoints(controller.webserver,function(err,req,res) {
         if (err) {
           res.status(500).send('ERROR: ' + err);
@@ -27,25 +28,21 @@ module.exports =  function(Botkit)  {
         }
       });
 
-      webserver.get('/heartbeat',function(req,res) {
-        res.send('OK');
-      });
-
-
       //serving static
       webserver.use(express.static("./node_modules/"));
       webserver.use(express.static("./app/"));
 
-
+      //midlewares
       webserver.use(bodyParser.json());
       webserver.use(bodyParser.urlencoded({ extended: false }));
       webserver.use(cookieParser());
       webserver.use(express.static('./public'));
 
+      //cross-side request accept
       webserver.use(function (req, res, next) {
          res.header("Access-Control-Allow-Origin", "*");
+         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
          next();
       });
 
@@ -69,36 +66,38 @@ module.exports =  function(Botkit)  {
          jsonData.message   = {text: "Got it, boss :)"};
 
          var data              = {};
-         data.user_id          = message.sender.id;
          data.message          = message.message.text;
          data.app_name         = 'facebook';
          data.app_user_name    = message.sender.id;
          data.app_group_name   = 'kopy';
          data.created_at       = new Date();
 
-        //saving bot message
-        nodeModel(data).save(function () {
-          console.log("fb message is saved.");
-        });
+        noteService.save(data, function (user) {
+              console.log(user);
+              if(user) {
+                  //response back that message is saved
+                  jsonData.message.text = 'Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password;
+              }
 
-        client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
-            //local logging purposes..
-          console.log('response sent successfully. Status: ' + res.statusCode);
-        });
+              client.post('v2.6/me/messages?access_token=' + Config.page_token, jsonData, function(err, res, body) {
+                 //local logging purposes..
+                  console.log('response sent successfully. Status: ' + res.statusCode);
+              });
+          });
 
         res.sendStatus(200);
       });
 
 
-      webserver.get('/note', function(req,res) {
-         noteService.getByAuthUser(req.query.token, function(result){
-            res.json(result);
-         });
-      });
+      webserver.get('/heartbeat',function(req,res) { res.json({status:'Okay'})});
+      webserver.get('/note', function(req,res) { noteService.getByAuthUser(req,res)});
+      webserver.get('/profile', function(req,res) {userService.getByAuthUser(req,res)});
+      webserver.post('/authenticate',function(req,res) {authService.authenticate(req, res);});
+      webserver.put('/profile/username',function(req,res) {userService.updateUsernameForAuthUser(req, res);});
+      webserver.get('/note/export_csv',function(req,res) {noteService.exportCSVByAuthUser(req,res)});
 
-      webserver.post('/authenticate',function(req,res) {
-          authService.authenticate(req, res);
-      });
+      //skypebot
+      skypebot(webserver);
     });
 
 
@@ -118,7 +117,13 @@ module.exports =  function(Botkit)  {
 
 
       bot.api.users.info({'user': message.user}, function(err, response) {
-        data.app_user_name  = response.user.name;
+          data.app_user_name  = response.user.name;
+
+          if (response && response.user && response.user.profile) {
+                data.app_user_email     = response.user.profile.email;
+                data.app_user_fullname  = response.user.profile.real_name;
+                data.app_user_avater    = response.user.profile.image_24;
+          }
 
           noteService.save(data, function (user) {
               console.log(user);
@@ -139,7 +144,6 @@ module.exports =  function(Botkit)  {
     });
 
 
-
     //Slash command
     controller.on('slash_command', function(bot,message) {
       var data              = {created_at  : new Date(),
@@ -150,22 +154,22 @@ module.exports =  function(Botkit)  {
       data.app_group_name   = message.team_domain;
       data.created_at       = new Date();
 
-      bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
+        bot.api.users.info({'user': message.user}, function(err, response) {
+            if (response && response.user && response.user.profile) {
+                data.app_user_email     = response.user.profile.email;
+                data.app_user_fullname  = response.user.profile.real_name;
+                data.app_user_avater    = response.user.profile.image_24;
+            }
+        });
 
+      //bot.replyPrivate(message, ':+1: Message saved - ' + message.text);
       noteService.save(data, function (user) {
-              console.log(user);
-              if(user) {
-                  //response back that message is saved
-                  bot.startPrivateConversation(message, function(err,dm) {
-                    dm.say('Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
-                  });
-              } else {
-                  //response back that message is saved
-                  bot.startPrivateConversation(message, function(err,dm) {
-                    dm.say(':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
-                  });
-              }
-          })
+          if (user) {
+              bot.replyPrivate(message,'Boss!!! New account has been created for you. Username: ' + user.username + '  & Password: ' + user.password);
+          } else {
+              bot.replyPrivate(message,':memo: :notebook_with_decorative_cover: Got it, boss - ' + message.text);
+          }
+      })
     });
 };
 

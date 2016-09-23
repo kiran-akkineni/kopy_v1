@@ -35,6 +35,11 @@ Config.password       = process.env.PASSWORD      || 'slashkopy0';
 Config.fb_token       = process.env.FB_TOKEN      || 'fb_kopy';
 Config.page_token     = "EAABz2BdMM9YBAEn9pYZBCqwx6ZC5ZBB4DNJvB2lGDL7HjeRtBcV6ihvEmJS2tHMTF1tDrZBK21ZCHM8jj2QFCsNgO5MDo4HZAUC0uwCnvoiuZAzHSpnwMxRPD2uz1ZBBbbbe07ayGslfC7PuB3fFhUpesFQ6vwOYsGUaCC1xuXmAdwZDZD";
 
+//skype
+Config.MS_APP_ID     =  process.env.MS_APP_ID       || '0d6a3d5f-253f-46c4-a4bd-8deaf9d5c873';
+Config.MS_APP_SECRET = process.env.MS_APP_SECRET    || 'ioYwL67uEk6KjaseUzqzDL4';
+
+
 
 
 var slackbot          = ModuleLoader.bot('slackbot')(Botkit);

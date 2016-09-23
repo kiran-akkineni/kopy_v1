@@ -5,7 +5,77 @@
 'use strict';
 
 var UserService  = {};
-var userModel       = ModuleLoader.model('user');
+var Promise      = require('promise');
+var userModel    = ModuleLoader.model('user');
+
+
+//Check username is exist or not. If not, then it's update
+UserService.updateUsernameForAuthUser = function (req, res) {
+
+    if ('token' in req.query) {
+        userModel.findOne({token: req.query.token})
+                 .then(function (user) {
+                    if (user.length === 0) {
+                        res.json({status:false, mgs: "Not a valid request"});
+                    } else {
+                        userModel.findOne({username: req.body.username})
+                                  .then(function (result) {
+                                      if (result === null) {
+                                        user.username = req.body.username;
+                                        userModel(user).save(function (err, result) {
+                                          res.json({"status":true});
+                                        });
+                                    } else {
+                                        res.json({"status":false, "mgs": "username is already taken."});
+                                    }
+                                 });
+                    }
+                 });
+    } else {
+         res.json({"status":false, "mgs": "Not a valid request"});
+    }
+};
+
+
+
+
+UserService.getByAuthUser = function (req, res) {
+
+    if ('token' in req.query) {
+        userModel.findOne({token: req.query.token})
+            .then(function (result) {
+                if (result.length === 0) {
+                    res.json([]);
+                } else {
+                    res.json(result);
+                }
+            });
+    } else {
+        res.json([]);
+    }
+};
+
+UserService.resetPassword =  function (data) {
+
+    return new Promise(function (resolve, reject) {
+
+        userModel.findByUsernameAndAuthType(data.app_user_name.trim().toString(), data.app_name, function (err, user) {
+            if (err) {
+                reject(false);
+            } else {
+                var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
+                user.password               = encryptService.encrypt(password.trim());
+
+                userModel(user).save(function (err, result) {
+                  //updating the password
+                  user.password   = password.trim();
+                  //password generation trigger
+                  resolve(user);
+                });
+          }
+        });
+    });
+};
     
 UserService.post = function (req, res) {
     var data          = {};

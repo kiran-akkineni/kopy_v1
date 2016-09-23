@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/http', '../app.setting'], function(e
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, http_1, app_setting_1;
-    var AuthService;
+    var ProfileService;
     return {
         setters:[
             function (core_1_1) {
@@ -24,40 +24,41 @@ System.register(['angular2/core', 'angular2/http', '../app.setting'], function(e
                 app_setting_1 = app_setting_1_1;
             }],
         execute: function() {
-            AuthService = (function () {
-                function AuthService(http) {
+            ProfileService = (function () {
+                function ProfileService(http) {
                     this.http = http;
                 }
-                AuthService.prototype.processData = function (data) {
-                    this.isLoggedin = true;
-                };
-                AuthService.prototype.authenticate = function (data) {
+                ProfileService.prototype.get = function () {
                     var _this = this;
-                    this.isLoggedin = false;
-                    var headers = new http_1.Headers();
-                    var credentials = 'username=' + data.username + '&password=' + data.password;
-                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-                    var authRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/authenticate";
-                    return new Promise(function (resolve) {
-                        _this.http.post(authRequestUrl, credentials, { headers: headers }).map(function (response) { return response.json(); }).subscribe(function (response) {
-                            console.log(response);
-                            if (response.success) {
-                                _this.isLoggedin = true;
-                                localStorage.setItem('profile', response.profile);
-                                localStorage.setItem('token', response.token);
-                                resolve(_this.isLoggedin);
-                            }
-                        });
+                    var token = localStorage.getItem('token');
+                    var NoteRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/profile?token=" + token;
+                    return new Promise(function (resolve, reject) {
+                        _this.http.get(NoteRequestUrl)
+                            .map(function (data) { return data.json(); })
+                            .subscribe(function (data) { return resolve(data); }, function (err) { return reject(err); });
                     });
                 };
-                AuthService = __decorate([
+                ProfileService.prototype.save = function (data) {
+                    var _this = this;
+                    var token = localStorage.getItem('token');
+                    var headers = new http_1.Headers();
+                    var credentials = 'username=' + data.username;
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    var profileRequestUrl = app_setting_1.AppSettings.API_ENDPOINT + "/profile/username?token=" + token;
+                    return new Promise(function (resolve, reject) {
+                        _this.http.put(profileRequestUrl, credentials, { headers: headers })
+                            .map(function (data) { return data.json(); })
+                            .subscribe(function (data) { return resolve(data); }, function (err) { return reject(err); });
+                    });
+                };
+                ProfileService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
-                ], AuthService);
-                return AuthService;
+                ], ProfileService);
+                return ProfileService;
             }());
-            exports_1("AuthService", AuthService);
+            exports_1("ProfileService", ProfileService);
         }
     }
 });
-//# sourceMappingURL=authservice.js.map
+//# sourceMappingURL=profileservice.js.map

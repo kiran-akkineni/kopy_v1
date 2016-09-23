@@ -10,7 +10,7 @@ System.register([], function(exports_1, context_1) {
                 }
                 Object.defineProperty(AppSettings, "API_ENDPOINT", {
                     //public static get API_ENDPOINT(): string { return 'https://aa4f0d93.ngrok.io'; }
-                    get: function () { return 'https://f44e2eae.ngrok.io'; },
+                    get: function () { return 'https://bot.ofra.in'; },
                     enumerable: true,
                     configurable: true
                 });

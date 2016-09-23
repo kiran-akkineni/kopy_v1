@@ -23,7 +23,8 @@ var Note = new Schema({
     type: String
   },
   app_group_name: {   //not important always
-    type: String
+    type    : String,
+    default : 'kopy'
   },
   created_at : Date,
   updated_at : {

@@ -22,10 +22,6 @@
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
 
-
-    <!-- Auth0 Lock script -->
-    <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
-
     <!-- 1. Load libraries -->
     <!--<script src="angular2/bundles/angular2-polyfills.js"></script>-->
     <!--<script src="systemjs/dist/system.src.js"></script>-->
@@ -49,10 +45,7 @@
             format: 'register',
             defaultExtension: 'js'
           }
-        },
-         map: {
-           "angular2-jwt": "angular2-jwt/angular2-jwt"
-         }
+        }
       });
 
       System.import('boot').then(null, console.error.bind(console));

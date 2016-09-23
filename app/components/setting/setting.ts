@@ -1,69 +1,78 @@
-import {Component, OnInit}                                    from 'angular2/core';
-import {CanActivate}                                          from 'angular2/router';
-import {tokenNotExpired}                                      from './../../services/authcheckservice';
-import {Http, Headers}                                        from "angular2/http";
-import {Configuration}                                        from './../../models/configuration';
-import {AppSettings} 			                              from './../../app.setting';
-
+import {Component, OnInit}              from 'angular2/core';
+import {CanActivate}                    from 'angular2/router';
+import {tokenNotExpired}                from '../../services/authcheckservice';
+import {ProfileService}                 from '../../services/profileservice';
+import {ControlGroup, FormBuilder,
+        Validators}                     from "angular2/common";
 import 'rxjs/add/operator/map';
-
-
 
 @Component({
 	selector: 'setting',
+    providers: [ProfileService, Validators],
     templateUrl: './components/setting/setting.html'
 })
 
 @CanActivate(() => tokenNotExpired())
 export class Setting implements OnInit
 {
-    data;
-    configuration: Configuration;
-    public http: Http;
-
-    constructor(http:Http) {
-      this.http = http;
-    }
+    usernameFrom:ControlGroup;
+    passwordChangeFrom:ControlGroup;
+    flashMessage = {"mgs" : "",
+                    "type": "success"};
+    constructor(private fromBuilder: FormBuilder, private profileService:ProfileService) {}
 
     ngOnInit() {
-        let profile = JSON.parse(localStorage.getItem('profile'));
-        this.configuration = {company_name:"", slack_username:""};
-        var userRequestUrl  = AppSettings.API_ENDPOINT + "/user_note_map?email=" +profile.email;
-        this.http.get(userRequestUrl)
-		     .map(res => res.json())
-      		 .subscribe(
-        		data	 =>  {this.data = data},
-        		err 	 => console.error(err),
-        		() 		 => this.getValue(this.data));
+        this.usernameFrom = this.fromBuilder.group({username: ["", Validators.compose([Validators.required, Validators.minLength(4)])]});
+
+        this.passwordChangeFrom =  this.fromBuilder.group({
+            old_password    :       ["", Validators.required],
+            password        :       ["", Validators.compose([Validators.required, Validators.minLength(4)])],
+            confirmPassword :    ["", Validators.compose([Validators.required, Validators.minLength(4))]
+        }, {validator: this.mismatchedPasswords('password', 'confirmPassword')});
+
+        this.profileService.get()
+			               .then((data) => {
+			                   if(data && data.username) this.usernameFrom.controls.username.updateValue(data.username);
+			               });
+        this.setFlashMessage("");
+    }
+
+    saveUserName() {
+            this.profileService.save(this.usernameFrom.value)
+                               .then((data) => {
+                                   if (data.status == false) {
+                                       this.setFlashMessage("Sorry! username already taken.","danger");
+                                   } else {
+                                        this.setFlashMessage("Username has been updated.","success");
+                                   }
+
+                               });
+    }
+
+    setFlashMessage(mgs, type="success") {
+        this.flashMessage.mgs       = mgs;
+        this.flashMessage.type      = "alert alert-"+type;
+    }
+
+    changePassword(event) {
+        event.preventDefault();
+        alert(this.passwordChangeFrom.valid);
+
 
     }
 
+    mismatchedPasswords(passwordKey: string, confirmPasswordKey: string) {
+        return (group: ControlGroup): {[key: string]: any} => {
+            let password = group.controls[passwordKey];
+            let confirmPassword = group.controls[confirmPasswordKey];
 
-    getValue (data) {
-        if(data.length > 0 ) {
-            this.configuration.company_name = data[0].app_group_name;
-            this.configuration.slack_username = data[0].app_user_name;
+            if (password.value !== confirmPassword.value) {
+              return {
+                mismatchedPasswords: true
+              };
+            }
         }
     }
 
 
-    onSubmit(){
-        let profile = JSON.parse(localStorage.getItem('profile'));
-        var creds = "email=" + profile.email + "&app_group_name=" + this.configuration.company_name+"&app_user_name=" +this.configuration.slack_username;
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-        var userRequestUrl  = AppSettings.API_ENDPOINT + "/user_note_map";
-
-        this.http.post(userRequestUrl, creds, {headers: headers})
-                 .map(res => res.json())
-                 .subscribe(
-                  data => {data = this.data},
-                  err => console.log(err),
-                  () => console.log('mapping is done')
-                 );
-
-        //redirect note page
-        //this.router.navigate(['Note']);
-    }
 }
