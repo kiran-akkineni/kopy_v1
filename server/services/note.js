@@ -15,13 +15,14 @@ var fields            = ['app_name', 'app_user_name', 'message', 'created_at'];
 //Save note with generate password for user if user and password doesn't exits
 NoteService.save = function (data, cb) {
 
-    userModel.findByUsernameAndAuthType(data.app_user_name, data.app_name)
+    userModel.findByIdentifierAndAuthType(data.auth_identifier, data.app_name)
              .then(function (result) {
 
                 if (_.isEmpty(result)) {
                     var user                    = {};
+                    user.auth_identifier        = data.auth_identifier; //very important
                     user.auth_type              = data.app_name;
-                    user.username               = (_.isEmpty(data.app_user_email))? data.app_user_name:data.app_user_email;  //if you have email address, the auth username is your email
+                    user.username               = data.app_user_name;
                     user.is_password_created    = true;
                     user.created_at             = new Date();
                     var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
@@ -62,6 +63,7 @@ NoteService.save = function (data, cb) {
 
 
 //Return all note based on Auth User
+//Consumer: Angular APP
 NoteService.getByAuthUser = function (req, res) {
 
     if ('token' in req.query) {
@@ -80,6 +82,8 @@ NoteService.getByAuthUser = function (req, res) {
     }
 };
 
+//Generate CSV based on authUser
+//Consumer: Angular APP
 NoteService.exportCSVByAuthUser = function (req, res) {
     if ('token' in req.query) {
         userModel.findOne({token: req.query.token})
