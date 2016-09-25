@@ -86,11 +86,11 @@ UserService.resetPassword =  function (data) {
 //Consumer: Skype
 UserService.userCreation = function (data) {
     return new Promise(function (resolve, reject) {
-        userModel.findByIdentifierAndAuthType(data.auth_identifier, data.app_name)
+        userModel.findByIdentifierAndAuthType(data.app_auth_identifier, data.app_name)
                  .then(function (result) {
                     if(_.isEmpty(result)){
                         var user                    = {};
-                        user.auth_identifier        = data.auth_identifier; //very important
+                        user.auth_identifier        = data.app_auth_identifier; //very important
                         user.auth_type              = data.app_name;
                         user.username               = data.app_user_name;
                         user.is_password_created    = true;
@@ -102,10 +102,14 @@ UserService.userCreation = function (data) {
                         if(data.app_user_fullname)  user.name       = data.app_user_fullname;
                         if(data.app_user_avater)    user.thumnil    = data.app_user_avater;
 
+
+
                         userModel(user).save(function (err, result) {
                             if(err) {
                                 reject(err);
                             } else {
+                                console.log('user created: ', user );
+                                user.created = true;
                                 resolve(user);
                             }
                         });

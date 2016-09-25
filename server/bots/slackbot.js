@@ -65,12 +65,13 @@ module.exports =  function(Botkit)  {
          jsonData.recipient = {id: message.sender.id};
          jsonData.message   = {text: "Got it, boss :)"};
 
-         var data              = {};
-         data.message          = message.message.text;
-         data.app_name         = 'facebook';
-         data.app_user_name    = message.sender.id;
-         data.app_group_name   = 'kopy';
-         data.created_at       = new Date();
+         var data                   = {};
+         data.message               = message.message.text;
+         data.app_name              = 'facebook';
+         data.app_user_name         = message.sender.id;
+         data.app_auth_identifier   =  message.sender.id;
+         data.app_group_name        = 'kopy';
+         data.created_at            = new Date();
 
         noteService.save(data, function (user) {
               console.log(user);
@@ -117,7 +118,7 @@ module.exports =  function(Botkit)  {
 
 
       bot.api.users.info({'user': message.user}, function(err, response) {
-          data.auth_identifier  = response.user.name;
+          data.app_auth_identifier  = response.user.name;
 
           if (response && response.user && response.user.profile) {
                 data.app_user_name      = response.user.profile.email;
@@ -152,9 +153,9 @@ module.exports =  function(Botkit)  {
 
       data.message          = message.text;
       data.app_name         = 'slack';
-      data.auth_identifier  = message.user_name;
+      data.app_auth_identifier  = message.user_name;
       data.app_group_name   = message.team_domain;
-      data.created_at       = new Date();
+      data.app_user_name      = message.user_name;
 
         bot.api.users.info({'user': message.user}, function(err, response) {
             if (response && response.user && response.user.profile) {

@@ -15,12 +15,12 @@ var fields            = ['app_name', 'app_user_name', 'message', 'created_at'];
 //Save note with generate password for user if user and password doesn't exits
 NoteService.save = function (data, cb) {
 
-    userModel.findByIdentifierAndAuthType(data.auth_identifier, data.app_name)
+    userModel.findByIdentifierAndAuthType(data.app_auth_identifier, data.app_name)
              .then(function (result) {
 
                 if (_.isEmpty(result)) {
                     var user                    = {};
-                    user.auth_identifier        = data.auth_identifier; //very important
+                    user.auth_identifier        = data.app_auth_identifier; //very important
                     user.auth_type              = data.app_name;
                     user.username               = data.app_user_name;
                     user.is_password_created    = true;
