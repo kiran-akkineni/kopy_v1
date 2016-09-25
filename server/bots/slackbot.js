@@ -65,12 +65,13 @@ module.exports =  function(Botkit)  {
          jsonData.recipient = {id: message.sender.id};
          jsonData.message   = {text: "Got it, boss :)"};
 
-         var data              = {};
-         data.message          = message.message.text;
-         data.app_name         = 'facebook';
-         data.app_user_name    = message.sender.id;
-         data.app_group_name   = 'kopy';
-         data.created_at       = new Date();
+         var data                   = {};
+         data.message               = message.message.text;
+         data.app_name              = 'facebook';
+         data.app_user_name         = message.sender.id;
+         data.app_auth_identifier   =  message.sender.id;
+         data.app_group_name        = 'kopy';
+         data.created_at            = new Date();
 
         noteService.save(data, function (user) {
               console.log(user);
@@ -111,15 +112,16 @@ module.exports =  function(Botkit)  {
       var data             = {app_name    : 'slack',
                               created_at  : new Date(),
                               updated_at  : new Date()};
+
       data.message        = message.text;
-      data.app_name       = 'slack';
       data.app_group_name = bot.config.name;
 
 
       bot.api.users.info({'user': message.user}, function(err, response) {
-          data.app_user_name  = response.user.name;
+          data.app_auth_identifier  = response.user.name;
 
           if (response && response.user && response.user.profile) {
+                data.app_user_name      = response.user.profile.email;
                 data.app_user_email     = response.user.profile.email;
                 data.app_user_fullname  = response.user.profile.real_name;
                 data.app_user_avater    = response.user.profile.image_24;
@@ -148,14 +150,16 @@ module.exports =  function(Botkit)  {
     controller.on('slash_command', function(bot,message) {
       var data              = {created_at  : new Date(),
                                updated_at  : new Date()};
+
       data.message          = message.text;
       data.app_name         = 'slack';
-      data.app_user_name    = message.user_name;
+      data.app_auth_identifier  = message.user_name;
       data.app_group_name   = message.team_domain;
-      data.created_at       = new Date();
+      data.app_user_name      = message.user_name;
 
         bot.api.users.info({'user': message.user}, function(err, response) {
             if (response && response.user && response.user.profile) {
+                data.app_user_name      = response.user.profile.email;
                 data.app_user_email     = response.user.profile.email;
                 data.app_user_fullname  = response.user.profile.real_name;
                 data.app_user_avater    = response.user.profile.image_24;
@@ -172,4 +176,3 @@ module.exports =  function(Botkit)  {
       })
     });
 };
-

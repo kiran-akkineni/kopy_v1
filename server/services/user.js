@@ -4,12 +4,15 @@
 
 'use strict';
 
-var UserService  = {};
-var Promise      = require('promise');
-var userModel    = ModuleLoader.model('user');
+var UserService       = {};
+var Promise           = require('promise');
+var userModel         = ModuleLoader.model('user');
+var randomstring      = require("randomstring");
+var encryptService    = ModuleLoader.service('encrypt');
 
 
 //Check username is exist or not. If not, then it's update
+//Consumer: Angular API
 UserService.updateUsernameForAuthUser = function (req, res) {
 
     if ('token' in req.query) {
@@ -38,7 +41,8 @@ UserService.updateUsernameForAuthUser = function (req, res) {
 
 
 
-
+//Get an user by Auth
+//Consumer: Angular API
 UserService.getByAuthUser = function (req, res) {
 
     if ('token' in req.query) {
@@ -76,55 +80,47 @@ UserService.resetPassword =  function (data) {
         });
     });
 };
-    
-UserService.post = function (req, res) {
-    var data          = {};
-    data.name         = req.body.name;
-    data.email        = req.body.email;
-
-    var auth          = req.body.user_id.split("|");
-
-    data.auth_type    = auth[0];
-    data.auth_user_id = (auth.length > 1)? auth[1]:'';
 
 
-    userModel.find({email: data.email.trim().toString()}, function (err, result) {
-        if (err) {
-            throw err;
-        } else {
-            if (result.length > 0) {
-                res.json({status: 'user already exist.'});
-            } else {
-              userModel(data).save(function (err) {
-                   if (err) throw err;
-                    res.json({status: 'okay'});
-                   });
-            }
-          }
-        });
-    
-};
+//Create an user my new user data
+//Consumer: Skype
+UserService.userCreation = function (data) {
+    return new Promise(function (resolve, reject) {
+        userModel.findByIdentifierAndAuthType(data.app_auth_identifier, data.app_name)
+                 .then(function (result) {
+                    if(_.isEmpty(result)){
+                        var user                    = {};
+                        user.auth_identifier        = data.app_auth_identifier; //very important
+                        user.auth_type              = data.app_name;
+                        user.username               = data.app_user_name;
+                        user.is_password_created    = true;
+                        user.created_at             = new Date();
+                        var password                = randomstring.generate({length: 8, charset: 'alphabetic'});
+                        user.password               = encryptService.encrypt(password.trim());
 
-UserService.createUserNoteMap = function (req, res) {
-    var map              = {};
-    map.email            = req.body.email;
-    map.app_group_name   = req.body.app_group_name;
-    map.app_user_name    = req.body.app_user_name;
-    map.created_at       = new Date();
-    map.updated_at       = new Date();
+                        if(data.app_user_email)     user.email      = data.app_user_email;
+                        if(data.app_user_fullname)  user.name       = data.app_user_fullname;
+                        if(data.app_user_avater)    user.thumnil    = data.app_user_avater;
 
-    userNoteModel.findByEmail(map.email, function (results) {
 
-      if (results.length > 0) {
-          console.log('mapping is already exist');
-      } else {
-        userNoteModel(map).save(function () {
-          console.log('new map created.');
-        });
-      }
+
+                        userModel(user).save(function (err, result) {
+                            if(err) {
+                                reject(err);
+                            } else {
+                                console.log('user created: ', user );
+                                user.created = true;
+                                resolve(user);
+                            }
+                        });
+                    } else {
+                        resolve(result);
+                    }
+                 })
+                 .catch(function(err) {
+                    reject(err);
+                 })
     });
-
-    res.json({status: 'okay'});
 };
 
 UserService.getUserNoteMap = function (req, res) {
