@@ -51,7 +51,7 @@ User.statics.findByUsernameAndAuthType =  function(user_name, auth_type) {
 
 
 //Find a user by auth_identifier and auth type
-User.statics.findByUsernameAndAuthType =  function(auth_identifier, auth_type) {
+User.statics.findByIdentifierAndAuthType =  function(auth_identifier, auth_type) {
     return this.findOne({auth_identifier: auth_identifier, auth_type: auth_type});
 };
 
