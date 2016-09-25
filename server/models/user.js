@@ -12,6 +12,9 @@ var User = new Schema({
   username: {   //unique
     type: String
   },
+  auth_identifier: {   //unique
+    type: String
+  },
   auth_type: {
     type: String
   },
@@ -41,11 +44,19 @@ var User = new Schema({
 });
 
 
+//Find a user by username and auth type
 User.statics.findByUsernameAndAuthType =  function(user_name, auth_type) {
     return this.findOne({username: user_name, auth_type: auth_type});
 };
 
-User.index({ "token": 1 }, { sparse: true } );
+
+//Find a user by auth_identifier and auth type
+User.statics.findByUsernameAndAuthType =  function(auth_identifier, auth_type) {
+    return this.findOne({auth_identifier: auth_identifier, auth_type: auth_type});
+};
+
+User.index({ "token": 1 },           { sparse: true } );
+User.index({ "auth_identifier": 1 }, { sparse: true } );
 module.exports = mongoose.model('user', User);
 
 
