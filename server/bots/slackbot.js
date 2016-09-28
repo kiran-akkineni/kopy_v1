@@ -151,11 +151,11 @@ module.exports =  function(Botkit)  {
       var data              = {created_at  : new Date(),
                                updated_at  : new Date()};
 
-      data.message          = message.text;
-      data.app_name         = 'slack';
+      data.message              = message.text;
+      data.app_name             = 'slack';
       data.app_auth_identifier  = message.user_name;
-      data.app_group_name   = message.team_domain;
-      data.app_user_name      = message.user_name;
+      data.app_group_name       = message.team_domain;
+      data.app_user_name        = message.user_name;
 
         bot.api.users.info({'user': message.user}, function(err, response) {
             if (response && response.user && response.user.profile) {

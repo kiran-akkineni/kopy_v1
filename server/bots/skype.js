@@ -5,7 +5,8 @@
 "use strict";
 var builder         = require('botbuilder');
 var userService     = ModuleLoader.service('user');
-var randomstring      = require("randomstring");
+var randomstring    = require("randomstring");
+var noteService     = ModuleLoader.service('note');
 module.exports =  function(server)  {
 
     var connector = new builder.ChatConnector({ appId: Config.MS_APP_ID,
@@ -18,8 +19,6 @@ module.exports =  function(server)  {
 
     //Bot on
     bot.on('contactRelationUpdate', function (message) {
-
-        console.log(message);
 
         if (message.action === 'add') {
 
@@ -65,12 +64,17 @@ module.exports =  function(server)  {
     }
 
     bot.dialog('/', function (session) {
-        if(session.message.text.toLowerCase().contains('hello')){
-          session.send("Hey, How are you?");
-          }else if(session.message.text.toLowerCase().contains('help')){
-            session.send("How can I help you?");
-          }else{
-            session.send("Sorry I don't understand you...");
-          }
+
+        var data              = {created_at  : new Date(),
+                                 updated_at  : new Date()};
+
+        data.message              = session.message.text;
+        data.app_name             = 'skype';
+        data.app_auth_identifier  = session.message.user.id;
+        data.app_group_name       = 'kopy';
+
+      noteService.save(data, function (user) {
+          session.send("Got it, boss");
+      });
     });
 };
